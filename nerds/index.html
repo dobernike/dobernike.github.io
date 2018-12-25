@@ -195,7 +195,22 @@
     <section class="modal modal-feedback">
         <h2 class="visually-hidden">Обратная связь</h2>
         <b>Напишите нам</b>
-        <!-- Здесь будет форма-->
+        <form class="feedback" action="https://echo.htmlacademy.ru" method="post">
+            <p>
+                <label for="feedback-name">Ваше имя:</label>
+                <input type="text" name="name" id="feedback-name" placeholder="Имя Фамилия">
+            </p>
+            <p>
+                <label for="feedback-email">Ваш e-mail:</label>
+                <input type="email" name="email" id="feedback-email" placeholder="email@example.com">
+            </p>
+            <p>
+                <label for="feedback-text">Текст письма:</label>
+                <textarea rows="10" cols="45" name="text" id="feedback-text" placeholder="В свободной форме"></textarea>
+            </p>
+            <button class="button button-red" type="submit">Отправить</button>
+        </form>
+        <button class="close-modal" type="button">Закрыть</button>
     </section>
 </body>
 
