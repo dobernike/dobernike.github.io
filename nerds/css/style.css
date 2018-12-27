@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    padding: 0;
+
+    font-family: "Roboto", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #000000;
+
+    background-color: #ffffff;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    font: inherit;
+
+    text-align: center;
+    color: #ffffff;
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    background-color: #fb565a;
+    border: none;
+}
+
+.button-green {
+    background-color: #00ca74;
+}
+
+.button-yellow {
+    background-color: #efc84a;
+}
+
+.main-navigation {
+    line-height: 30px;
+    font-weight: 500;
+    color: #000000;
+    text-transform: uppercase;
+
+    background-color: #eeeeee;
+}
+
+.logo:hover,
+.logo:focus {
+    opacity: 0.8;
+}
+
+.logo:active {
+    opacity: 0.3;
+}
+
+.navigation-list {
+    list-style: none;
+}
+
+.navigation-list a {
+    color: #000000;
+}
+
+.navigation-list a:hover,
+.navigation-list a:focus {
+   color: #fb565a;
+}
+
+.navigation-list a:active {
+    color: #000000;
+    opacity: 0.3;
+}
+
+.navigation-item-current a {
+    text-decoration: underline;
+    text-decoration-color: #fb565a;
+}
+
+.navigation-item-current a:hover,
+.navigation-item-current a:focus,
+.navigation-item-current a:active {
+    color: #000000;
+    opacity: 1;
+}
+
+.slider {
+    background-color: #eeeeee;
+}
+
+.slider-list {
+    list-style: none;
+}
+
+.slide b {
+    font-size: 55px;
+    line-height: 55px;
+    font-weight: 500;
+}
+
+.feature-list {
+    list-style: none;
+}
+
+.feature-item h3 {
+    font-size: 24px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.info-strong {
+    font-size: 45px;
+    line-height: 45px;
+    font-weight: 500;
+}
+
+.info b {
+    text-transform: uppercase;
+}
+
+.info-list {
+    list-style: none;
+}
+
+.statistics p {
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.statistics-termin b {
+    font-size: 45px;
+    line-height: 10px;
+    font-weight: 700;
+}
