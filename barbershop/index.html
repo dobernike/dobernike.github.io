@@ -4,6 +4,9 @@
 <head>
     <meta charset="utf-8">
     <title>Барбершоп «Бородинский»</title>
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -61,33 +64,36 @@
             </ul>
         </section>
 
-        <section class="news">
-            <h2>Новости</h2>
-            <ul class="news-list">
-                <li class="news-item">
-                    <p>Нам наконец завезли ягермайстер! теперь вы можете пропустить стаканчик во время стрижки</p>
-                    <time datetime="2018-01-11">11 января</time>
-                </li>
-                <li class="news-item">
-                    <p>В нашей команде пополнение, борис «бритва» стригунец, обладaтель множества титулов и наград
-                        пополнил наши стройные ряды</p>
-                    <time datetime="2018-01-18">18 января</time>
-                </li>
-            </ul>
-            <a class="button" href="news.html">Все новости</a>
-        </section>
+        <div class="index-columns">
+            <section class="news">
+                <h2>Новости</h2>
+                <ul class="news-list">
+                    <li class="news-item">
+                        <p>Нам наконец завезли ягермайстер! теперь вы можете пропустить стаканчик во время стрижки</p>
+                        <time datetime="2018-01-11">11 января</time>
+                    </li>
+                    <li class="news-item">
+                        <p>В нашей команде пополнение, борис «бритва» стригунец, обладaтель множества титулов и наград
+                            пополнил наши стройные ряды</p>
+                        <time datetime="2018-01-18">18 января</time>
+                    </li>
+                </ul>
+                <a class="button" href="news.html">Все новости</a>
+            </section>
 
-        <section class="gallery">
-            <h2>Фотогалерея</h2>
-            <figure class="gallery-content">
-                <a href="#">
-                    <img src="img/salon.jpg" width="286" height="164" alt="Интерьер">
-                </a>
-            </figure>
-            <button class="button gallery-button gallery-button-back" type="button">Назад</button>
-            <button class="button gallery-button gallery-button-next" type="button">Вперед</button>
-        </section>
+            <section class="gallery">
+                <h2>Фотогалерея</h2>
+                <figure class="gallery-content">
+                    <a href="#">
+                        <img src="img/salon.jpg" width="286" height="164" alt="Интерьер">
+                    </a>
+                </figure>
+                <button class="button gallery-button gallery-button-back" type="button">Назад</button>
+                <button class="button gallery-button gallery-button-next" type="button">Вперед</button>
+            </section>
+        </div>
 
+        <div class="index-columns">
         <section class="contacts">
             <h2>Контактная информация</h2>
             <p>
@@ -127,6 +133,7 @@
                 <button class="button" type="submit">Отправить</button>
             </form>
         </section>
+    </div>
     </main>
     <footer class="main-footer">
         <p class="footer-contacts">
@@ -154,7 +161,7 @@
         <p class="footer-copyright">
             <b>Разработано:</b>
             <a class="button" href="#">dobernike</a>
-            <p>По макету <a class="button" href="https://htmlacademy.ru">HTML Academy</a></p>
+            <small>По макету <a class="button" href="https://htmlacademy.ru">HTML Academy</a></small>
         </p>
     </footer>
 
