@@ -132,3 +132,72 @@ a {
     line-height: 10px;
     font-weight: 700;
 }
+
+.procent {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.statistics-list dd {
+    line-height: 18px;
+    color: #283136;
+}
+
+.clients-list {
+    list-style: none;
+}
+
+.client-item img {
+    opacity: 0.2;
+}
+
+.client-item img:hover,
+.client-item img:focus {
+    opacity: 1;
+}
+
+.client-item img:active {
+    opacity: 0.1;
+}
+
+.main-footer {
+    background-color: #ffffff;
+}
+
+.feedback b {
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 700;
+}
+
+.feedback p {
+    color: #666666;
+    line-height: 18px;
+}
+
+.social-list {
+    list-style: none;
+}
+
+.friendship {
+    line-height: 22px;
+    color: #444444;
+}
+
+.friendship b {
+    font-size: 36px;
+    line-height: 36px;
+    font-weight: 700;
+    color: #000000;
+}
+
+.modal-feedback b {
+    font-size: 45px;
+    line-height: 45px;
+    font-weight: 500;
+}
+
+.feedback-item {
+    line-height: 18px;
+    font-weight: 700;
+}
