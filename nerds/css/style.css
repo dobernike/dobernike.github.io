@@ -30,16 +30,39 @@ a {
     background-color: #fb565a;
 }
 
+.button-red:hover,
+.button-red:focus {
+
+}
+
+.button-red:active {
+
+}
+
 .button-green {
   background-color: #00ca74;
 }
 
-.button-green: {
+.button-green:hover,
+.button-green:focus {
+
+}
+
+.button-green:active {
 
 }
 
 .button-yellow {
   background-color: #efc84a;
+}
+
+.button-yellow:hover,
+.button-yellow:focus {
+
+}
+
+.button-yellow:active {
+
 }
 
 .button-grey {
