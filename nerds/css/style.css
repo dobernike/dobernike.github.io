@@ -1,203 +1,354 @@
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-    font-family: "Roboto", Arial, sans-serif;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-    color: #000000;
+  font-family: "Roboto", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: #000000;
 
-    background-color: #ffffff;
+  background-color: #ffffff;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .button {
-    font: inherit;
+  font: inherit;
 
-    text-align: center;
-    color: #ffffff;
-    vertical-align: middle;
-    text-transform: uppercase;
+  text-align: center;
+  color: #ffffff;
+  vertical-align: middle;
+  text-transform: uppercase;
+  
+  border: none;
+}
 
+.button-red {
     background-color: #fb565a;
-    border: none;
 }
 
 .button-green {
-    background-color: #00ca74;
+  background-color: #00ca74;
+}
+
+.button-green: {
+
 }
 
 .button-yellow {
-    background-color: #efc84a;
+  background-color: #efc84a;
 }
 
-.main-navigation {
-    line-height: 30px;
-    font-weight: 500;
+.button-grey {
     color: #000000;
-    text-transform: uppercase;
 
     background-color: #eeeeee;
 }
 
+.button-grey:hover,
+.button-grey:focus {
+    background-color: #dfdfdf;
+}
+
+.button-grey:active {
+    background-color: #d5d5d5;
+    
+    border-top: 10px solid #bfbfbf;
+}
+
+.main-navigation {
+  line-height: 30px;
+  font-weight: 500;
+  color: #000000;
+  text-transform: uppercase;
+
+  background-color: #eeeeee;
+}
+
 .logo:hover,
 .logo:focus {
-    opacity: 0.8;
+  opacity: 0.8;
 }
 
 .logo:active {
-    opacity: 0.3;
+  opacity: 0.3;
 }
 
 .navigation-list {
-    list-style: none;
+  list-style: none;
 }
 
 .navigation-list a {
-    color: #000000;
+  color: #000000;
 }
 
 .navigation-list a:hover,
 .navigation-list a:focus {
-   color: #fb565a;
+  color: #fb565a;
 }
 
 .navigation-list a:active {
-    color: #000000;
-    opacity: 0.3;
+  color: #000000;
+  opacity: 0.3;
 }
 
 .navigation-item-current a {
-    text-decoration: underline;
-    text-decoration-color: #fb565a;
+  text-decoration: underline;
+  text-decoration-color: #fb565a;
 }
 
 .navigation-item-current a:hover,
 .navigation-item-current a:focus,
 .navigation-item-current a:active {
-    color: #000000;
-    opacity: 1;
+  color: #000000;
+  opacity: 1;
 }
 
 .slider {
-    background-color: #eeeeee;
+  background-color: #eeeeee;
 }
 
 .slider-list {
-    list-style: none;
+  list-style: none;
 }
 
 .slide b {
-    font-size: 55px;
-    line-height: 55px;
-    font-weight: 500;
+  font-size: 55px;
+  line-height: 55px;
+  font-weight: 500;
 }
 
 .feature-list {
-    list-style: none;
+  list-style: none;
 }
 
 .feature-item h3 {
-    font-size: 24px;
-    line-height: 30px;
-    font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  font-weight: 700;
 }
 
 .info-strong {
-    font-size: 45px;
-    line-height: 45px;
-    font-weight: 500;
+  font-size: 45px;
+  line-height: 45px;
+  font-weight: 500;
 }
 
 .info b {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .info-list {
-    list-style: none;
+  list-style: none;
 }
 
 .statistics p {
-    font-weight: 700;
+  font-weight: 700;
 
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .statistics-termin b {
-    font-size: 45px;
-    line-height: 10px;
-    font-weight: 700;
+  font-size: 45px;
+  line-height: 10px;
+  font-weight: 700;
 }
 
 .procent {
-    font-size: 25px;
-    font-weight: 700;
+  font-size: 25px;
+  font-weight: 700;
 }
 
 .statistics-list dd {
-    line-height: 18px;
-    color: #283136;
+  line-height: 18px;
+  color: #283136;
 }
 
 .clients-list {
-    list-style: none;
+  list-style: none;
 }
 
 .client-item img {
-    opacity: 0.2;
+  opacity: 0.2;
 }
 
 .client-item img:hover,
 .client-item img:focus {
-    opacity: 1;
+  opacity: 1;
 }
 
 .client-item img:active {
-    opacity: 0.1;
+  opacity: 0.1;
 }
 
-.main-footer {
-    background-color: #ffffff;
+.page-title {
+  font-size: 55px;
+  line-height: 55px;
+  font-weight: 500;
+
+  text-align: center;
+
+  background-color: #eeeeee;
 }
 
-.feedback b {
+.filter fieldset {
+  border: none;
+}
+
+.filter legend {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+}
+
+.filter ul {
+  list-style: none;
+}
+
+.filter-option {
+  color: #283136;
+}
+
+.filter-option:hover,
+.filter-option:focus {
+color: #000000;
+}
+
+.filter-option:disabled {
+    opacity: 0.3;
+}
+
+.filter-option-range label {
+  line-height: 22px;
+  text-transform: uppercase;
+}
+
+.options b {
+    font-size: 18px;
+    line-height: 18px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.options-list {
+    list-style: none;
+}
+
+.options-item a {
+    font-size: 14px;
+    line-height: 18px;
+    color: #000000;
+    opacity: 0.3;
+
+    text-transform: uppercase;
+}
+
+.options-item a:hover,
+.options-item a:focus {
+    opacity: 0.6;
+}
+
+.options-item a:active,
+.options-item-current {
+    opacity: 1;
+}
+
+.catalog-list {
+    list-style: none;
+}
+
+.catalog-item-hover {
+    background-color: #eeeeee;
+}
+
+.catalog-item-name {
     font-size: 18px;
     line-height: 30px;
     font-weight: 700;
+
+    text-transform: uppercase;
 }
 
-.feedback p {
+.catalog-item-info {
     color: #666666;
     line-height: 18px;
 }
 
-.social-list {
+.pagination-list {
     list-style: none;
 }
 
+.pagination-item a {
+    line-height: 18px;
+    font-weight: 500;
+    color: #000000;
+
+    background-color: #eeeeee;
+}
+
+.pagination-item a:hover,
+.pagination-item a:focus {
+    background-color: #dfdfdf;
+}
+
+.pagination-item a:active {
+    background-color: #d5d5d5;
+
+    border-top: 1px solid #bfbfbf;
+}
+
+.pagination-current a,
+.pagination-current a:hover,
+.pagination-current a:focus,
+.pagination-current a:active {
+    background-color: #ffffff;
+    
+    border: 1px solid #666666;
+}
+
+.main-footer {
+  background-color: #ffffff;
+}
+
+.feedback b {
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.feedback p {
+  color: #666666;
+  line-height: 18px;
+}
+
+.social-list {
+  list-style: none;
+}
+
 .friendship {
-    line-height: 22px;
-    color: #444444;
+  line-height: 22px;
+  color: #444444;
 }
 
 .friendship b {
-    font-size: 36px;
-    line-height: 36px;
-    font-weight: 700;
-    color: #000000;
+  font-size: 36px;
+  line-height: 36px;
+  font-weight: 700;
+  color: #000000;
 }
 
 .modal-feedback b {
-    font-size: 45px;
-    line-height: 45px;
-    font-weight: 500;
+  font-size: 45px;
+  line-height: 45px;
+  font-weight: 500;
 }
 
 .feedback-item {
-    line-height: 18px;
-    font-weight: 700;
+  line-height: 18px;
+  font-weight: 700;
 }
