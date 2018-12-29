@@ -32,11 +32,13 @@ a {
 
 .button-red:hover,
 .button-red:focus {
-
+    background-color: #e74246;
 }
 
 .button-red:active {
+    color: rgba(255, 255, 255, 0.3);
 
+    background-color: #d7373b;
 }
 
 .button-green {
@@ -45,11 +47,13 @@ a {
 
 .button-green:hover,
 .button-green:focus {
-
+    background-color: #00bc6c;
 }
 
 .button-green:active {
+    color: rgba(255, 255, 255, 0.3);
 
+    background-color: #00aa62;
 }
 
 .button-yellow {
@@ -58,11 +62,13 @@ a {
 
 .button-yellow:hover,
 .button-yellow:focus {
-
+    background-color: #eab534;
 }
 
 .button-yellow:active {
+    color: rgba(255, 255, 255, 0.3);
 
+    background-color: #e5a722;
 }
 
 .button-grey {
@@ -77,6 +83,8 @@ a {
 }
 
 .button-grey:active {
+    color: rgba(0, 0, 0, 0.3);
+
     background-color: #d5d5d5;
     
     border-top: 10px solid #bfbfbf;
@@ -320,6 +328,8 @@ color: #000000;
 }
 
 .pagination-item a:active {
+    color: rgba(0, 0, 0, 0.3);
+
     background-color: #d5d5d5;
 
     border-top: 1px solid #bfbfbf;
