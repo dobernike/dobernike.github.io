@@ -46,12 +46,55 @@ a {
   background-color: #663d15;
 }
 
+.main-header {
+  margin-bottom: 75px;
+}
+
 .main-navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   font-size: 16px;
   line-height: 20px;
   color: #ffffff;
 
+  background-color: transparent;
+}
+
+.main-header-logo {
+  width: 368px;
+  height: 153px;
+
+  order: 2;
+}
+
+.main-navigation-wrapper {
+  width: 100%;
+  margin-bottom: 60px;
+
   background-color: #000000;
+}
+
+.main-navigation-wrapper .container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.site-navigation {
+  width: 620px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.user-navigation {
+  width: 140px;
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
 }
 
 .site-navigation,
@@ -71,11 +114,28 @@ a {
   background-color: #242424;
 }
 
+.container {
+  width: 940px;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.features {
+  margin-bottom: 80px;
+}
+
 .features-list {
+  display: flex;
+  justify-content: space-between;
+
+  margin: 0;
+  padding: 0;
+
   list-style: none;
 }
 
 .feature-item {
+  width: 300px;
   text-align: center;
 }
 
@@ -85,6 +145,12 @@ a {
 }
 
 .index-columns {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 50px 80px;
+  margin-bottom: 35px;
+
   color: #000000;
 
   background-color: #f8f5f2;
@@ -98,6 +164,10 @@ a {
   line-height: 42px;
 }
 
+.news {
+  width: 380px;
+}
+
 .news-list {
   list-style: none;
 }
@@ -106,9 +176,21 @@ a {
   text-transform: none;
 }
 
+.gallery {
+  width: 300px;
+}
+
 .gallery-content {
   background-color: #cccccc;
   border: 7px solid #ffffff;
+}
+
+.contacts {
+  width: 380px;
+}
+
+.appointment {
+  width: 300px;
 }
 
 .appointment-item input {
@@ -272,12 +354,25 @@ a {
 }
 
 .main-footer {
+  padding: 60px 0;
+  margin-top: 65px;
+
   color: #ffffff;
 
   background-color: #212121;
   background-image: url(../img/pattern-dark.jpg);
   background-position: 0 0;
   background-repeat: repeat;
+}
+
+.main-footer .container {
+  display: flex;
+}
+
+.footer-contacts {
+  width: 320px;
+  margin: 0;
+  margin-right: 80px;
 }
 
 .footer-contacts a {
@@ -291,6 +386,8 @@ a {
 }
 
 .footer-social {
+  width: 145px;
+
   text-align: center;
 }
 
@@ -303,6 +400,10 @@ a {
 }
 
 .footer-copyright {
+  width: 150px;
+  margin: 0;
+  margin-left: auto;
+
   text-align: center;
 }
 
@@ -356,102 +457,49 @@ a {
   text-decoration: none;
 }
 
-/*      Стили сеточные      */
-html,
-body {
-  min-width: 1122px;
-  min-height: 1750px;
+/* Стилевые стили */
+
+.inner-page {
+/* Временно */
+background-image: url('../layout/barbershop/previews/barbershop-shop.jpg');
+background-size: 1200px auto;
+background-position: top center;
+background-repeat: no-repeat;
 }
 
-body {
-  /* Временно для сетки */
-  background-image: url("../layout/barbershop/previews/barbershop-index.jpg");
-  /* background-size: 1372px auto; */
-  background-repeat: no-repeat;
-}
+.inner-page .main-header {
+  margin-bottom: 50px;
 
-.container {
-  width: 940px;
-  margin: 0 auto;
-  padding: 0 10px;
-}
+  background-color: #000000;
 
-.main-header {
-  margin-bottom: 75px;
-  /* Временно для сетки */
-  height: 285px;
-}
-
-.main-navigation {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* Временно для сетки */
-  height: 285px;
+  /* Временно */
   background-color: transparent;
 }
 
-.main-header-logo {
-  width: 368px;
-  height: 153px;
-
-  order: 2;
-  /* Временно для сетки */
-  /* display: block; */
+.inner-page .main-navigation {
+  align-items: flex-start;
+  flex-direction: row;
 }
 
-.main-navigation-wrapper {
-  width: 100%;
-  margin-bottom: 60px;
+.inner-page .main-header-logo {
+  order:0;
 
-  background-color: #000000;
-    /* Временно для сетки */
-    min-height: 70px;
+  width: 111px;
+  height: 24px;
+  
+  padding: 23px 20px;
 }
 
-.main-navigation-wrapper .container {
-  display: flex;
-  justify-content: space-between;
+.inner-page .user-navigation {
+  margin-left: auto;
 }
 
-.site-navigation {
-  width: 620px;
+.page-title {
   margin: 0;
+  margin-bottom: 15px;
   padding: 0;
-
-  list-style: none;
-  /* Временно для сетки */
-  min-height: 70px;
 }
 
-.user-navigation {
-  width: 140px;
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-  /* Временно для сетки */
-  min-height: 70px;
-}
-
-.features {
-  margin-bottom: 80px;
-}
-
-.features-list {
-  display: flex;
-  justify-content: space-between;
-
-  margin: 0;
-  padding: 0;
-
-  list-style: none;
-/* Временно для сетки */
-  min-height: 170px;
-}
-
-.feature-item {
-  width: 300px;
-/* Временно для сетки */
-  min-height: 170px;
+.breadcrumbs {
+  
 }
