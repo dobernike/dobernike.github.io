@@ -50,6 +50,12 @@ a {
   margin-bottom: 75px;
 }
 
+.inner-page .main-header {
+  margin-bottom: 50px;
+
+  background-color: #000000;
+}
+
 .main-navigation {
   display: flex;
   flex-direction: column;
@@ -62,11 +68,26 @@ a {
   background-color: transparent;
 }
 
+
+.inner-page .main-navigation {
+  align-items: flex-start;
+  flex-direction: row;
+}
+
 .main-header-logo {
   width: 368px;
   height: 153px;
 
   order: 2;
+}
+
+.inner-page .main-header-logo {
+  order:0;
+
+  width: 111px;
+  height: 24px;
+
+  padding: 23px 20px;
 }
 
 .main-navigation-wrapper {
@@ -95,6 +116,10 @@ a {
   padding: 0;
 
   list-style: none;
+}
+
+.inner-page .user-navigation {
+  margin-left: auto;
 }
 
 .site-navigation,
@@ -353,6 +378,60 @@ a {
   list-style: none;
 }
 
+.page-title {
+  margin: 0;
+  margin-bottom: 15px;
+  padding: 0;
+}
+
+.breadcrumbs {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 50px;
+}
+
+.catalog-columns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filters {
+  width: 180px;
+}
+
+.catalog {
+  width: 700px;
+}
+
+.catalog-list {
+  display: flex;
+  flex-wrap: wrap;
+
+  padding: 0;
+  margin: 0;
+  margin-bottom: 25px;
+
+  list-style: none;
+}
+
+.catalog-item {
+  width: 220px;
+
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.catalog-item:nth-child(3n) {
+  margin-right: 0;
+}
+
+.pagination-list {
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
 .main-footer {
   padding: 60px 0;
   margin-top: 65px;
@@ -363,6 +442,10 @@ a {
   background-image: url(../img/pattern-dark.jpg);
   background-position: 0 0;
   background-repeat: repeat;
+}
+
+.inner-page .main-footer {
+  margin-top: 45px;
 }
 
 .main-footer .container {
@@ -455,51 +538,4 @@ a {
 .restore:hover,
 .restore:focus {
   text-decoration: none;
-}
-
-/* Стилевые стили */
-
-.inner-page {
-/* Временно */
-background-image: url('../layout/barbershop/previews/barbershop-shop.jpg');
-background-size: 1200px auto;
-background-position: top center;
-background-repeat: no-repeat;
-}
-
-.inner-page .main-header {
-  margin-bottom: 50px;
-
-  background-color: #000000;
-
-  /* Временно */
-  background-color: transparent;
-}
-
-.inner-page .main-navigation {
-  align-items: flex-start;
-  flex-direction: row;
-}
-
-.inner-page .main-header-logo {
-  order:0;
-
-  width: 111px;
-  height: 24px;
-  
-  padding: 23px 20px;
-}
-
-.inner-page .user-navigation {
-  margin-left: auto;
-}
-
-.page-title {
-  margin: 0;
-  margin-bottom: 15px;
-  padding: 0;
-}
-
-.breadcrumbs {
-  
 }
