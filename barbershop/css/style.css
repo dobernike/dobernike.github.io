@@ -432,6 +432,14 @@ a {
   list-style: none;
 }
 
+.product-photos {
+  width: 460px;
+}
+
+.product-info {
+  width: 390px;
+}
+
 .main-footer {
   padding: 60px 0;
   margin-top: 65px;
