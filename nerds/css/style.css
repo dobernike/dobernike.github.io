@@ -513,3 +513,25 @@ align-self: center;
   width: 160px;
   /* min-height: 50px; */
 }
+
+.info-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.info {
+  width: 660px;
+}
+
+.statistics {
+  width: 360px;
+}
+
+.clients-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.map {
+
+}
