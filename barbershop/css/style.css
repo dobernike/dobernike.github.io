@@ -28,6 +28,29 @@ a {
   text-decoration: none;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.visually-hidden:not(:focus):not(:active),
+input[type="checkbox"].visually-hidden,
+input[type="radio"].visually-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
 .button {
   font: inherit;
 
@@ -103,15 +126,23 @@ a {
 }
 
 .site-navigation {
+  display: flex;
+  flex-wrap: wrap;
+
   width: 620px;
   margin: 0;
   padding: 0;
 
   list-style: none;
+/* Временная обводка */
+  background: rgba(234, 255, 45, 0.2);
+  box-shadow: inset 0 0 0 2px rgb(234, 255, 45);
 }
 
 .user-navigation {
-  width: 140px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 140px;
   margin: 0;
   padding: 0;
 
@@ -129,6 +160,9 @@ a {
 
 .site-navigation a,
 .user-navigation a {
+  display: block;
+  padding: 25px 20px;
+
   color: #ffffff;
 }
 
@@ -137,6 +171,37 @@ a {
 .user-navigation a:hover,
 .user-navigation a:focus {
   background-color: #242424;
+}
+
+.user-navigation .login-link {
+  position: relative;
+  padding-left: 50px;
+  /* Временная обводка */
+  background: rgba(234, 255, 45, 0.2);
+  box-shadow: inset 0 0 0 2px rgb(234, 255, 45);
+}
+
+.login-link::before {
+  content: "";
+
+  position: absolute;
+  top: 28px;
+  left: 24px;
+
+  width: 16px;
+  height: 16px;
+
+  background-image: url("../img/login.svg");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+
+  opacity: 0.3;
+}
+
+.login-link:hover::before,
+.login-link:focus::before,
+.login-link:active::before {
+  opacity: 1;
 }
 
 .container {
@@ -161,12 +226,37 @@ a {
 
 .feature-item {
   width: 300px;
+
   text-align: center;
+
+    /* Временная обводка */
+    background: rgba(255, 45, 82, 0.2);
+    box-shadow: inset 0 0 0 2px rgb(255, 45, 82);
 }
 
 .feature-item h3 {
+  position: relative;
+
+  margin: 0;
+  margin-bottom: 60px;
+
   font-size: 30px;
   line-height: 42px;
+
+  background: rgba(255, 45, 82, 0.5);
+}
+
+.feature-item h3::after {
+  content: "";
+
+  position: absolute;
+  /* top: 0; */
+  /* right: 0; */
+
+  width: 20px;
+  height: 20px;
+
+  background-color: #ffffff;
 }
 
 .index-columns {
