@@ -415,48 +415,6 @@ input[type="radio"].visually-hidden {
   line-height: 42px;
 }
 
-.breadcrumbs {
-  list-style: none;
-}
-
-.breadcrumbs a {
-  color: #000000;
-}
-
-.breadcrumbs a:hover,
-.breadcrumbs a:focus {
-  text-decoration: underline;
-}
-
-.breadcrumbs-current {
-  color: #aba9a7;
-}
-
-.filter fieldset {
-  border: none;
-}
-
-.filter legend {
-  font-size: 24px;
-  line-height: 30px;
-}
-
-.filter ul {
-  list-style: none;
-  line-height: 18px;
-}
-
-.filter-input:hover + label,
-.filter-input:focus + label {
-  color: #663d15;
-}
-
-.filter-input:disabled + label {
-  color: #000000;
-
-  opacity: 0.5;
-}
-
 .catalog-list {
   list-style: none;
 }
@@ -566,9 +524,57 @@ input[type="radio"].visually-hidden {
 }
 
 .breadcrumbs {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+
   padding: 0;
   margin: 0;
   margin-bottom: 50px;
+
+  list-style: none;
+}
+
+.breadcrumbs li {
+  position: relative;
+
+  margin-right: 42px;
+}
+
+.breadcrumbs li:last-child {
+  margin-right: 0;
+}
+
+.breadcrumbs li::after {
+  content: "";
+
+  position: absolute;
+  top: 8px;
+  right: -25px;
+
+  width: 8px;
+  height: 8px;
+
+  background-color: #000000;
+
+  transform: rotate(45deg);
+}
+
+.breadcrumbs a {
+  color: #000000;
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus {
+  text-decoration: underline;
+}
+
+.breadcrumbs-current {
+  color: #aba9a7;
+}
+
+.breadcrumbs-current::after {
+display: none;
 }
 
 .catalog-columns {
@@ -578,6 +584,90 @@ input[type="radio"].visually-hidden {
 
 .filters {
   width: 180px;
+}
+
+.filter fieldset {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+
+  border: none;
+}
+
+.filter fieldset:first-child {
+  margin-bottom: 35px;
+}
+
+.filter legend {
+  margin-bottom: 26px;
+
+  font-size: 24px;
+  line-height: 30px;
+}
+
+.filter ul {
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+  line-height: 18px;
+}
+
+.filter-option {
+  margin-bottom: 19px;
+  padding-left: 45px;
+
+  /* Временно */
+  background: rgba(255, 45, 45, 0.2);
+  box-shadow: inset 0 0 0 2px rgb(255, 45, 45);
+}
+
+.filter-option label {
+  position: relative;
+
+  display: block;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.filter-input:hover + label,
+.filter-input:focus + label {
+  color: #663d15;
+}
+
+.filter-input-checkbox + label::before {
+  content: "";
+  position: absolute;
+  left: -42px;
+  top: 0;
+
+  box-sizing: border-box;
+  width: 18px;
+  height: 18px;
+
+  border: 2px solid #000000;
+}
+
+.filter-input-checkbox + label::after {
+  content: "";
+
+  position: absolute;
+  top: 3px;
+  left: -39px;
+
+  width: 12px;
+  height: 12px;
+
+  background-color: green;
+  background-image: url("../img/cross.svg");
+  background-position: 0 0;
+}
+
+.filter-input:disabled + label {
+  color: #000000;
+
+  opacity: 0.5;
 }
 
 .catalog {
