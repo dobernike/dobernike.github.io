@@ -641,12 +641,38 @@ input[type="radio"].visually-hidden {
 }
 
 .product-info h3 {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 30px;
+
   font-size: 24px;
   line-height: 30px;
 }
 
 .product-info ul {
+  margin: 0;
+  padding: 0;
   list-style: none;
+}
+
+.product-info li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.product-info li::before {
+  content: "";
+
+  position: absolute;
+  top: 8px;
+  left: 2px;
+
+  width: 8px;
+  height: 8px;
+
+  background-color: #000000;
+
+  transform: rotate(45deg);
 }
 
 .page-title {
