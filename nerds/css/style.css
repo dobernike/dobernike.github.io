@@ -138,6 +138,7 @@ a {
   opacity: 1;
 }
 
+/* slider */
 .slider {
   background-color: #eeeeee;
 }
@@ -152,12 +153,10 @@ a {
   font-weight: 500;
 }
 
-/* slider */
+
 
 .slider {
   position: relative;
-  /* margin: 50px auto; */
-  /* box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.75); */
 }
 
 .slider-slides {
