@@ -17,65 +17,50 @@
             </a>
             <ul class="navigation-list">
                 <li class="navigation-item">
-                    <a href="studio.html">Студия</a>
+                    <a href="#studio">Студия</a>
                 </li>
                 <li class="navigation-item">
-                    <a href="clients.html">Клиенты</a>
+                    <a href="#clients">Клиенты</a>
                 </li>
                 <li class="navigation-item">
                     <a href="catalog.html">Магазин</a>
                 </li>
                 <li class="navigation-item">
-                    <a href="studio.html">Контакты</a>
+                    <a href="#contacts">Контакты</a>
                 </li>
             </ul>
-            <a class="cart" href="cart.html">Корзина</a>
+            <a class="cart" href="#">Корзина</a>
         </nav>
     </header>
     <main>
         <h1 class="visually-hidden">Дизайн-студия nerd`s</h1>
-        <!-- Clider-->
+
         <section class="slider">
-            <h2 class="visually-hidden">Слайдер</h2>
             <div class="container">
-                <div class="slider-slides">
-                    <ul class="slider-list">
-                        <li class="slide slide-current">
-                            <!-- <img src="img/slide-1.png" width="698" height="413" alt="Телефоны"> -->
-                            <b>Долго, дорого, скрупулезно.</b>
-                            <p>Математически выверенный дизайн для вашего сайта или мобильного приложения</p>
-                            <a class="button button-red" href="#">Узнать больше</a>
-                        </li>
-                        <li class="slide">
-                            <!-- <img src="img/slide-2.png" width="663" height="430" alt="Мониторы"> -->
-                            <b>Любим математику как никто другой</b>
-                            <p>Никакого креатива, только математические формулы для расчета идеальных
-                                пропорций.</p>
-                            <a class="button button-red" href="#">Узнать больше</a>
-                        </li>
-                        <li class="slide">
-                            <!-- <img src="img/slide-3.png" width="759" height="411" alt="Планшет и телефон"> -->
-                            <b>Только ночь, только хардкор</b>
-                            <p>Работать днем, как все? Мы против этого. <br> Ближе к полуночи работа только
-                                начинается.</p>
-                            <a class="button button-red" href="#">Узнать больше</a>
-                        </li>
-                    </ul>
+                <h2 class="visually-hidden">Слайдер</h2>
+                <div class="slider-controls">
+                    <i class="active"></i>
+                    <i></i>
+                    <i></i>
                 </div>
-                <ul class="slider-switches">
-                    <li class="slide-radio">
-                        <button class="slide-button">Первый слайд</button>
+                <ul class="slider-list">
+                    <li class="slider-item">
+                        <h3>Долго, дорого,<br>скрупулезно.</h3>
+                        <p>Математически выверенный дизайн <br> для вашего сайта или мобильного приложения.</p>
+                        <a class="button button-red button-slider" href="#">Узнать больше</a>
                     </li>
-                    <li class="slide-radio">
-                        <button class="slide-button">Второй слайд</button>
+                    <li class="slider-item">
+                        <h3>Любим математику как никто другой</h3>
+                        <p>Никакого креатива, только математические формулы для расчета идеальных пропорций.</p>
+                        <a class="button button-red button-slider" href="#">Узнать больше</a>
                     </li>
-                    <li class="slide-radio">
-                        <button class="slide-button">Третий слайд</button>
-                    </li>
+                    <li class="slider-item">
+                        <h3>Только ночь, <br> только хардкор</h3>
+                        <p>Работать днем, как все? Мы против этого. <br> Ближе к полуночи работа только начинается.</p>
+                        <a class="button button-red button-slider" href="#">Узнать больше</a>
                 </ul>
             </div>
         </section>
-        <!-- end Clider-->
 
         <div class="container">
             <section class="features">
@@ -102,12 +87,12 @@
                 </ul>
             </section>
 
-            <div class="info-wrapper">
+            <div class="info-wrapper" id="studio">
                 <section class="info">
                     <h2 class="visually-hidden">Информация</h2>
-                    <p class="info-strong">Мы - маленькая, но гордая <br>
+                    <p class="info-title">Мы - маленькая, но гордая <br>
                         дизайн-студия из Краснодара.</p>
-                    <p>Исповедуем принципы минимализма и чистоты. Ставим математический расчет
+                    <p class="info-paragraph">Исповедуем принципы минимализма и чистоты. Ставим математический расчет
                         превыше креатива. Работаем не покладая рук, как роботы.</p>
                     <b>Выполняем заказы на разработку:</b>
                     <ul class="info-list">
@@ -122,18 +107,24 @@
                     <img src="img/nerds-illustration.png" width="360" height="208" alt="Красочный логотип nerd`s">
                     <p>С 2004 года любим точность во всем:</p>
                     <dl class="statistics-list">
-                        <dt class="statistics-termin"><b>146</b><span class="procent">%</span></dt>
-                        <dd>Уровень самоотдачи</dd>
-                        <dt class="statistics-termin"><b>100</b><span class="procent">%</span></dt>
-                        <dd>Соблюдение сроков</dd>
-                        <dt class="statistics-termin"><b>50</b><span class="procent">%</span></dt>
-                        <dd>Минимальная предоплата</dd>
+                        <div class="statistics-wrapper">
+                            <dt class="statistics-termin"><b>146</b></dt>
+                            <dd>Уровень самоотдачи</dd>
+                        </div>
+                        <div class="statistics-wrapper">
+                            <dt class="statistics-termin"><b>100</b></dt>
+                            <dd>Соблюдение сроков</dd>
+                        </div>
+                        <div class="statistics-wrapper">
+                            <dt class="statistics-termin"><b>50</b></dt>
+                            <dd>Минимальная предоплата</dd>
+                        </div>
                     </dl>
                 </section>
 
             </div>
 
-            <section class="clients">
+            <section class="clients" id="clients">
                 <h2 class="visually-hidden">Клиенты</h2>
                 <ul class="clients-list">
                     <li class="client-item">
@@ -160,37 +151,55 @@
             </section>
         </div>
     </main>
-    <footer class="main-footer">
+    <footer class="main-footer" id="contacts">
 
         <section class="maps">
             <h2 class="visually-hidden">Карта</h2>
-            <img class="map" src="img/map-with-marker.png" width="1440" height="416" alt="Как нас найти">
+            <!-- <img class="map" src="img/map-with-marker.png" width="1440" height="416" alt="Как нас найти"> -->
+            <div class="container">
             <div class="feedback">
                 <b>NЁRDS DESIGN STUDIO</b>
                 <p>191186, Санкт-Петербург,<br>
                     ул. Б. Конюшенная, д. 19/8</p>
                 <p>тел. +7 (812) 275-75-75</p>
-                <button class="button button-red">Напишите нам</button>
+                <button class="button button-red button-feedback">Напишите нам</button>
             </div>
+        </div>
         </section>
+        <div class="container">
         <ul class="social-list">
-            <li class="social-item social-vk">
-                <a href="#">Вконтакте</a>
+            <li>
+                <a class="social social-vk" href="#">
+                    <span class="visually-hidden">Вконтакте</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="26px" height="15px" viewBox="0 0 26 15" enable-background="new 0 0 26 15" xml:space="preserve">
+                        <path fill="#FFFFFF" d="M16.138,11.51c0.956-0.309,2.18,2.04,3.483,2.939c0.978,0.681,1.727,0.534,1.727,0.534l3.473-0.05  c0,0,1.815-0.112,0.957-1.554c-0.071-0.12-0.503-1.069-2.585-3.022c-2.177-2.043-1.882-1.712,0.739-5.244  c1.597-2.153,2.236-3.468,2.036-4.028c-0.192-0.539-1.365-0.399-1.365-0.399L20.69,0.713c-0.381,0.001-0.704,0.119-0.851,0.515  c-0.003,0.004-0.621,1.666-1.445,3.079c-1.741,2.989-2.436,3.148-2.724,2.961c-0.661-0.433-0.494-1.737-0.494-2.664  c0-2.897,0.432-4.105-0.846-4.417c-0.427-0.104-0.739-0.172-1.828-0.182c-1.392-0.021-2.574,0-3.244,0.329  c-0.445,0.223-0.786,0.712-0.579,0.74c0.26,0.035,0.843,0.16,1.155,0.586c0.401,0.552,0.389,1.789,0.389,1.789  s0.229,3.411-0.54,3.834c-0.528,0.29-1.25-0.302-2.803-3.016C6.087,2.879,5.488,1.345,5.488,1.345S5.372,1.06,5.162,0.904  C4.912,0.719,4.562,0.66,4.562,0.66L0.848,0.684c0,0-0.558,0.016-0.763,0.262C-0.097,1.164,0.07,1.614,0.07,1.614  s2.909,6.881,6.203,10.347c3.02,3.182,6.452,2.971,6.452,2.971h1.555c0,0,0.469-0.054,0.709-0.312  c0.224-0.24,0.214-0.691,0.214-0.691S15.172,11.82,16.138,11.51z"/>
+                        </svg>
+                </a>
             </li>
-            <li class="social-item social-fb">
-                <a href="#">Фейсбук</a>
+            <li>
+                <a class="social social-fb" href="#">
+                    <span class="visually-hidden">Фейсбук</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_2" x="0px" y="0px" width="12px" height="22px" viewBox="0 0 12 22" enable-background="new 0 0 12 22" xml:space="preserve">
+                        <path fill="#FFFFFF" d="M12,4V0H8C5.791,0,4,1.791,4,4v4H0v4h4v10h4V12h4V8H8V4H12z"/>
+                        </svg>
+                </a>
             </li>
-            <li class="social-item social-ig">
-                <a href="#">Инстаграмм</a>
+            <li>
+                <a class="social social-ig" href="#">
+                    <span class="visually-hidden">Инстаграмм</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" width="21px" height="21px" viewBox="0 0 21 21" enable-background="new 0 0 21 21" xml:space="preserve">
+                        <path fill="#FFFFFF" d="M18,0H3C1.35,0,0,1.35,0,3v15c0,1.65,1.35,3,3,3h15c1.65,0,3-1.35,3-3V3C21,1.35,19.65,0,18,0z M10.5,7  c1.93,0,3.5,1.57,3.5,3.5S12.43,14,10.5,14S7,12.43,7,10.5S8.57,7,10.5,7z M18,18H3V9h1.181C4.067,9.482,4,9.983,4,10.5  c0,3.59,2.91,6.5,6.5,6.5s6.5-2.91,6.5-6.5c0-0.517-0.066-1.018-0.181-1.5H18V18z M18,7h-4V3h4V7z"/>
+                        </svg>
+                </a>
             </li>
         </ul>
         <p class="friendship">
-            <b>Давайте дружить, это выгодно!</b>
-            Скидка 10% для друзей из социальных сетей.
+            <b>Давайте дружить, это выгодно!</b> Скидка 10% для друзей из социальных сетей.
         </p>
+    </div>
     </footer>
 
-    <section class="modal modal-feedback">
+    <section class="modal modal-feedback visually-hidden">
         <h2 class="visually-hidden">Обратная связь</h2>
         <b>Напишите нам</b>
         <form class="feedback-form" action="https://echo.htmlacademy.ru" method="post">
@@ -206,7 +215,7 @@
                 <label for="feedback-text">Текст письма:</label>
                 <textarea rows="10" cols="45" name="text" id="feedback-text" placeholder="В свободной форме"></textarea>
             </p>
-            <button class="button button-red" type="submit">Отправить</button>
+            <button class="button button-red button-modal-feedback" type="submit">Отправить</button>
         </form>
         <button class="close-modal" type="button">Закрыть</button>
     </section>
