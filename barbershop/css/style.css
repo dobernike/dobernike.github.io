@@ -46,7 +46,9 @@ input[type="radio"].visually-hidden {
 
   white-space: nowrap;
 
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+
+          clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
@@ -278,7 +280,9 @@ input[type="radio"].visually-hidden {
 
   background-color: #ffffff;
 
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+          transform: rotate(45deg);
 }
 
 .feature-item p {
@@ -693,7 +697,9 @@ input[type="radio"].visually-hidden {
 
   background-color: #000000;
 
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+          transform: rotate(45deg);
 }
 
 .page-title {
@@ -736,7 +742,9 @@ input[type="radio"].visually-hidden {
 
   background-color: #000000;
 
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+
+          transform: rotate(45deg);
 }
 
 .breadcrumbs a {
@@ -803,7 +811,10 @@ display: none;
   display: block;
 
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
 .filter-input:hover + label,
@@ -986,7 +997,9 @@ display: none;
   
     background-color: #000000;
   
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  
+            transform: rotate(45deg);
 }
 
 .custom-table-1 {
@@ -1204,6 +1217,18 @@ width: 460px;
   border-color: #663d15;
 }
 
+.login-form input::-webkit-input-placeholder {
+  color: #000000;
+}
+
+.login-form input:-ms-input-placeholder {
+  color: #000000;
+}
+
+.login-form input::-ms-input-placeholder {
+  color: #000000;
+}
+
 .login-form input::placeholder {
   color: #000000;
 }
@@ -1272,11 +1297,13 @@ width: 460px;
 }
 
 .login-checkbox input[type="checkbox"]:checked + .checkbox-indicator::before {
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .login-checkbox input[type="checkbox"]:checked + .checkbox-indicator::after {
-  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
 
 .restore {
@@ -1342,9 +1369,11 @@ width: 460px;
 }
 
 .modal-close::before {
-  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
 }
 
 .modal-close::after {
-  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
 }
