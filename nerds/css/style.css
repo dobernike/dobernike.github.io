@@ -1250,3 +1250,28 @@ width: 200px;
   display: block;
   margin-bottom: 10px;
 }
+
+.modal {
+  /* display: none; */
+
+  position: fixed;
+
+  color: #000000;
+
+  background-color: #ffffff;
+  /* background-image: url("../img/pattern-light.jpg"); */
+  background-position: 0 0;
+  background-repeat: repeat;
+  box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
+  /* z-index: 2; */
+}
+
+.modal-feedback {
+  top: 50%;
+  left: 50%;
+
+  margin-left: -480px;
+  padding-right: 100px;
+  padding-left: 100px;
+  width: 760px;
+}
