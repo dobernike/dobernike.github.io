@@ -29,7 +29,9 @@ input[type="radio"].visually-hidden {
 
   white-space: nowrap;
 
-  clip-path: inset(100%);
+  -webkit-clip-path: inset(100%);
+
+          clip-path: inset(100%);
   clip: rect(0 0 0 0);
   overflow: hidden;
 }
@@ -220,7 +222,8 @@ input[type="radio"].visually-hidden {
 
   text-align: center;
   font-size: 0;
-  transform: translateX(-55%);
+  -webkit-transform: translateX(-55%);
+          transform: translateX(-55%);
 }
 
 .slider-controls i {
@@ -1078,7 +1081,9 @@ width: 200px;
 
   padding-left: 40px;
 
-  align-self: center;
+  -ms-grid-row-align: center;
+
+      align-self: center;
 }
 
 .cart::before {
@@ -1368,6 +1373,21 @@ width: 200px;
 .feedback-item input:focus,
 .feedback-item textarea:focus {
   border: 1px solid #000000;
+}
+
+.feedback-item input:focus::-webkit-input-placeholder,
+.feedback-item textarea:focus::-webkit-input-placeholder {
+  color: #444444;
+}
+
+.feedback-item input:focus:-ms-input-placeholder,
+.feedback-item textarea:focus:-ms-input-placeholder {
+  color: #444444;
+}
+
+.feedback-item input:focus::-ms-input-placeholder,
+.feedback-item textarea:focus::-ms-input-placeholder {
+  color: #444444;
 }
 
 .feedback-item input:focus::placeholder,
