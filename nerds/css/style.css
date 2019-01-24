@@ -1191,14 +1191,25 @@ width: 200px;
 }
 
 .maps {
+  position: relative;
   background-image: url("../img/map-with-marker.png");
-  background-position: 0 0;
+  background-position: 0 40%;
   background-repeat: no-repeat;
+  background-size: cover;
 
-  max-width: 1440px;
   height: 416px;
 
   margin: 0 auto;
+}
+
+.maps iframe {
+  position: absolute;
+
+  z-index: 2;
+
+  width: 100%;
+
+  border: none;
 }
 
 .maps .container {
@@ -1206,6 +1217,7 @@ width: 200px;
 }
 
 .feedback {
+  position: absolute;
   box-sizing: border-box;
 
   margin: 0;
@@ -1214,6 +1226,8 @@ width: 200px;
   width: 320px;
 
   background-color: #ffffff;
+
+  z-index: 3;
 }
 
 .feedback b {
@@ -1280,6 +1294,46 @@ width: 200px;
   margin-bottom: 10px;
 }
 
+@keyframes bounce {
+  0% {
+    transform: translateY(-1200px);
+  }
+  
+  70% {
+    transform: translateY(30px);
+  }
+
+  90% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+            transform: translateX(0);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+            transform: translateX(-10px);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+            transform: translateX(10px);
+  }
+}
+
 .modal {
   display: none;
 
@@ -1305,9 +1359,17 @@ width: 200px;
   width: 100%;
   height: 100%;
 
-  background-color: rgba(0, 0, 0, 0.5);
-
   z-index: 3;
+}
+
+.modal-show {
+  display: block;
+
+  animation: bounce 0.6s;
+}
+
+.modal-error {
+  animation: shake 0.6s;
 }
 
 .modal-feedback {
@@ -1406,6 +1468,10 @@ width: 200px;
   width: 100%;
 
   resize: none;
+}
+
+.feedback-item .not-valid {
+  border: 1px solid #e74246;
 }
 
 .modal-feedback .button {
