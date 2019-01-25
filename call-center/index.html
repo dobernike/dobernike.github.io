@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <title>Страница колл-центра</title>
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+
+  <body>
+    <header class="main-header"></header>
+    <main class="container">
+      <h1 class="visually-hidden">Страница Колл-центра</h1>
+
+      <section class="info-user">
+        <h2 class="info-user-title">1. Информация пользователя</h2>
+
+        <!-- Основная навигация-->
+        <div class="nav-user-div after-title">
+          <form class="user-id-form" action="" method="POST">
+            <p class="nav-user user-contract active">Договор</p>
+            <input
+              type="text"
+              name="user-id"
+              class="nav-user user-contract hidden"
+              placeholder="Договор"
+            />
+          </form>
+          <ul class="nav-user-list">
+            <li class="nav-user nav-user-item">
+              <button
+                type="button"
+                class="nav-user-button button-search button"
+                id="button-search"
+              >
+                Поиск
+              </button>
+            </li>
+            <li class="nav-user nav-user-item">
+              <button
+                type="button"
+                class="nav-user-button button-new button"
+                id="button-new"
+              >
+                Новый
+              </button>
+            </li>
+            <li class="nav-user nav-user-item">
+              <button
+                type="button"
+                class="nav-user-button button-company button"
+              >
+                Компания
+              </button>
+            </li>
+          </ul>
+          <p class="nav-user phone">+7(xxx)xxx-xx-xx</p>
+        </div>
+
+        <!-- первое состояние -->
+        <p class="info-user-notfound hidden">
+          Мы не смогли определить номер договора, сделайте выбор вручную
+        </p>
+
+        <!-- второе состояние -->
+        <p class="info-user-choose hidden">
+          Выберите номер договора:
+          <button type="button" class="button button-choose button-border">
+            Договор
+          </button>
+          <button type="button" class="button button-choose button-border">
+            Договор
+          </button>
+          <button type="button" class="button button-choose button-border">
+            Договор
+          </button>
+        </p>
+
+        <!-- третие состояние -->
+        <div class="info-user-search-div hidden">
+          <p class="info-user-search">Поиск по номеру договора или адресу</p>
+          <form
+            class="user-search-form"
+            action="https://echo.htmlacademy.ru"
+            method="POST"
+          >
+            <p class="user-search-item-input ">
+              <input name="user-id" type="text" placeholder="Договор" />
+              <input name="street-name" type="text" placeholder="Улица" />
+              <input name="house" type="text" placeholder="Дом" />
+              <input name="appartment" type="text" placeholder="Квартира" />
+            </p>
+            <p class="user-search-item active">
+              <button
+                type="submit"
+                class="button button-user-search button-border active"
+              >
+                Поиск
+              </button>
+            </p>
+          </form>
+          <p class="info-user-search-choose hidden">
+            Выберите номер договора:
+            <button type="button" class="button button-choose button-border">
+              Договор
+            </button>
+            <button type="button" class="button button-choose button-border">
+              Договор
+            </button>
+            <button type="button" class="button button-choose button-border">
+              Договор
+            </button>
+          </p>
+        </div>
+
+        <!-- четвертое состояние -->
+        <div class="registration-new-user hidden">
+          <p class="registration-new-user-p">Регистрация нового абонента:</p>
+          <form
+            class="registration"
+            active="https://echo.htmlacademy.ru"
+            method="post"
+          >
+            <p class="registration-item">
+              <label class="visually-hidden" for="registration-surname"
+                >Фамилия</label
+              >
+              <input
+                type="text"
+                name="surname"
+                id="registration-surname"
+                value=""
+                placeholder="Фамилия"
+              />
+              <label class="visually-hidden" for="registration-name">Имя</label>
+              <input
+                type="text"
+                name="name"
+                id="registration-name"
+                value=""
+                placeholder="Имя"
+              />
+              <label class="visually-hidden" for="registration-patronymic"
+                >Отчество</label
+              >
+              <input
+                type="text"
+                name="patronymic"
+                id="registration-patronymic"
+                value=""
+                placeholder="Отчество"
+              />
+            </p>
+            <p class="registration-item">
+              <input
+                type="radio"
+                class="input-radio"
+                name="house-type"
+                value="multy"
+                id="registration-multy"
+              />
+              <label for="registration-multy">Многоквартирный дом</label>
+              <input
+                type="radio"
+                class="input-radio"
+                name="house-type"
+                value="sector"
+                id="registration-sector"
+              />
+              <label for="registration-sector">Частный дом</label>
+            </p>
+
+            <p class="registration-item">
+              <label class="visually-hidden" for="registration-street"
+                >Улица</label
+              >
+              <input
+                type="text"
+                name="street"
+                id="registration-street"
+                value=""
+                placeholder="Улица"
+              />
+              <label class="visually-hidden" for="registration-house"
+                >Дом</label
+              >
+              <input
+                type="text"
+                name="house"
+                id="registration-house"
+                value=""
+                placeholder="Дом"
+              />
+              <label class="visually-hidden" for="registration-apartment"
+                >Квартира</label
+              >
+              <input
+                type="text"
+                name="apartment"
+                id="registration-apartment"
+                value=""
+                placeholder="Квартира"
+              />
+            </p>
+            <p class="registration-button-item">
+              <button
+                type="submit"
+                class="button button-border button-registration"
+              >
+                Перевести звонок на специалиста
+              </button>
+            </p>
+          </form>
+        </div>
+
+        <!-- Основное состояние -->
+        <ul class="info-user-list active">
+          <li class="info-user-item">
+            <span class="green">1.1</span>
+            <p class="user-name">ФИО пользователя</p>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.2</span>
+            <p class="user-adress">Адрес пользователя</p>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.3</span>
+            <p class="user-rate">Тариф пользователя</p>
+            <p class="user-rate-speed">xxxx</p>
+            <span class="span-speed">Мб/с</span>
+            <p class="user-rate-cost">xxx</p>
+            <span class="span-rub">р.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.4</span>
+            <p class="user-period">Период тарифа</p>
+            <p class="user-period-date">xx.xx.xxxx</p>
+            <p class="user-period-days">xx</p>
+            <span class="span-days">дн.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.5</span>
+            <p class="user-balance-name">Счет</p>
+            <p class="user-balance-date">xx.xx.xxxx</p>
+            <p class="user-balance">xxx</p>
+            <span class="span-rub">р.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.6</span>
+            <p class="user-call-name">Обращения в ТП</p>
+            <p class="user-call-date">xx.xx.xxxx</p>
+            <p class="user-call-days">xxx</p>
+            <span class="span-days">дн.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.7</span>
+            <p class="user-devices-name">Устройства</p>
+            <p class="user-devices-quantity">x</p>
+            <span class="span-quantity">шт.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.8</span>
+            <p class="user-router">Роутер</p>
+            <p class="user-router-name">xxxxxxx</p>
+            <p class="user-router-status">xxxxxxx</p>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.9</span>
+            <p class="user-tvbox">ТВ-приставка</p>
+            <p class="user-tvbox-name">xxxxxxx</p>
+            <p class="user-tvbox-quantity">x</p>
+            <span class="span-quantity">шт.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.10</span>
+            <p class="user-CCTV">Видеонаблюдение</p>
+            <p class="user-CCTV-quantity">x</p>
+            <span class="span-quantity">шт.</span>
+          </li>
+          <li class="info-user-item">
+            <span class="green">1.11</span>
+            <p class="user-telephony">Телефония</p>
+            <p class="user-telephony-quantity">x</p>
+            <span class="span-quantity">шт.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="info-firm">
+        <h2 class="info-firm-title">2. Интернет-провайдер "Сатнет"</h2>
+        <p class="info-firm-name after-title">
+          ООО “Компьютерные Информационные Технологии”
+        </p>
+
+        <ul class="info-firm-list">
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.1</span>
+              <p class="firm-adress">
+                Старый Петергоф, ул. Ботаническая д.18/3
+              </p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.2</span>
+              <p class="firm-workhour">Режим работы офисов</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.3</span>
+              <p class="firm-refill-balance">Пополнение счета</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.4</span>
+              <p class="firm-сonnection">Подключение</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.5</span>
+              <p class="firm-promotions">Акции</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.6</span>
+              <p class="firm-tariffs-internet">Тарифы Интернет</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.7</span>
+              <p class="firm-tariffs-tv">Тарифы ТВ</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.8</span>
+              <p class="firm-tariffs-telephony">Тарифы Телефонии</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.9</span>
+              <p class="firm-tariffs-CCTV">Тарифы Видеонаблюдение</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.10</span>
+              <p class="firm-price-services">Тарифы на работы Мастера</p>
+            </a>
+          </li>
+          <li class="info-firm-item">
+            <a>
+              <span class="blue">2.11</span>
+              <p class="firm-price-devices">Цены на оборудование</p>
+            </a>
+          </li>
+        </ul>
+
+        <ul class="info-firm-inner-list hidden">
+          <li class="info-firm-inner-back">
+            <button class="button button-back">&#60;&#60;</button>
+            <!-- <p>Заголовок</p> -->
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.1</span>
+            <p class="firm-workhour">
+              Старый Петергоф, ул. Ботаническая д.18/3Старый Петергоф, ул.
+              Ботаническая д.18/3Старый Петергоф, ул. Ботаническая д.18/3Старый
+              Петергоф, ул. Ботаническая д.18/3Старый Петергоф, ул. Ботаническая
+              д.18/3Старый Петергоф, ул. Ботаническая д.18/3Старый Петергоф, ул.
+              Ботаническая д.18/3Старый Петергоф, ул. Ботаническая д.18/3
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.2</span>
+            <p class="firm-workhour">
+              Режим работы офисов Режим работы офисов Режим работы офисов Режим
+              работы офисов Режим работы офисов Режим работы офисов Режим работы
+              офисов Режим работы офисов Режим работы офисов Режим работы офисов
+              Режим работы офисов Режим работы офисов Режим работы офисов Режим
+              работы офисов Режим работы офисов Режим работы офисов
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.3</span>
+            <p class="firm-refill-balance">
+              Пополнение счетаПополнение счетаПополнение счетаПополнение
+              счетаПополнение счетаПополнение счетаПополнение счетаПополнение
+              счетаПополнение счетаПополнение счетаПополнение счетаПополнение
+              счетаПополнение счетаПополнение счета
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.4</span>
+            <p class="firm-сonnection">
+              Подключение Подключение Подключение Подключение Подключение
+              Подключение Подключение Подключение Подключение Подключение
+              Подключение Подключение Подключение Подключение Подключение
+              Подключение Подключение Подключение Подключение Подключение
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.5</span>
+            <p class="firm-promotions">
+              Акции Акции Акции Акции Акции Акции Акции Акции Акции Акции Акции
+              Акции Акции Акции Акции Акции
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.6</span>
+            <p class="firm-tariffs-internet">
+              Тарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы
+              ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы
+              ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы
+              ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы
+              ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы ИнтернетТарифы
+              Интернетv
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.7</span>
+            <p class="firm-tariffs-tv">
+              Тарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы
+              ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы
+              ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы
+              ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы
+              ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВТарифы ТВ
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.8</span>
+            <p class="firm-tariffs-telephony">
+              Тарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы ТелефонииТарифы
+              Телефонииv
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.9</span>
+            <p class="firm-tariffs-CCTV">
+              Тарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы
+              ВидеонаблюдениеТарифы ВидеонаблюдениеТарифы Видеонаблюдение
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.10</span>
+            <p class="firm-price-services">
+              Тарифы на работы МастераТарифы на работы МастераТарифы на работы
+              МастераТарифы на работы МастераТарифы на работы МастераТарифы на
+              работы МастераТарифы на работы МастераТарифы на работы
+              МастераТарифы на работы МастераТарифы на работы МастераТарифы на
+              работы МастераТарифы на работы МастераТарифы на работы
+              МастераТарифы на работы МастераТарифы на работы МастераТарифы на
+              работы МастераТарифы на работы Мастераv
+            </p>
+          </li>
+          <li class="info-firm-inner-item hidden">
+            <span class="blue">2.11</span>
+            <p class="firm-price-devices">
+              Цены на оборудованиеЦены на оборудованиеЦены на оборудованиеЦены
+              на оборудованиеЦены на оборудованиеЦены на оборудованиеЦены на
+              оборудованиеЦены на оборудованиеЦены на оборудованиеЦены на
+              оборудованиеЦены на оборудованиеЦены на оборудованиеЦены на
+              оборудованиеЦены на оборудованиеЦены на оборудованиеЦены на
+              оборудованиеЦены на оборудование
+            </p>
+          </li>
+        </ul>
+      </section>
+
+      <section class="diagnostics-user">
+        <h2 class="diagnostics-user-title">3. Диагностика пользователя</h2>
+        <ul class="diagnostics-user-list">
+          <li class="diagnostics-user-item">
+            <span class="gray">2.1</span>
+            <p class="diagnostics-device-name">
+              Незарегистрированное устройства
+            </p>
+            <p class="diagnostics-device-mac">xx:xx:xx:xx:xx:xx</p>
+          </li>
+          <li class="diagnostics-user-item">
+            <span class="gray">2.2</span>
+            <p class="diagnostics-link-name">Нестабильное соединение</p>
+            <p class="diagnostics-link">xx</p>
+            <span class="span-minutes">мин.</span>
+          </li>
+          <li class="diagnostics-user-item">
+            <span class="gray">2.3</span>
+            <p class="diagnostics-port-name">Перепутаны порты на роутере</p>
+          </li>
+        </ul>
+      </section>
+      <section class="solutions">
+        <h2 class="solutions-title">4. Возможные решения</h2>
+        <ul class="solutions-list">
+          <li class="solutions-item">
+            <span class="red">4.1</span>
+            <p class="solutions-router-reboot red">Перезагрузить роутер</p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-router-link">Проверить порты на роутере</p>
+          </li>
+          <li class="solutions-item">
+            <span class="green">4.2</span>
+            <p class="solutions-test-cable">Проверить кабель</p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-master">Вызвать мастера</p>
+          </li>
+          <li class="solutions-item">
+            <span class="green">4.3</span>
+            <p class="solutions-registration-device">
+              Зарегистрировать новое устройство
+            </p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-internet-debt">Подключить интернет в долг</p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-deferred-payment">
+              Подключить отложенный платеж
+            </p>
+          </li>
+          <li class="solutions-item">
+            <span class="green">4.4</span>
+            <p class="solutions-restore-password">Востановить пароль</p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-tvbox-update">Обновить приставку</p>
+          </li>
+          <li class="solutions-item">
+            <p class="solutions-tvbox-xxx">Отключить каналы для взрослых</p>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <footer class="main-footer"></footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,392 @@
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../fonts/proximanova-regular-webfont.woff2") format("woff2"),
+    url("../fonts/proximanova-regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Proxima Nova";
+  src: url("../fonts/proximanova-semibold-webfont.woff2") format("woff2"),
+    url("../fonts/proximanova-semibold-webfont.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+}
+
+.hidden,
+.user-contract.hidden {
+  display: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+}
+
+body {
+  margin-top: 20px;
+  padding: 0;
+
+  font-family: "Proxima Nova", Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+section {
+  /* background-color: yellow; */
+  width: 720px;
+  min-height: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.info-firm {
+  background-color: #F1F2F2;
+  /* border: 1px solid #F1F2F2; */
+  border-radius: 10px;
+}
+
+.green {
+  color: #7dbd42;
+}
+
+.blue {
+  color: #0b9bce;
+}
+
+.red {
+  color: #ed1c24;
+}
+
+.button {
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+
+  cursor: pointer;
+}
+
+.button-border {
+  border: 2px solid #e81e25;
+  border-radius: 5px;
+
+  width: 110px;
+  height: 32px;
+
+  color: #e81e25;
+}
+
+.button-border:hover,
+.button-border:focus,
+.button-border:active {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+.button-choose {
+  margin-left: 15px;
+}
+
+.nav-user-button {
+  text-decoration: underline;
+  text-decoration-color: #939598;
+  width: 120px;
+}
+
+.nav-user-button:hover,
+.nav-user-button:focus,
+.nav-user-button:active {
+  text-decoration: none;
+}
+
+.button-back {
+  color: #0b9bce;
+  font-weight: 700;
+}
+
+h2 {
+  text-align: center;
+  color: white;
+  margin: 0;
+  border-radius: 5px;
+
+  font-size: 36px;
+  font-weight: 600;
+}
+
+h2.info-user-title {
+  background-color: #65ad45;
+  border-radius: 5px 5px 0 0;
+}
+
+h2.info-firm-title {
+  background-color: #0b9bce;
+  border-radius: 5px 5px 0 0;
+}
+
+h2.diagnostics-user-title {
+  background-color: #939598;
+}
+
+h2.solutions-title {
+  background-color: #009444;
+}
+
+.after-title,
+.info-user-choose,
+.info-user-notfound,
+.info-user-search-div,
+.registration-new-user {
+  font-size: 20px;
+
+  margin: 0;
+
+  border: 1px solid #939598;
+  border-top: 0;
+  border-radius: 0 0 5px 5px;
+  /* border-top-color: white; */
+  /* border-top: none; */
+}
+
+.after-title {
+  background-color: #f1f2f2;
+}
+
+.info-user-notfound,
+.info-firm-name {
+  text-align: center;
+  padding: 5px 0;
+}
+
+.info-user-choose {
+  padding: 8px 32px;
+}
+
+.info-user-search-div {
+  padding-left: 32px;
+  padding-right: 30px;
+}
+
+.info-user-search {
+  margin:0; 
+  padding-top: 10px;
+}
+
+.user-search-form input,
+.registration input[type="text"] {
+  width: 100px;
+  height: 32px;
+  text-align: center;
+
+  background-color: #e6e7e8;
+
+  border: 1px solid #bcbec0;
+  border-radius: 2px;
+}
+
+input[name="street-name"] {
+  width: 320px;
+  text-align: left;
+
+  padding-left: 10px;
+}
+
+.registration-new-user {
+  padding-left: 32px;
+}
+
+.registration-new-user-p {
+  margin: 0;
+  padding-top: 10px;
+}
+
+.registration-item:first-child input {
+  width: 200px;
+  height: 32px;
+  text-align: left;
+
+  padding-left: 10px;
+}
+
+.registration-item input[name="street"] {
+  width: 420px;
+
+  text-align: left;
+
+  padding-left: 10px;
+}
+
+.user-search-item {
+  text-align: center;
+}
+
+.user-search-item-input {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-search-item-input input {
+  height: 32px;
+}
+
+.registration-button-item {
+  text-align: center;
+}
+
+.button-registration {
+  width: 380px;
+}
+
+.nav-user-div {
+  /* Временно */
+  border-radius: 0;
+}
+
+.nav-user-div * {
+  display: inline;
+  text-align: center;
+  padding: 5px 7px;
+}
+
+
+.nav-user-div input {
+  width: 52px;
+  height: 12px;
+}
+
+
+.nav-user-div ul {
+  padding: 0;
+}
+
+.nav-user-div>form,
+.nav-user-div li {
+  border-right: 1px solid #939598;
+}
+
+.nav-user-div>.phone {
+  display: inline-block;
+  width: 170px;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+}
+
+ul {
+  margin-left: 0;
+  /* Отступ слева в браузере IE и Opera */
+  padding-left: 0;
+  /* Отступ слева в браузере Firefox, Safari, Chrome */
+}
+
+li {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+li>a {
+  display: flex;
+  cursor: pointer;
+}
+
+li>a>span {
+  text-decoration: none;
+}
+
+li>a>p {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 10px 0;
+  color: black;
+  text-decoration: underline;
+
+}
+
+li>a>p:hover,
+li>a>p:focus {
+  text-decoration: none;
+}
+
+li>p,
+li span {
+  margin: 0px;
+  padding: 10px 0;
+}
+
+li span:first-child {
+  margin-right: 10px;
+  padding-left: 16px;
+  font-size: 30px;
+  width: 50px;
+}
+
+li>span:last-child {
+  /* border: 1px green solid; */
+  width: 50px;
+}
+
+li p:nth-of-type(1) {
+  margin-right: auto;
+}
+
+li p:nth-of-type(2) {
+  /* border: 1px solid red; */
+  flex: 0 0 10em;
+}
+
+li p:nth-of-type(3) {
+  /* border: 1px solid #939598; */
+  flex: 0 0 2em;
+}
+
+.span-speed {
+  padding: 10px 135px 10px 0px;
+}
+
+li>p.user-rate-speed {
+  max-width: 52px;
+}
+
+li>p.user-router-status {
+  min-width: 100px;
+  text-align: left;
+}
+
+li>p.user-devices-quantity,
+li>p.user-CCTV-quantity,
+li>p.user-telephony-quantity,
+li>p.diagnostics-link {
+  max-width: 46px;
+}
+
+.diagnostics-device-mac {
+  text-align: end;
+}
+
+li.solutions-item>p:first-child {
+  margin-left: 76px;
+}
+
+.firm-adress-inner {
+  display: flex;
+  justify-content: right;
+}
+
+.info-firm-inner {
+  position: relative;
+  top: 0;
+  bottom: 0;
+}
