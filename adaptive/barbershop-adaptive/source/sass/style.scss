@@ -1,12 +1,14 @@
+// @import "normalize";
+
+// @import "variables";
 // Файл variables.scss
 $bg-darkgrey: #292929;
 $bg-lightgrey: #f8f5f2;
 $tablet-width: 768px;
 $desktop-width: 1200px;
 
-
-// Файл scaffolding.scss
-
+// @import "global";
+// Файл global.scss
 body {
   min-width: 320px;
   margin: 0;
@@ -25,7 +27,7 @@ img {
   height: auto;
 }
 
-
+// @import "outlines";
 // Файл outlines.scss
 
 body {
@@ -49,6 +51,7 @@ body {
   }
 }
 
+// @import "blocks/page-header";
 // Файл blocks/page-header.scss
 
 .page-header {
@@ -73,6 +76,7 @@ body {
   }
 }
 
+// @import "blocks/main-nav";
 // Файл blocks/main-nav.scss
 
 .main-nav {
@@ -123,6 +127,7 @@ body {
   }
 }
 
+// @import "blocks/stats";
 // Файл blocks/stats.scss
 
 .stats {
