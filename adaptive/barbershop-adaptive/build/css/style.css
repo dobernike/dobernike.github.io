@@ -304,14 +304,27 @@ template {
 [hidden] {
   display: none; }
 
+@font-face {
+  font-weight: normal;
+  font-family: "PT Sans Narrow";
+  font-style: normal;
+  src: url("../fonts/pt_sans-narrow-web-regular-webfont.woff2") format("woff2"), url("../fonts/pt_sans-narrow-web-regular-webfont.woff") format("woff"); }
+
+@font-face {
+  font-weight: bold;
+  font-family: "PT Sans Narrow";
+  font-style: normal;
+  src: url("../fonts/pt_sans-narrow-web-bold-webfont.woff2") format("woff2"), url("../fonts/pt_sans-narrow-web-bold-webfont.woff") format("woff"); }
+
 body {
   min-width: 320px;
   margin: 0;
   padding: 0;
   font-size: 18px;
   line-height: 27px;
-  font-family: "Arial", sans-serif;
+  font-family: "PT Sans Narrow", "Arial", sans-serif;
   color: #f7f4f1;
+  font-style: normal;
   background-color: #292929; }
 
 img {
