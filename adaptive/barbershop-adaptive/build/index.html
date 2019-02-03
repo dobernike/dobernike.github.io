@@ -14,7 +14,7 @@
     <a class="page-header__logo">
       <img class="page-header__logo-image" src="img/logotype-mobile.svg" width="226" height="30" alt="Барбершоп 'Бородинский'">
     </a>
-    <nav class="main-nav main-nav--closed">
+    <nav class="main-nav main-nav--closed main-nav--nojs">
       <button class="main-nav__toggle" type="button"><span class="visually-hidden">Открыть меню</span></button>
       <div class="main-nav__wrapper">
         <ul class="main-nav__list site-list">
@@ -37,7 +37,12 @@
         <ul class="main-nav__list user-list">
           <li class="user-list__item">
             <a class="user-list__login" href="login.html">
-              <include class="user-list__login-icon" src="build/img/login.svg"></include>
+              <svg class="user-list__login-icon" height="22" width="22" xmlns="http://www.w3.org/2000/svg">
+                <g fill="#000">
+                  <path d="M0 9.333h9.346v-3.92l5.268 5.267-5.268 5.2v-3.8L0 12.027V9.333"/>
+                  <path d="M9.346 0v2.667h9.361v15.987h-9.36v2.68h11.986V0H9.346"/>
+                </g>
+              </svg>
               Войти
             </a>
           </li>
@@ -53,7 +58,7 @@
     <section class="stats">
       <header class="stats__header">
         <h2 class="visually-hidden">Статистика Барбершопа</h2>
-        <b class="stats__slogan">Стрижка у нас это выгодно!</b>
+        <b class="stats__slogan">Стрижка у нас<br> это выгодно!</b>
         <p class="stats__intro">Мужская стрижка требует точного подхода. Обратимся к статистике:</p>
         <small class="stats__legend stats__legend--top">
           <sup>*</sup> - приведённые данные ложь
