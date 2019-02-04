@@ -31,9 +31,9 @@ var del = require('del');
 
 gulp.task('html', function () {
   return gulp.src('source/*.html')
-    .pipe(posthtml([
-      include()
-    ]))
+    // .pipe(posthtml([
+    //   include()
+    // ]))
     .pipe(htmlmin())
     .pipe(gulp.dest('build'));
 });
@@ -58,6 +58,7 @@ gulp.task('js', function () {
     .pipe(gulp.dest('build/js'));
 });
 
+// запускается один раз командой
 gulp.task('images', function () {
   return gulp.src('source/img/**/*.{gif,png,jpg,jpeg,svg}')
     .pipe(imagemin([
@@ -117,6 +118,7 @@ gulp.task('build', gulp.series(
   'clean',
   'copy',
   'css',
+  'images',
   // 'sprite',
   'js',
   'html'

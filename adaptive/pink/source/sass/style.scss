@@ -34,19 +34,19 @@ body {
   background-repeat: no-repeat;
   background-position:  50% 0;
   /* Mobile layout by default */
-  background-image: url("/img/preview/barbershop-index-mobile.jpg");
+  background-image: url("/img/preview/pink-index-mobile.jpg");
 }
 /* Tablet */
 @media ( min-width: $tablet-width ) {
   body {
     /* Tablet layout */
-    background-image: url( "/img/preview/barbershop-index-tablet.jpg" );
+    background-image: url( "/img/preview/pink-index-tablet.jpg" );
   }
 }
 /* Desktop */
 @media ( min-width: $desktop-width ) {
   body {
     /* Desktop layout */
-    background-image: url( "/img/preview/barbershop-index-desktop.jpg" );
+    background-image: url( "/img/preview/pink-index-desktop.jpg" );
   }
 }
