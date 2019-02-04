@@ -366,7 +366,12 @@ img {
     background-color: #000000;
     background-image: url("../img/bg-tablet-inner.jpg");
     background-repeat: no-repeat;
-    background-position: center -9px; }
+    background-position: center -9px; } }
+  @media (min-width: 768px) and (-webkit-min-device-pixel-ratio: 1.5), (min-width: 768px) and (min-resolution: 144dpi), (min-width: 768px) and (min-resolution: 1.5dppx) {
+    .page-header__logo {
+      background-image: url("..img/"); } }
+
+@media (min-width: 768px) {
   .page-header__logo img {
     display: block;
     width: 370px;
