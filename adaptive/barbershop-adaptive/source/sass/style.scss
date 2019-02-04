@@ -62,26 +62,26 @@ img {
 // @import "outlines";
 // Файл outlines.scss
 
-body {
-  background-repeat: no-repeat;
-  background-position:  50% 0;
-  /* Mobile layout by default */
-  background-image: url("/img/preview/barbershop-index-mobile.jpg");
-}
-/* Tablet */
-@media ( min-width: $tablet-width ) {
-  body {
-    /* Tablet layout */
-    background-image: url( "/img/preview/barbershop-index-tablet.jpg" );
-  }
-}
-/* Desktop */
-@media ( min-width: $desktop-width ) {
-  body {
-    /* Desktop layout */
-    background-image: url( "/img/preview/barbershop-index-desktop.jpg" );
-  }
-}
+// body {
+//   background-repeat: no-repeat;
+//   background-position:  50% 0;
+//   /* Mobile layout by default */
+//   background-image: url("/img/preview/barbershop-index-mobile.jpg");
+// }
+// /* Tablet */
+// @media ( min-width: $tablet-width ) {
+//   body {
+//     /* Tablet layout */
+//     background-image: url( "/img/preview/barbershop-index-tablet.jpg" );
+//   }
+// }
+// /* Desktop */
+// @media ( min-width: $desktop-width ) {
+//   body {
+//     /* Desktop layout */
+//     background-image: url( "/img/preview/barbershop-index-desktop.jpg" );
+//   }
+// }
 
 // @import "blocks/page-header";
 // Файл blocks/page-header.scss
@@ -147,9 +147,10 @@ body {
 .main-nav {
   position: relative;
 
-  width: 320px;
+  width: auto;
+  // width: 320px;
   min-height: 51px;
-  margin: 0 auto;
+  // margin: 0 auto;
 
   background-color: #826550;
 }
@@ -318,7 +319,9 @@ body {
   .main-nav__wrapper {
     display: flex;
     justify-content: space-between;
-    width: 640px;
+    // width: 640px;
+    width: 84%; // 640px / 768px ~= 84%
+    max-width: 960px; // 960px / .84 ~= 1142px
     margin: 0 auto;
   }
 
@@ -329,7 +332,7 @@ body {
 
 @media (min-width: $desktop-width) {
   .main-nav__wrapper {
-    width: 960px;
+    // width: 960px;
   }
 }
 
@@ -374,6 +377,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    flex-grow: 1;
 
     width: 570px;
   }
@@ -582,8 +586,9 @@ body {
 // Файл blocks/stats.scss
 
 .stats {
-  width: 320px;
-  margin: 0 auto;
+  width: auto;
+  // width: 320px;
+  // margin: 0 auto;
 }
 
 .stats__header {
@@ -698,7 +703,11 @@ body {
 
 @media (min-width: $tablet-width) {
   .stats {
-    width: 640px;
+    width: 84%;
+    // max-width: 960px;
+    max-width: 1200px;
+    margin: 0 auto;
+    // width: 640px;
     // margin-top: -185px;
     margin-top: -174px;
   }
@@ -725,7 +734,8 @@ body {
   }
 
   .stats__slogan {
-    width: 240px;
+    width: 50%;
+    // width: 240px;
     margin-bottom: 18px;
 
     font-size: 40px;
@@ -735,9 +745,12 @@ body {
   }
 
   .stats__intro {
-    width: 210px;
+    width: 37.5%;
+    padding: 0;
+    padding-left: 30px;
+    // width: 210px;
     margin-top: 5px;
-    padding-right: 47px;
+    // padding-right: 47px;
 
     text-align: left;
   }
@@ -759,7 +772,9 @@ body {
   }
 
   .stats__list tr {
-    width: 250px;
+    width: 50%;
+    box-sizing: border-box;
+    // width: 250px;
     padding: 25px 35px;
     padding-bottom: 28px;
   }
@@ -791,12 +806,14 @@ body {
 @media (min-width: $desktop-width) {
   .stats {
     display: flex;
-    width: 960px;
+    // width: 960px;
     margin-top: -160px;
   }
 
   .stats__header {
-    display: block;
+    // display: block;
+    flex-direction: column;
+    flex-grow: 1;
     width: 240px;
 
     &::before {
@@ -813,14 +830,17 @@ body {
     width: auto;
     margin-bottom: 32px;
     padding-right: 30px;
+    padding-left: 0;
   }
 
   .stats__legend--top {
     width: auto;
+    margin-top: auto;
   }
 
   .stats__list {
     display: flex;
+    flex-grow: 1;
     width: 640px;
   }
 }

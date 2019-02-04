@@ -344,24 +344,6 @@ img {
   clip: rect(0 0 0 0);
   overflow: hidden; }
 
-body {
-  background-repeat: no-repeat;
-  background-position: 50% 0;
-  /* Mobile layout by default */
-  background-image: url("/img/preview/barbershop-index-mobile.jpg"); }
-
-/* Tablet */
-@media (min-width: 768px) {
-  body {
-    /* Tablet layout */
-    background-image: url("/img/preview/barbershop-index-tablet.jpg"); } }
-
-/* Desktop */
-@media (min-width: 1200px) {
-  body {
-    /* Desktop layout */
-    background-image: url("/img/preview/barbershop-index-desktop.jpg"); } }
-
 .page-header {
   display: flex;
   flex-direction: column; }
@@ -402,9 +384,8 @@ body {
 
 .main-nav {
   position: relative;
-  width: 320px;
+  width: auto;
   min-height: 51px;
-  margin: 0 auto;
   background-color: #826550; }
 
 .main-nav__toggle {
@@ -512,14 +493,11 @@ body {
   .main-nav__wrapper {
     display: flex;
     justify-content: space-between;
-    width: 640px;
+    width: 84%;
+    max-width: 960px;
     margin: 0 auto; }
   .main-nav__toggle {
     display: none; } }
-
-@media (min-width: 1200px) {
-  .main-nav__wrapper {
-    width: 960px; } }
 
 .site-list {
   font-weight: bold; }
@@ -551,6 +529,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    flex-grow: 1;
     width: 570px; }
   .site-list__item {
     margin-right: 32px; }
@@ -669,8 +648,7 @@ body {
     left: 15px; } }
 
 .stats {
-  width: 320px;
-  margin: 0 auto; }
+  width: auto; }
 
 .stats__header {
   padding-top: 30px;
@@ -751,7 +729,9 @@ body {
 
 @media (min-width: 768px) {
   .stats {
-    width: 640px;
+    width: 84%;
+    max-width: 1200px;
+    margin: 0 auto;
     margin-top: -174px; }
   .stats__header {
     position: relative;
@@ -768,16 +748,17 @@ body {
       -webkit-transform: rotate(45deg);
               transform: rotate(45deg); }
   .stats__slogan {
-    width: 240px;
+    width: 50%;
     margin-bottom: 18px;
     font-size: 40px;
     line-height: 40px;
     text-align: left;
     text-transform: none; }
   .stats__intro {
-    width: 210px;
+    width: 37.5%;
+    padding: 0;
+    padding-left: 30px;
     margin-top: 5px;
-    padding-right: 47px;
     text-align: left; }
   .stats__legend--top {
     display: block;
@@ -789,7 +770,8 @@ body {
     display: flex;
     flex-wrap: wrap; }
   .stats__list tr {
-    width: 250px;
+    width: 50%;
+    box-sizing: border-box;
     padding: 25px 35px;
     padding-bottom: 28px; }
   .stats__list td {
@@ -810,10 +792,10 @@ body {
 @media (min-width: 1200px) {
   .stats {
     display: flex;
-    width: 960px;
     margin-top: -160px; }
   .stats__header {
-    display: block;
+    flex-direction: column;
+    flex-grow: 1;
     width: 240px; }
     .stats__header::before {
       top: 22px; }
@@ -823,9 +805,12 @@ body {
   .stats__intro {
     width: auto;
     margin-bottom: 32px;
-    padding-right: 30px; }
+    padding-right: 30px;
+    padding-left: 0; }
   .stats__legend--top {
-    width: auto; }
+    width: auto;
+    margin-top: auto; }
   .stats__list {
     display: flex;
+    flex-grow: 1;
     width: 640px; } }
