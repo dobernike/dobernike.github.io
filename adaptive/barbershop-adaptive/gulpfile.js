@@ -18,22 +18,21 @@ const uglify = require('gulp-uglify');
 // img
 const imagemin = require('gulp-imagemin');
 // webp
-// var webp = require("gulp-webp");
-
+const webp = require("gulp-webp");
 // svg sprites
-// var svgstore = require("gulp-svgstore");
+const svgstore = require("gulp-svgstore");
 
 // server
 const server = require("browser-sync").create();
-
 // delete
-var del = require('del');
+const del = require('del');
+
 
 gulp.task('html', function () {
   return gulp.src('source/*.html')
-    // .pipe(posthtml([
-    //   include()
-    // ]))
+    .pipe(posthtml([
+      include()
+    ]))
     .pipe(htmlmin())
     .pipe(gulp.dest('build'));
 });
@@ -62,27 +61,28 @@ gulp.task('js', function () {
 gulp.task('images', function () {
   return gulp.src('source/img/**/*.{gif,png,jpg,jpeg,svg}')
     .pipe(imagemin([
-      imagemin.optipng({ optimizationLevel: 7 }), // по умолчанию 3, 7 просто дольше, без потери качеста
+      imagemin.optipng({ optimizationLevel: 3 }), // по умолчанию 3, 7 просто дольше, без потери качеста
       imagemin.jpegtran({ progressive: true }),
       imagemin.svgo()
     ]))
     .pipe(gulp.dest('source/img'));
 });
 
-// gulp.task("webp", function () { // запускается один раз командой npx gulp webp
-//   return gulp.src("source/img/**/*.{png,jpg}")
-//     .pipe(webp({quality: 90}))
-//     .pipe(gulp.dest("source/img"));
-// });
+// запускается один раз командой npx gulp webp
+gulp.task("webp", function () {
+  return gulp.src("source/img/**/*.{png,jpg}")
+    .pipe(webp({ quality: 90 }))
+    .pipe(gulp.dest("source/img"));
+});
 
-// gulp.task("sprite", function () {
-//   return gulp.src("source/img/sprite-svg/*.svg")
-//     .pipe(svgstore({
-//       inlineSvg: true
-//     }))
-//     .pipe(rename("sprite.svg"))
-//     .pipe(gulp.dest("build/img"));
-// });
+gulp.task("sprite", function () {
+  return gulp.src("source/img/sprite-svg/*.svg")
+    .pipe(svgstore({
+      inlineSvg: true
+    }))
+    .pipe(rename("sprite.svg"))
+    .pipe(gulp.dest("build/img"));
+});
 
 gulp.task('copy', function () {
   return gulp.src([
@@ -103,7 +103,7 @@ gulp.task('refresh', function (done) {
   done();
 });
 
-gulp.task('server', function () {
+gulp.task('serve', function () {
   server.init({
     server: "build/"
   });
@@ -119,9 +119,9 @@ gulp.task('build', gulp.series(
   'copy',
   'css',
   'images',
-  // 'sprite',
+  'sprite',
   'js',
   'html'
 ));
 
-gulp.task('start', gulp.series('build', 'server'));
+gulp.task('start', gulp.series('build', 'serve'));

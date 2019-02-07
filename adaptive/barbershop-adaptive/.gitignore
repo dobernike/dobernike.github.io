@@ -7,4 +7,3 @@ npm-debug.*
 source/css/*.css
 Thumbs.db
 preview/
-build/
