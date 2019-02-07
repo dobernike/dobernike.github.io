@@ -16,6 +16,7 @@ $retina-dppx: 1.5dppx;
   font-weight: normal;
   font-family: "PT Sans Narrow";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/pt_sans-narrow-web-regular-webfont.woff2") format("woff2"), url("../fonts/pt_sans-narrow-web-regular-webfont.woff") format("woff");
 }
 
@@ -23,6 +24,7 @@ $retina-dppx: 1.5dppx;
   font-weight: bold;
   font-family: "PT Sans Narrow";
   font-style: normal;
+  font-display: swap;
   src: url("../fonts/pt_sans-narrow-web-bold-webfont.woff2") format("woff2"), url("../fonts/pt_sans-narrow-web-bold-webfont.woff") format("woff");
 }
 
