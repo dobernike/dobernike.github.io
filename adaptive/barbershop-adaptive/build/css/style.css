@@ -830,7 +830,6 @@ img {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  width: 240px;
   padding: 0 20px;
   margin: 0 auto; }
 
@@ -852,16 +851,33 @@ img {
   margin: 0; }
 
 .slider__toggle {
+  width: 8px;
+  height: 8px;
+  margin-right: 23px;
+  padding: 0;
   position: relative;
   font-size: 0;
   border: none;
   background-color: inherit; }
+  .slider__toggle:last-child {
+    margin-right: 0; }
+  .slider__toggle::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 2px;
+    box-sizing: border-box;
+    width: 8px;
+    height: 8px;
+    border: 2px solid #999999;
+    -webkit-transform: rotate(45deg);
+            transform: rotate(45deg); }
+  .slider__toggle--active::before {
+    background-color: #ffffff;
+    border: 1px solid #cccccc; }
 
-.slider__toggle::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0; }
+.advantages {
+  margin-bottom: 45px; }
 
 .advantages__item--fast {
   padding-top: 125px;
@@ -897,3 +913,74 @@ img {
   margin: 0;
   font-size: 20px;
   text-align: center; }
+
+.news {
+  padding-top: 80px;
+  background-image: url("../img/start_news.svg");
+  background-position: center 0;
+  background-size: 1280px 80px;
+  background-repeat: no-repeat; }
+
+.news__wrapper {
+  color: #000000;
+  background-color: #f8f5f2; }
+
+.news__title {
+  padding-top: 38px;
+  margin: 0;
+  margin-bottom: 38px;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: bold;
+  text-align: center;
+  text-transform: uppercase; }
+
+.news__list {
+  padding: 0;
+  list-style: none; }
+
+.news__item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  padding-bottom: 22px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid #e5ddd5; }
+  .news__item:last-child {
+    border: none; }
+
+.news__date {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  padding: 9px;
+  margin-right: 20px;
+  width: 50px;
+  height: 50px;
+  font-size: 16px;
+  line-height: 30px;
+  color: #ffffff;
+  text-align: center;
+  background-color: #000000; }
+  .news__date::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    border: 10px solid #000000;
+    border-right-width: 25px;
+    border-left-width: 25px;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-bottom-width: 0; }
+
+.news__day {
+  margin-bottom: -10px;
+  font-size: 30px;
+  line-height: 30px;
+  font-weight: bold; }
+
+.news__text {
+  margin: 0;
+  max-width: 600px; }
