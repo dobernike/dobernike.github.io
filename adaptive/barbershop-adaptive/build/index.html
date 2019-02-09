@@ -113,7 +113,7 @@
       <div class="advantages__wrapper slider">
         <h2 class="visually-hidden">Наши преимущества</h2>
         <ul class="advantages__list slider__list">
-          <li class="advantages__item advantages__item--fast slider__item">
+          <li class="advantages__item advantages__item--fast slider__item slider__item--current">
             <h3 class="advantages__title">Быстро</h3>
             <p class="advantages__description">Мы делаем свою работу быстро! Два часа пролетят незаметно и Вы - счастливый обладатель стильной стрижки-минутки.</p>
           </li>
@@ -160,32 +160,38 @@
         <h2 class="reviews__title">Отзывы о нас</h2>
         <a class="reviews__write button" href="#">Оставить свой</a>
         <div class="reviews__list slider__list">
-          <blockquote class="reviews__item slider__item">
+          <blockquote class="reviews__item slider__item slider__item--current">
             <p class="reviews__author-picture">
-              <img class="reviews__author-image" src="img/picture-travis.jpg" width="50" height="33" alt="Фото Трэвиса Баркера">
+              <img class="reviews__author-image" src="img/travis.jpg" width="70" height="46" alt="Фото Трэвиса Баркера">
             </p>
+            <div class="reviews__author-wrapper">
             <cite class="reviews__author-name">Трэвис Баркер</cite>
             <p class="reviews__text">Спасибо за лысину! Был проездом в Москве, заскочил побриться, чтобы было видно новую татуировку!</p>
+          </div>
           </blockquote>
           <blockquote class="reviews__item slider__item">
             <p class="reviews__author-picture">
-              <img class="reviews__author-image" src="img/picture-john.jpg" width="50" height="33" alt="Фото Джона Смита">
+              <img class="reviews__author-image" src="img/picture-john.jpg" width="70" height="46" alt="Фото Джона Смита">
             </p>
+            <div class="reviews__author-wrapper">
             <cite class="reviews__author-name">Джон Смит</cite>
             <p class="reviews__text">Отличную стрижку мне сделали ребята.</p>
+            </div>
           </blockquote>
           <blockquote class="reviews__item slider__item">
             <p class="reviews__author-picture">
-              <img class="reviews__author-image" src="img/picture-ivan.jpg" width="50" height="33" alt="Фото Ивана Бородайло">
+              <img class="reviews__author-image" src="img/picture-ivan.jpg" width="70" height="46" alt="Фото Ивана Бородайло">
             </p>
+            <div class="reviews__author-wrapper">
             <cite class="reviews__author-name">Иван Бородайло</cite>
             <p class="reviews__text">В Бородинском ваша борода в надёжных руках!</p>
+            </div>
           </blockquote>
           <button class="reviews__prev" type="button">Предыдущий отзыв</button>
           <button class="reviews__next" type="button">Следующий отзыв</button>
         </div>
         <p class="reviews__toggles slider__toggles">
-          <button class="slider__toggle" type="button">1</button>
+          <button class="slider__toggle slider__toggle--active" type="button">1</button>
           <button class="slider__toggle" type="button">2</button>
           <button class="slider__toggle" type="button">3</button>
         </p>
@@ -208,23 +214,60 @@
         <b class="social__title">Давайте дружить!</b>
         <ul class="social__list">
           <li class="social__item">
-            <a class="social__link social__link--vkontakte" href="#">Мы в Вконтакте</a>
+            <a class="social__link social__link--vkontakte" href="#">
+              <span class="visually-hidden">Мы в Вконтакте</span>
+            </a>
           </li>
           <li class="social__item">
-            <a class="social__link social__link--facebook" href="#">Мы в Фейсбуке</a>
+            <a class="social__link social__link--facebook" href="#">
+                <span class="visually-hidden">Мы в Фейсбуке
+                  </span>
+                </a>
           </li>
           <li class="social__item">
-            <a class="social__link social__link--instagram" href="#">Мы в Инстаграме</a>
+            <a class="social__link social__link--instagram" href="#">
+                <span class="visually-hidden">Мы в Инстаграме
+                  </span>
+                </a>
           </li>
         </ul>
       </div>
       <div class="page-footer__copyright copyright">
-        <b class="copyright__text">Разработано:</b>
+        <p class="copyright__text">Разработано:</p>
         <a class="button copyright__link" href="https://dobernike.github.io">dobernike</a>
         <small class="copyright__small">По макету: "HTML Academy"</small>
       </div>
     </div>
   </footer>
+
+  <section class="modal modal-login">
+    <h2 class="modal-login__title">
+      Личный кабинет
+    </h2>
+    <p class="modal-login__text">
+      Введите свой логин и пароль, чтобы войти
+    </p>
+    <form class="modal-login__form" action="https://echo.academy.ru" method="post">
+    <p class="modal-login__item">
+      <label class="visually-hidden" for="input-user">Логин</label>
+      <input class="modal-login__input modal-login__input--user" id="input-user" name="user" type="text" placeholder="Логин">
+    </p>
+    <p class="modal-login__item">
+        <label class="visually-hidden" for="input-password">Пароль</label>
+        <input class="modal-login__input modal-login__input--password" id="input-password" name="password" type="password" placeholder="Пароль">
+      </p>
+      <p class="modal-login__help">
+        <label class="modal-login__remember-label"><input class="modal-login__remember-checkbox" name="remember-me" type="checkbox" checked=""> Запомните меня</label>
+        <a class="modal-login__forgot-pass" href="#">
+          Я забыл пароль!
+        </a>
+      </p>
+      <button class="modal-login__button modal-login__button--submit button" type="submit">Войти</button>
+      <button class="modal-login__button modal-login__button--close button" type="button">Закрыть</button>
+    </form>
+
+  </section>
+
   <script src="js/scripts.js"></script>
 </body>
 

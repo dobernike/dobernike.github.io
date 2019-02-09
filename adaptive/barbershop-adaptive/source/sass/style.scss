@@ -884,8 +884,8 @@ img {
   padding: 0;
 }
 
-.slider__item:nth-child(1) {
-  display: block;
+.slider__item--current {
+  display: flex;
 }
 
 .slider__toggles {
@@ -940,6 +940,10 @@ img {
 
 .advantages {
   margin-bottom: 45px;
+}
+
+.advantages__item {
+  flex-direction: column;
 }
 
 .advantages__item--fast {
@@ -997,7 +1001,11 @@ img {
 }
 
 .news__wrapper {
+  padding-bottom: 28px;
+
   color: #000000;
+
+  border-bottom: 1px solid #e5ddd5;
  
   background-color: $bg-lightgrey;
 }
@@ -1016,8 +1024,9 @@ img {
 
 .news__list {
   // margin: 0 auto;
+  margin: 0;
   padding: 0;
-  // padding: 0 20px;
+  padding: 0 20px;
 
   // width: 280px;
 
@@ -1029,7 +1038,6 @@ img {
   display: flex;
   justify-content: space-between;
 
-  padding: 0 20px;
   padding-bottom: 22px;
   margin-bottom: 26px;
 
@@ -1044,6 +1052,7 @@ img {
   position: relative;
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   // justify-content: space-between;
   box-sizing: border-box;
 
@@ -1096,4 +1105,354 @@ img {
   margin: 0;
 
   max-width: 600px;
+}
+
+// @import "blocks/buttton";
+// Файл blocks/buttton.scss
+
+.button {
+  display: block;
+
+  margin: 0 auto;
+  padding-top: 14px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  box-sizing: border-box;
+  width: 280px;
+  // height: 50px;
+
+  line-height: 24px;
+  font-weight: bold;
+  color: #000000;
+  text-align: center;
+  // vertical-align: middle;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  border: 1px solid #e5ddd5;
+}
+
+// @import "blocks/reviews";
+// Файл blocks/reviews.scss
+
+.reviews {
+  padding-bottom: 80px;
+
+  color: #000000;
+
+  background-color: $bg-lightgrey;
+
+  // padding-top: 80px;
+    background-image: url("../img/start_footer.svg");
+    background-position: center bottom;
+    background-size: 1280px 80px;
+    background-repeat: no-repeat;
+}
+
+.reviews__title {
+  margin: 0;
+  padding-top: 30px;
+  margin-bottom: 35px;
+
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 30px;
+  text-transform: uppercase;
+}
+
+.reviews__write {
+  display: none;
+}
+
+// .reviews__item {
+//   // display: flex;
+// }
+
+
+.reviews__author-picture {
+  position: relative;
+  margin: 0;
+  margin-right: 20px;
+
+  flex-shrink: 0;
+
+  box-sizing: border-box;
+  width: 50px;
+  height: 48px;
+
+  overflow: hidden;
+
+  border: 1px solid #e8e0d9;
+}
+
+.reviews__author-image {
+  position: absolute;
+  top: 0;
+  left: -10px;
+
+  max-width: none;
+}
+
+.reviews__author-name {
+  display: block;
+  margin-bottom: 15px;
+
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
+}
+
+.reviews__text {
+  margin: 0;
+}
+
+// .reviews__author-wrapper {
+
+// }
+
+.reviews__prev {
+  display: none;
+}
+
+.reviews__next {
+  display: none;
+}
+
+
+.reviews__toggles .slider__toggle--active::before {
+  background-color: #353535;
+}
+
+// @import "blocks/page-footer";
+// Файл blocks/page-footer.scss
+
+.page-footer {
+  border: 1px solid #353535;
+}
+
+.page-footer__wrapper {
+  padding-top: 35px;
+
+  text-align: center;
+}
+
+// @import "blocks/contacts";
+// Файл blocks/contacts.scss
+
+.contacts__title {
+  display: block;
+
+  margin-bottom: 15px;
+
+  font-weight: bold;
+}
+
+.contacts__text {
+  margin: 0;
+  padding: 0 20px;
+}
+
+.contacts__phone {
+  display: block;
+
+  margin: 0 auto;
+  margin-top: 20px;
+  margin-bottom: 26px;
+  padding-top: 14px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+
+  box-sizing: border-box;
+  width: 280px;
+  // height: 50px;
+
+  line-height: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+  // vertical-align: middle;
+  text-decoration: none;
+  text-transform: uppercase;
+
+  border: 1px solid #353535;
+}
+
+.contacts__phone-mobile {
+  display: none;
+}
+
+// @import "blocks/social";
+// Файл blocks/social.scss
+
+.social__title {
+  display: none;
+}
+
+.social__list {
+  display: flex;
+  justify-content: center;
+
+  margin: 0 auto;
+  margin-bottom: 30px;
+  padding: 0;
+
+  list-style: none;
+}
+
+.social__item {
+  display: flex;
+  flex-grow: 1;
+
+  max-width: 214px;
+  height: 101px;
+}
+
+.social__link {
+  position: relative;
+
+  // display: block;
+
+  // flex-grow: 1;
+
+  box-sizing: border-box;
+  width: 100%;
+  // width: 109px;
+  
+
+  border: 1px solid #353535;
+
+  &:hover,
+  &:focus {
+
+  }
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    margin-top: -20px;
+    margin-left: -18px;
+
+    width: 36px;
+    height: 40px;
+
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  &--vkontakte::before {
+    background-image: url("../img/vk-big.png");
+  }
+
+  &--facebook::before {
+    background-image: url("../img/fb-big.png");
+  }
+
+  &--instagram::before {
+    background-image: url("../img/ig-big.png");
+  }
+}
+
+// @import "blocks/copyright";
+// Файл blocks/copyright.scss
+
+.copyright__text {
+  margin: 0;
+  margin-bottom: 15px;
+}
+
+.copyright__link {
+  color: #ffffff;
+}
+
+.copyright__small {
+  opacity: 0.1;
+}
+
+// @import "blocks/modal-login";
+// Файл blocks/modal-login.scss
+
+.modal {
+  display: block;
+}
+
+.modal-login {
+  position: fixed;
+  top: 136px;
+
+  margin: 0 auto;
+  padding: 0 20px;
+
+  width: 100%;
+  // max-width: 460px;
+  min-height: 502px;
+
+  text-align: center;
+  color: #000000;
+
+  background-color: $bg-lightgrey;
+}
+
+.modal-login__title {
+  margin: 0;
+  margin-bottom: 25px;
+  padding-top: 37px;
+
+  
+  font-size: 40px;
+  line-height: 40px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.modal-login__text {
+  margin: 0;
+  margin-bottom: 25px;
+}
+
+.modal-login__item {
+  margin: 0;
+  margin-bottom: 6px;
+
+  &:nth-child(2) {
+    margin-bottom: 26px;
+  }
+}
+
+.modal-login__input {
+  position: relative;
+
+  box-sizing: border-box;
+  width: 280px;
+  height: 50px;
+
+  padding-left: 18px;
+  padding-right: 40px;
+
+  border: 1px solid #e5ddd5;
+
+  background-repeat: no-repeat;
+  background-position: 245px center;
+
+  &::placeholder {
+    color: #000000;
+  }
+
+  &--user {
+    background-image: url("../img/user.svg");
+  }
+
+  &--password {
+    background-image: url("../img/locked.svg");
+  }
+}
+
+.modal-login__help {
+  margin: 0;
 }
