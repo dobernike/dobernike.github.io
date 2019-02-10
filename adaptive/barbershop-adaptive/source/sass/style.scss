@@ -48,7 +48,9 @@ img {
   height: auto;
 }
 
-.visually-hidden:not(:focus):not(:active) {
+.visually-hidden:not(:focus):not(:active),
+input[type="checkbox"].visually-hidden,
+input[type="radio"].visually-hidden {
   position: absolute;
 
   width: 1px;
@@ -1034,7 +1036,7 @@ img {
   list-style: none;
 }
 
-.news__item {
+.news__item-link {
   display: flex;
   justify-content: space-between;
 
@@ -1043,8 +1045,41 @@ img {
 
   border-bottom: 1px solid #e5ddd5;
 
+  color: #000000;
+  text-decoration: none;
+
   &:last-child {
     border: none;
+  }
+
+  &:hover .news__date,
+  &:focus .news__date {
+    background-color: #826550;
+  }
+  
+  &:active .news__date {
+    color: #8e7868;
+
+    background-color: #6a4d38;
+  }
+
+  &:hover .news__date::after,
+  &:focus .news__date::after {
+    border-top-color: #826550;
+  }
+
+  &:active .news__date::after {
+    border-top-color: #6a4d38;
+  }
+
+  &:hover .news__text,
+  &:focus .news__text {
+    color: #826550;
+    text-decoration: underline;
+  }
+
+  &:active .news__text {
+    color: #6a4d38;
   }
 }
 
@@ -1057,6 +1092,7 @@ img {
   box-sizing: border-box;
 
   padding: 9px;
+  margin-top: 10px;
   margin-right: 20px;
 
   width: 50px;
@@ -1106,6 +1142,20 @@ img {
 
   max-width: 600px;
 }
+
+.news__to-all {
+  &:hover,
+  &:focus {
+  border-color: #d5c9bd;
+  } 
+
+  &:active {
+    color: #958c84;
+    background-color: #d5c9bd;
+  }
+}
+
+
 
 // @import "blocks/buttton";
 // Файл blocks/buttton.scss
@@ -1228,10 +1278,6 @@ img {
 // @import "blocks/page-footer";
 // Файл blocks/page-footer.scss
 
-.page-footer {
-  border: 1px solid #353535;
-}
-
 .page-footer__wrapper {
   padding-top: 35px;
 
@@ -1278,6 +1324,19 @@ img {
   text-transform: uppercase;
 
   border: 1px solid #353535;
+
+  &:hover,
+  &:focus {
+    border-color: #525252;
+  }
+
+  &:active {
+    color: #676767;
+
+    border-color: transparent;
+
+    background-color: #252525;
+  }
 }
 
 .contacts__phone-mobile {
@@ -1326,7 +1385,12 @@ img {
 
   &:hover,
   &:focus {
+    border-color: #515151;
+  }
 
+  &:active {
+    border-color: transparent;
+    background-color: #252525;
   }
 
   &::before {
@@ -1357,6 +1421,11 @@ img {
   &--instagram::before {
     background-image: url("../img/ig-big.png");
   }
+
+  &:active::before {
+    opacity: 0.3;
+  }
+
 }
 
 // @import "blocks/copyright";
@@ -1369,6 +1438,19 @@ img {
 
 .copyright__link {
   color: #ffffff;
+
+  border-color: #3e3e3e;
+
+  &:hover,
+  &:focus {
+    border-color: #515151;
+  }
+
+  &:active {
+    color: #676767;
+    border-color: transparent;
+    background-color: #252525
+  }
 }
 
 .copyright__small {
@@ -1379,11 +1461,29 @@ img {
 // Файл blocks/modal-login.scss
 
 .modal {
+  display: none;
+
+  position: fixed;
+
+  box-shadow: 0 30px 50px rgba(0,0,0,.7);
+  z-index: 3;
+}
+
+.modal-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.modal-show {
   display: block;
 }
 
 .modal-login {
-  position: fixed;
   top: 136px;
 
   margin: 0 auto;
@@ -1451,8 +1551,128 @@ img {
   &--password {
     background-image: url("../img/locked.svg");
   }
+
+  &:hover,
+  &:focus {
+    outline-color: #999999;
+    border-color: #d5c9bd;
+  }
+
+  &:active {
+    border-color: #999999;
+  }
 }
 
 .modal-login__help {
-  margin: 0;
+  display: flex;
+  justify-content: space-between;
+
+  width: 280px;
+
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.modal-login__remember-label {
+  position: relative;
+  padding-left: 48px;
+
+  line-height: 30px;
+
+  cursor: pointer;
+
+  &:not(:active) input[type=checkbox]:checked + .modal-login__remember-checkbox::before,
+   &:active input[type=checkbox]:not(:checked) + .modal-login__remember-checkbox::before
+   {
+    content: "";
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    margin-top: -8px;
+    margin-left: -11px;
+
+    width: 22px;
+    height: 16px;
+
+    background-image: url("../img/tick.svg");
+    background-repeat: no-repeat;
+  }
+
+  &:hover .modal-login__remember-checkbox,
+  &:focus .modal-login__remember-checkbox {
+    border-color: #d5c9bd;
+  }
+
+  &:active .modal-login__remember-checkbox {
+    background-color: #d5c9bd;
+  }
+}
+
+.modal-login__remember-checkbox {
+  position: absolute;
+  top: -2px;
+  left: 0;
+
+  width: 31px;
+  height: 31px;
+
+  background-color: #ffffff;
+
+  border: 1px solid #e5ddd5;
+}
+
+.modal-login__forgot-pass {
+  color: #000000;
+  line-height: 30px;
+  
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.modal-login__button {
+  display: inline-block;
+
+  width: 130px;
+
+  margin-right: 18px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &--submit {
+    color: #ffffff;
+    background-color: #826550;
+  }
+
+  &--submit:hover,
+  &--submit:focus {
+    background-color: #6a4d38;
+  } 
+
+  &--submit:active {
+    color: #978374;
+  }
+
+  &--submit:disabled {
+    background-color: #aeaeae;
+  }
+
+  &--close {
+    background-color: transparent;
+  }
+
+  &--close:hover,
+  &--close:focus {
+  border-color: #d5c9bd;
+  } 
+
+  &--close:active {
+    color: #958c84;
+    background-color: #d5c9bd;
+  }
 }
