@@ -778,6 +778,8 @@ input[type="radio"].visually-hidden {
     color: rgba(0, 0, 0, 0.3); }
   .stats__legend--bottom {
     display: none; }
+  .stats__list {
+    margin-bottom: 40px; }
   .stats__list tbody {
     display: flex;
     flex-wrap: wrap; }
@@ -882,28 +884,20 @@ input[type="radio"].visually-hidden {
   margin-bottom: 45px; }
 
 .advantages__item {
-  flex-direction: column; }
+  padding-top: 125px;
+  flex-direction: column;
+  background-size: 95px;
+  background-position: center 0;
+  background-repeat: no-repeat; }
 
 .advantages__item--fast {
-  padding-top: 125px;
-  background-image: url("../img/advantage-1-illustration.svg");
-  background-size: 95px;
-  background-position: center 0;
-  background-repeat: no-repeat; }
+  background-image: url("../img/advantage-1-illustration.svg"); }
 
 .advantages__item--cool {
-  padding-top: 125px;
-  background-image: url("../img/advantage-2-illustration.svg");
-  background-size: 95px;
-  background-position: center 0;
-  background-repeat: no-repeat; }
+  background-image: url("../img/advantage-2-illustration.svg"); }
 
 .advantages__item--price {
-  padding-top: 125px;
-  background-image: url("../img/advantage-3-illustration.svg");
-  background-size: 95px;
-  background-position: center 0;
-  background-repeat: no-repeat; }
+  background-image: url("../img/advantage-3-illustration.svg"); }
 
 .advantages__title {
   margin: 0;
@@ -919,10 +913,32 @@ input[type="radio"].visually-hidden {
   font-size: 20px;
   text-align: center; }
 
+@media (min-width: 768px) {
+  .advantages__wrapper {
+    width: 84%; }
+  .advantages__item {
+    display: flex;
+    margin-left: 30px;
+    padding-top: 0;
+    padding-bottom: 40px;
+    padding-left: 125px;
+    border-bottom: 1px solid #4a4a4a;
+    background-position: 0 6px; }
+    .advantages__item:last-child {
+      margin-bottom: 0;
+      padding-bottom: 10px;
+      border: none; }
+  .advantages__title {
+    text-align: left; }
+  .advantages__description {
+    text-align: left; }
+  .advantages__toggles {
+    display: none; } }
+
 .news {
   padding-top: 80px;
   background-image: url("../img/start_news.svg");
-  background-position: center 0;
+  background-position: center top;
   background-size: 1280px 80px;
   background-repeat: no-repeat; }
 
@@ -1020,6 +1036,14 @@ input[type="radio"].visually-hidden {
 .news__to-all:active {
   color: #958c84;
   background-color: #d5c9bd; }
+
+@media (min-width: 768px) {
+  .news {
+    padding-top: 126px;
+    background-size: 1280px 126px; }
+  .news__wrapper {
+    width: 84%;
+    margin: 0 auto; } }
 
 .button {
   display: block;
