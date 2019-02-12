@@ -262,3 +262,35 @@ uploadFile.addEventListener('change', function () {
 uploadCancel.addEventListener('click', function () {
   closeEditor();
 });
+
+var hashtagInput = document.querySelector('.text__hashtags');
+
+hashtagInput.addEventListener('invalid', function () {
+  if (hashtagInput.validity.tooShort) {
+    hashtagInput.setCustomValidity('Больше хештегов, богу хештегов!');
+  } else if (hashtagInput.validity.tooLong) {
+    hashtagInput.setCustomValidity('Ну нет много, же...');
+  } else {
+    hashtagInput.setCustomValidity('');
+  }
+});
+
+hashtagInput.addEventListener('input', function (evt) {
+  var target = evt.target;
+  if (target.value.length < 2) {
+    hashtagInput.setCustomValidity('И это по твойму хештег?');
+  } else {
+    var arrTarget = target.value.split(' ');
+    console.log(arrTarget);
+
+    for (var k = 0; k < arrTarget.length; k++) {
+      var targetElement = arrTarget[k];
+      if (targetElement[0] !== '#' || targetElement[0] === '#' && targetElement[1] === '#') {
+        console.log('error');
+        hashtagInput.setCustomValidity('Больше хештегов, богу хештегов!');
+        target.setCustomValidity('Больше хештегов, богу хештегов!');
+      }
+    }
+    // target.setCustomValidity('bad');
+  }
+});
