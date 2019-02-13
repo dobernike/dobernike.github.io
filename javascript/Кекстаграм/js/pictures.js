@@ -156,10 +156,11 @@ var effectsPreviews = imgUploadOverlay.querySelectorAll('.effects__preview');
 var scaleControlValue = imgUploadOverlay.querySelector('.scale__control--value');
 var imagePreview = imgUploadOverlay.querySelector('.img-upload__preview > img');
 var scalePin = imgUploadOverlay.querySelector('.effect-level__pin');
-var scalePinProcent = scalePin.style.left;
+console.log(window.slider);
 
 var pinEditor = function () {
   // imagePreview.style.filter = getComputedStyle(filterChecked).filter;
+
 
   // var EFFECT_SEPIA_MIN = 0;
   // var EFFECT_SEPIA_MAX = 1;
@@ -205,9 +206,9 @@ var pinEditor = function () {
 };
 
 
-scalePin.addEventListener('mouseup', function () {
-  pinEditor();
-});
+// scalePin.addEventListener('mouseup', function () {
+//   pinEditor();
+// });
 
 
 var resetEditor = function () {
@@ -232,7 +233,7 @@ for (var i = 0; i < effectPreviews.length; i++) {
 
 
 // ------------------------------------------------------------
-
+imgUploadOverlay.classList.remove('hidden');
 
 // Открывание и закрывание редактора
 var onEditorPressESC = function (evt) {
