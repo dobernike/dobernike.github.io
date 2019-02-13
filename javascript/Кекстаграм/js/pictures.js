@@ -166,7 +166,7 @@ var pinEditor = function () {
   // var EFFECT_SEPIA_MAX = 1;
   // var SCALE_PIN_MAX = 100;
   // var filterValueTest = 'sepia(' + 1 + ')';
-  // scalePinProcent = 100;
+  var scalePinProcent = 100;
   // var math = ((SCALE_PIN_MIN + scalePinProcent) * 1);
   // console.log(math);
   // console.log(scalePinProcent);
