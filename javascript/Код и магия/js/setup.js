@@ -18,26 +18,26 @@
   };
 
 
-  var wizards = [{
-    name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: randomArray(WIZARD_COAT_COLORS),
-    eyesColor: randomArray(WIZARD_EYES_COLORS)
-  },
-  {
-    name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: randomArray(WIZARD_COAT_COLORS),
-    eyesColor: randomArray(WIZARD_EYES_COLORS)
-  },
-  {
-    name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: randomArray(WIZARD_COAT_COLORS),
-    eyesColor: randomArray(WIZARD_EYES_COLORS)
-  },
-  {
-    name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
-    coatColor: randomArray(WIZARD_COAT_COLORS),
-    eyesColor: randomArray(WIZARD_EYES_COLORS)
-  }];
+  // var wizards = [{
+  //   name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
+  //   coatColor: randomArray(WIZARD_COAT_COLORS),
+  //   eyesColor: randomArray(WIZARD_EYES_COLORS)
+  // },
+  // {
+  //   name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
+  //   coatColor: randomArray(WIZARD_COAT_COLORS),
+  //   eyesColor: randomArray(WIZARD_EYES_COLORS)
+  // },
+  // {
+  //   name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
+  //   coatColor: randomArray(WIZARD_COAT_COLORS),
+  //   eyesColor: randomArray(WIZARD_EYES_COLORS)
+  // },
+  // {
+  //   name: randomArray(WIZARD_NAMES, WIZARD_LAST_NAMES),
+  //   coatColor: randomArray(WIZARD_COAT_COLORS),
+  //   eyesColor: randomArray(WIZARD_EYES_COLORS)
+  // }];
 
   var similarListElement = document.querySelector('.setup-similar-list');
 
@@ -49,23 +49,37 @@
     var wizardElement = similarWizardTemplate.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizard.name;
-    wizardElement.querySelector('.wizard-coat').style.fill = wizard.coatColor;
-    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+    wizardElement.querySelector('.wizard-coat').style.fill = wizard.colorCoat;
+    wizardElement.querySelector('.wizard-eyes').style.fill = wizard.colorEyes;
 
     return wizardElement;
   };
 
-  var addFragment = function (arr) {
+  var successHandler = function (wizards) {
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < arr.length; i++) {
-      fragment.appendChild(renderWizard(arr[i]));
+
+    for (var i = 0; i < 4; i++) {
+      fragment.appendChild(renderWizard(wizards[i]));
     }
     similarListElement.appendChild(fragment);
+
+    document.querySelector('.setup-similar').classList.remove('hidden');
   };
 
-  addFragment(wizards);
+  var errorHandler = function (errorMessage) {
+    var node = document.createElement('div');
+    node.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red;';
+    node.style.position = 'absolute';
+    node.style.left = 0;
+    node.style.right = 0;
+    node.style.fontSize = '30px';
 
-  document.querySelector('.setup-similar').classList.remove('hidden');
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', node);
+  };
+
+  window.backend.load(successHandler, errorHandler);
+
 
   var setupPlayer = document.querySelector('.setup-player');
   var setupWizard = setupPlayer.querySelector('.setup-wizard');
@@ -94,5 +108,15 @@
     setupFireball.style.background = selectColor;
     setupFireballBackend.value = selectColor;
   });
+
+  var overlay = document.querySelector('.overlay');
+  var form = overlay.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), function (response) {
+      overlay.classList.add('hidden');
+    });
+    evt.preventDefault();
+  });
+
 })();
 

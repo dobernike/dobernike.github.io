@@ -5,8 +5,6 @@
   var setupOpen = document.querySelector('.setup-open');
   var setupClose = setup.querySelector('.setup-close');
 
-  var setupForm = document.querySelector('.setup-wizard-form');
-
   var ESC_KEYCODE = 27;
 
   var userNameInput = setup.querySelector('.setup-user-name');
@@ -67,9 +65,5 @@
     } else {
       target.setCustomValidity('');
     }
-  });
-
-  setupForm.addEventListener('submit', function () {
-    setup.classList.add('hidden');
   });
 })();
