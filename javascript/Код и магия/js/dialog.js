@@ -69,7 +69,7 @@
     }
   });
 
-  setupForm.addEventListener('submit', function (evt) {
+  setupForm.addEventListener('submit', function () {
     setup.classList.add('hidden');
   });
 })();
