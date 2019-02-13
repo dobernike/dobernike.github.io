@@ -134,24 +134,25 @@
       </div>
     </section>
 
+    <div class="news-review-wrapper">
     <section class="news">
       <div class="news__wrapper">
         <h2 class="news__title">Новости и акции</h2>
         <ul class="news__list">
           <li class="news__item">
             <a class="news__item-link" href="#">
-            <time class="news__date" datetime="2017-09-29">
-              <b class="news__day">29</b> сент
-            </time>
-            <p class="news__text">Нам наконец завезли Ягермайстер! Теперь вы можете пропустить стаканчик во время стрижки.</p>
-          </a>
+              <time class="news__date" datetime="2017-09-29">
+                <b class="news__day">29</b> сент
+              </time>
+              <p class="news__text">Нам наконец завезли Ягермайстер! Теперь вы можете пропустить стаканчик во время стрижки.</p>
+            </a>
           </li>
           <li class="news__item">
-              <a class="news__item-link" href="#">
-            <time class="news__date" datetime="2017-09-09">
-              <b class="news__day">19</b> сент
-            </time>
-            <p class="news__text">В нашей команде пополнение, Борис "Бритва" Стригунец, обладатель множества титулов и наград пополнил наши стройные ряды. Спешите записаться!</p>
+            <a class="news__item-link" href="#">
+              <time class="news__date" datetime="2017-09-09">
+                <b class="news__day">19</b> сент
+              </time>
+              <p class="news__text">В нашей команде пополнение, Борис "Бритва" Стригунец, обладатель множества титулов и наград пополнил наши стройные ряды. Спешите записаться!</p>
             </a>
           </li>
         </ul>
@@ -161,8 +162,10 @@
 
     <section class="reviews">
       <div class="reviews__wrapper slider">
-        <h2 class="reviews__title">Отзывы о нас</h2>
-        <a class="reviews__write button" href="#">Оставить свой</a>
+        <div class="reviews__title-wrapper">
+          <h2 class="reviews__title">Отзывы о нас</h2>
+          <a class="reviews__write button" href="#">Оставить свой</a>
+        </div>
         <div class="reviews__list slider__list">
           <blockquote class="reviews__item slider__item slider__item--current">
             <p class="reviews__author-picture">
@@ -201,6 +204,7 @@
         </p>
       </div>
     </section>
+  </div>
   </main>
 
   <footer class="page-footer">
@@ -254,11 +258,11 @@
     <form class="modal-login__form" action="https://echo.htmlacademy.ru" method="post">
       <p class="modal-login__item">
         <label class="visually-hidden" for="input-user">Логин</label>
-        <input class="modal-login__input modal-login__input--user" id="input-user" name="user" type="text" placeholder="Логин">
+        <input class="modal-login__input modal-login__input--user" id="input-user" name="user" required="" type="text" placeholder="Логин">
       </p>
       <p class="modal-login__item">
         <label class="visually-hidden" for="input-password">Пароль</label>
-        <input class="modal-login__input modal-login__input--password" id="input-password" name="password" type="password" placeholder="Пароль">
+        <input class="modal-login__input modal-login__input--password" id="input-password" name="password" required="" type="password" placeholder="Пароль">
       </p>
       <p class="modal-login__help">
         <label class="modal-login__remember-label"><input class="visually-hidden" name="remember-me" type="checkbox" checked="">
@@ -267,7 +271,7 @@
           Я забыл пароль!
         </a>
       </p>
-      <button class="modal-login__button modal-login__button--submit button" type="submit">Войти</button>
+      <button class="modal-login__button modal-login__button--submit button" type="submit"><span class="modal-login__submit-span-mobile">Войти</span><span class="modal-login__submit-span-table"> В личный кабинет</span></button>
       <button class="modal-login__button modal-login__button--close button" type="button">Закрыть</button>
     </form>
 

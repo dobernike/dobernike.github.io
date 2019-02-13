@@ -958,7 +958,11 @@ input[type="radio"].visually-hidden {
   .advantages__toggles {
     display: none; } }
 
+.news-review-wrapper {
+  background-color: #f8f5f2; }
+
 .news {
+  margin-bottom: 30px;
   padding-bottom: 28px;
   color: #000000;
   border-bottom: 1px solid #e5ddd5;
@@ -1091,10 +1095,11 @@ input[type="radio"].visually-hidden {
   background-size: cover;
   background-repeat: no-repeat; }
 
+.reviews__title-wrapper {
+  margin-bottom: 35px; }
+
 .reviews__title {
   margin: 0;
-  padding-top: 30px;
-  margin-bottom: 35px;
   font-weight: bold;
   font-size: 30px;
   line-height: 30px;
@@ -1138,6 +1143,24 @@ input[type="radio"].visually-hidden {
 
 .reviews__toggles .slider__toggle--active::before {
   background-color: #353535; }
+
+@media (min-width: 768px) {
+  .reviews__title-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .reviews__title {
+    margin-right: 20px;
+    width: 460px;
+    text-align: left;
+    font-size: 40px;
+    line-height: 40px; }
+  .reviews__write {
+    display: block;
+    margin: 0;
+    width: 160px; }
+  .reviews__list slider__list {
+    width: 640px; } }
 
 .page-footer__wrapper {
   padding-top: 35px;
@@ -1252,7 +1275,7 @@ input[type="radio"].visually-hidden {
 
 .modal-overlay {
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -1264,10 +1287,7 @@ input[type="radio"].visually-hidden {
 
 .modal-login {
   top: 136px;
-  margin: 0 auto;
-  padding: 0 20px;
   width: 100%;
-  min-height: 502px;
   text-align: center;
   color: #000000;
   background-color: #f8f5f2; }
@@ -1284,6 +1304,9 @@ input[type="radio"].visually-hidden {
 .modal-login__text {
   margin: 0;
   margin-bottom: 25px; }
+
+.modal-login__form {
+  margin-bottom: 37px; }
 
 .modal-login__item {
   margin: 0;
@@ -1386,3 +1409,54 @@ input[type="radio"].visually-hidden {
   .modal-login__button--close:active {
     color: #958c84;
     background-color: #d5c9bd; }
+
+.modal-login__submit-span-table {
+  display: none; }
+
+@media (min-width: 768px) {
+  .modal-login {
+    left: 50%;
+    box-sizing: border-box;
+    width: 460px;
+    margin-left: -230px; }
+  .modal-login__title {
+    padding-top: 60px; }
+  .modal-login__form {
+    margin-bottom: 57px; }
+  .modal-login__input {
+    width: 320px;
+    background-position: 285px center; }
+  .modal-login__help {
+    width: 320px; }
+  .modal-login__button--submit {
+    width: 320px;
+    margin-right: 0; }
+  .modal-login__submit-span-table {
+    display: inline; }
+  .modal-login__button--close {
+    position: absolute;
+    top: 65px;
+    right: -100px;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border: none;
+    font-size: 0; }
+    .modal-login__button--close::before, .modal-login__button--close::after {
+      content: "";
+      position: absolute;
+      top: 11px;
+      left: -6px;
+      width: 36px;
+      height: 2px;
+      background-color: #ffffff; }
+    .modal-login__button--close::before {
+      -webkit-transform: rotate(45deg);
+              transform: rotate(45deg); }
+    .modal-login__button--close::after {
+      -webkit-transform: rotate(-45deg);
+              transform: rotate(-45deg); }
+    .modal-login__button--close:active {
+      background-color: transparent; }
+    .modal-login__button--close:active::before, .modal-login__button--close:active::after {
+      opacity: 0.3; } }
