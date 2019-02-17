@@ -744,13 +744,16 @@ input[type="radio"].visually-hidden {
 
 @media (min-width: $tablet-width) {
   .stats {
+    // margin-top: -185px;
+    margin: 0 auto;
+    margin-top: -173px;
+    margin-bottom: 40px;
+
     width: 84%;
     // max-width: 960px;
     max-width: 1200px;
-    margin: 0 auto;
     // width: 640px;
-    // margin-top: -185px;
-    margin-top: -174px;
+    
   }
 
   .stats__header {
@@ -807,10 +810,6 @@ input[type="radio"].visually-hidden {
     display: none;
   }
 
-  .stats__list {
-    margin-bottom: 40px;
-  }
-
   .stats__list tbody {
     display: flex;
     flex-wrap: wrap;
@@ -852,7 +851,7 @@ input[type="radio"].visually-hidden {
   .stats {
     display: flex;
     // width: 960px;
-    margin-top: -160px;
+    margin-top: -158px;
   }
 
   .stats__header {
@@ -968,6 +967,12 @@ input[type="radio"].visually-hidden {
   }
 }
 
+@media(min-width: $desktop-width) {
+  .stats {
+    margin-bottom: 80px;
+  }
+}
+
 // @import "blocks/advantages";
 // Файл blocks/advantages.scss
 
@@ -978,7 +983,7 @@ input[type="radio"].visually-hidden {
 
   background-image: url("../img/start_news.svg");
   background-position: center bottom;
-  background-size: cover;
+  // background-size: cover;
   background-repeat: no-repeat;
 }
 
@@ -1032,7 +1037,7 @@ input[type="radio"].visually-hidden {
     // padding: 0 64px;
 
     width: 84%;
-    // max-width: 1200px;
+    max-width: 1200px;
   }
 
   // .advantages__list {
@@ -1074,6 +1079,43 @@ input[type="radio"].visually-hidden {
 
   .advantages__toggles {
     display: none;
+  }
+}
+
+@media(min-width: $desktop-width) {
+  .advantages {
+    padding-bottom: 140px;
+    }
+
+  .advantages__list {
+    display: flex;
+    justify-content: space-between;
+    // flex-direction: row;
+
+    width: 100%;
+  }
+
+  .advantages__item {
+    margin: 0;
+    padding: 0 45px;
+    padding-top: 130px;
+
+    box-sizing: border-box;
+    width: 320px;
+
+    background-position: center top;
+    
+    border: none;
+  }
+
+  .advantages__title {
+    margin-bottom: 20px;
+
+    text-align: center;
+  }
+
+  .advantages__description {
+    text-align: center;
   }
 }
 
@@ -1309,7 +1351,7 @@ input[type="radio"].visually-hidden {
   // padding-top: 80px;
     background-image: url("../img/start_footer.svg");
     background-position: center bottom;
-    background-size: cover;
+    // background-size: cover;
     background-repeat: no-repeat;
 }
 
