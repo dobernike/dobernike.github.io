@@ -762,7 +762,7 @@ input[type="radio"].visually-hidden {
     margin-top: -173px;
     margin-bottom: 40px;
     width: 84%;
-    max-width: 1200px; }
+    max-width: 960px; }
   .stats__header {
     position: relative;
     display: flex;
@@ -850,7 +850,6 @@ input[type="radio"].visually-hidden {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 20px;
   margin: 0 auto; }
 
 .slider__list {
@@ -906,6 +905,9 @@ input[type="radio"].visually-hidden {
   background-position: center bottom;
   background-repeat: no-repeat; }
 
+.advantages__wrapper {
+  padding: 0 20px; }
+
 .advantages__item {
   padding-top: 125px;
   flex-direction: column;
@@ -941,7 +943,7 @@ input[type="radio"].visually-hidden {
     padding-bottom: 90px; }
   .advantages__wrapper {
     width: 84%;
-    max-width: 1200px; }
+    max-width: 960px; }
   .advantages__item {
     display: flex;
     margin-left: 30px;
@@ -1008,6 +1010,9 @@ input[type="radio"].visually-hidden {
   padding: 0 20px;
   padding-top: 38px;
   list-style: none; }
+
+.news__item:nth-child(3) {
+  display: none; }
 
 .news__item-link {
   display: flex;
@@ -1091,6 +1096,7 @@ input[type="radio"].visually-hidden {
     align-items: center;
     justify-content: space-between;
     width: 84%;
+    max-width: 960px;
     margin: 0 auto; }
   .news__title {
     text-align: left;
@@ -1109,6 +1115,12 @@ input[type="radio"].visually-hidden {
   .news__to-all {
     margin: 0;
     width: 160px; } }
+
+@media (min-width: 1200px) {
+  .news__title {
+    margin-left: 70px; }
+  .news__item:nth-child(3) {
+    display: inline-block; } }
 
 .reviews {
   padding-bottom: 50px;
@@ -1130,6 +1142,9 @@ input[type="radio"].visually-hidden {
 
 .reviews__write {
   display: none; }
+
+.reviews__item {
+  padding: 0 20px; }
 
 .reviews__author-picture {
   position: relative;
@@ -1172,10 +1187,12 @@ input[type="radio"].visually-hidden {
     padding-bottom: 70px;
     background-image: none; }
   .reviews__wrapper {
-    position: relative; }
+    position: relative;
+    flex-wrap: wrap;
+    width: 84%;
+    max-width: 960px; }
   .reviews__title-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center; }
   .reviews__title {
     margin-right: 20px;
@@ -1188,8 +1205,7 @@ input[type="radio"].visually-hidden {
     margin: 0;
     width: 160px; }
   .reviews__list {
-    display: flex;
-    width: 640px; }
+    display: flex; }
   .reviews__item {
     margin: 0;
     padding: 0 30px;
@@ -1232,6 +1248,10 @@ input[type="radio"].visually-hidden {
     bottom: -8px;
     padding: 0 25px;
     background-color: #f8f5f2; } }
+
+@media (min-width: 1200px) {
+  .reviews__title {
+    margin-left: 70px; } }
 
 .page-footer__wrapper {
   padding-top: 35px;

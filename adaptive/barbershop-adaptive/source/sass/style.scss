@@ -750,8 +750,8 @@ input[type="radio"].visually-hidden {
     margin-bottom: 40px;
 
     width: 84%;
-    // max-width: 960px;
-    max-width: 1200px;
+    max-width: 960px;
+    // max-width: 1200px;
     // width: 640px;
     
   }
@@ -899,7 +899,7 @@ input[type="radio"].visually-hidden {
   align-items: center;
   // width: 240px;
   // min-height: 320px;
-  padding: 0 20px;
+  // padding: 0 20px;
   margin: 0 auto;
 }
 
@@ -987,6 +987,10 @@ input[type="radio"].visually-hidden {
   background-repeat: no-repeat;
 }
 
+.advantages__wrapper {
+  padding: 0 20px;
+}
+
 .advantages__item {
   padding-top: 125px;
 
@@ -1034,10 +1038,9 @@ input[type="radio"].visually-hidden {
 
   .advantages__wrapper {
     // flex-direction: row;
-    // padding: 0 64px;
 
     width: 84%;
-    max-width: 1200px;
+    max-width: 960px;
   }
 
   // .advantages__list {
@@ -1166,6 +1169,12 @@ input[type="radio"].visually-hidden {
 
 
   list-style: none;
+}
+
+.news__item {
+  &:nth-child(3) {
+    display: none;
+  }
 }
 
 .news__item-link {
@@ -1299,6 +1308,7 @@ input[type="radio"].visually-hidden {
     justify-content: space-between;
 
     width: 84%;
+    max-width: 960px;
     margin: 0 auto;
   }
 
@@ -1338,6 +1348,18 @@ input[type="radio"].visually-hidden {
   
 }
 
+@media (min-width: $desktop-width) {
+  .news__title {
+    margin-left: 70px;
+  }
+
+  .news__item {
+    &:nth-child(3) {
+      display: inline-block;
+    }
+  }
+}
+
 // @import "blocks/reviews";
 // Файл blocks/reviews.scss
 
@@ -1375,6 +1397,10 @@ input[type="radio"].visually-hidden {
 // .reviews__item {
 //   // display: flex;
 // }
+
+.reviews__item {
+  padding: 0 20px;
+}
 
 
 .reviews__author-picture {
@@ -1440,12 +1466,18 @@ input[type="radio"].visually-hidden {
 
   .reviews__wrapper {
     position: relative;
+    flex-wrap: wrap;
+    width: 84%;
+    max-width: 960px;
   }
 
   .reviews__title-wrapper {
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     align-items: center;
+
+    // width: 84%;
+    // max-width: 960px;
   }
 
   .reviews__title {
@@ -1468,7 +1500,7 @@ input[type="radio"].visually-hidden {
   .reviews__list {
     display: flex;
 
-    width: 640px;
+    // width: 640px;
   }
 
   .reviews__item {
@@ -1540,6 +1572,11 @@ input[type="radio"].visually-hidden {
   }
 }
 
+@media(min-width: $desktop-width) {
+  .reviews__title {
+    margin-left: 70px;
+  }
+}
 // @import "blocks/page-footer";
 // Файл blocks/page-footer.scss
 
