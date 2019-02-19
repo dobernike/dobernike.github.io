@@ -758,10 +758,11 @@ input[type="radio"].visually-hidden {
 
 @media (min-width: 768px) {
   .stats {
-    width: 84%;
-    max-width: 1200px;
     margin: 0 auto;
-    margin-top: -174px; }
+    margin-top: -173px;
+    margin-bottom: 40px;
+    width: 84%;
+    max-width: 960px; }
   .stats__header {
     position: relative;
     display: flex;
@@ -795,8 +796,6 @@ input[type="radio"].visually-hidden {
     color: rgba(0, 0, 0, 0.3); }
   .stats__legend--bottom {
     display: none; }
-  .stats__list {
-    margin-bottom: 40px; }
   .stats__list tbody {
     display: flex;
     flex-wrap: wrap; }
@@ -823,7 +822,7 @@ input[type="radio"].visually-hidden {
 @media (min-width: 1200px) {
   .stats {
     display: flex;
-    margin-top: -160px; }
+    margin-top: -158px; }
   .stats__header {
     flex-direction: column;
     flex-grow: 1;
@@ -851,7 +850,6 @@ input[type="radio"].visually-hidden {
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding: 0 20px;
   margin: 0 auto; }
 
 .slider__list {
@@ -897,12 +895,18 @@ input[type="radio"].visually-hidden {
     background-color: #ffffff;
     border: 1px solid #cccccc; }
 
+@media (min-width: 1200px) {
+  .stats {
+    margin-bottom: 80px; } }
+
 .advantages {
   padding-bottom: 45px;
   background-image: url("../img/start_news.svg");
   background-position: center bottom;
-  background-size: cover;
   background-repeat: no-repeat; }
+
+.advantages__wrapper {
+  padding: 0 20px; }
 
 .advantages__item {
   padding-top: 125px;
@@ -938,7 +942,8 @@ input[type="radio"].visually-hidden {
   .advantages {
     padding-bottom: 90px; }
   .advantages__wrapper {
-    width: 84%; }
+    width: 84%;
+    max-width: 960px; }
   .advantages__item {
     display: flex;
     margin-left: 30px;
@@ -957,6 +962,27 @@ input[type="radio"].visually-hidden {
     text-align: left; }
   .advantages__toggles {
     display: none; } }
+
+@media (min-width: 1200px) {
+  .advantages {
+    padding-bottom: 140px; }
+  .advantages__list {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; }
+  .advantages__item {
+    margin: 0;
+    padding: 0 45px;
+    padding-top: 130px;
+    box-sizing: border-box;
+    width: 320px;
+    background-position: center top;
+    border: none; }
+  .advantages__title {
+    margin-bottom: 20px;
+    text-align: center; }
+  .advantages__description {
+    text-align: center; } }
 
 .news-review-wrapper {
   background-color: #f8f5f2; }
@@ -984,6 +1010,9 @@ input[type="radio"].visually-hidden {
   padding: 0 20px;
   padding-top: 38px;
   list-style: none; }
+
+.news__item:nth-child(3) {
+  display: none; }
 
 .news__item-link {
   display: flex;
@@ -1067,6 +1096,7 @@ input[type="radio"].visually-hidden {
     align-items: center;
     justify-content: space-between;
     width: 84%;
+    max-width: 960px;
     margin: 0 auto; }
   .news__title {
     text-align: left;
@@ -1086,13 +1116,18 @@ input[type="radio"].visually-hidden {
     margin: 0;
     width: 160px; } }
 
+@media (min-width: 1200px) {
+  .news__title {
+    margin-left: 70px; }
+  .news__item:nth-child(3) {
+    display: inline-block; } }
+
 .reviews {
   padding-bottom: 50px;
   color: #000000;
   background-color: #f8f5f2;
   background-image: url("../img/start_footer.svg");
   background-position: center bottom;
-  background-size: cover;
   background-repeat: no-repeat; }
 
 .reviews__title-wrapper {
@@ -1107,6 +1142,9 @@ input[type="radio"].visually-hidden {
 
 .reviews__write {
   display: none; }
+
+.reviews__item {
+  padding: 0 20px; }
 
 .reviews__author-picture {
   position: relative;
@@ -1149,10 +1187,12 @@ input[type="radio"].visually-hidden {
     padding-bottom: 70px;
     background-image: none; }
   .reviews__wrapper {
-    position: relative; }
+    position: relative;
+    flex-wrap: wrap;
+    width: 84%;
+    max-width: 960px; }
   .reviews__title-wrapper {
     display: flex;
-    justify-content: space-between;
     align-items: center; }
   .reviews__title {
     margin-right: 20px;
@@ -1165,8 +1205,7 @@ input[type="radio"].visually-hidden {
     margin: 0;
     width: 160px; }
   .reviews__list {
-    display: flex;
-    width: 640px; }
+    display: flex; }
   .reviews__item {
     margin: 0;
     padding: 0 30px;
@@ -1209,6 +1248,10 @@ input[type="radio"].visually-hidden {
     bottom: -8px;
     padding: 0 25px;
     background-color: #f8f5f2; } }
+
+@media (min-width: 1200px) {
+  .reviews__title {
+    margin-left: 70px; } }
 
 .page-footer__wrapper {
   padding-top: 35px;
