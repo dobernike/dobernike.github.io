@@ -1,6 +1,5 @@
 'use strict';
 
-
 const KEY_CODE = {
   left: 37,
   right: 39
@@ -19,6 +18,7 @@ const showCurrentScreen = (it) => {
     main.removeChild(main.firstChild);
   }
   main.appendChild(templates[it].content.cloneNode(true));
+  main.click();
 }; showCurrentScreen(currentScreen);
 
 document.addEventListener(`keydown`, (evt) => {
