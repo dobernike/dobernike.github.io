@@ -1,26 +1,27 @@
 'use strict';
-let firstScreen = 0;
-const screens = [];
-const templates = document.querySelectorAll(`template`);
-templates.forEach((template) => screens.push(template));
+
+const KEYCODE_ARROW_RIGHT = 39;
+const KEYCODE_ARROW_LEFT = 37;
+
+let currentScreen = 0;
+
+const templates = [`intro`, `greeting`, `rules`, `game-1`, `game-2`, `game-3`, `stats`]
+  .map((template) => {
+    return document.getElementById(`${template}`);
+  });
 
 const main = document.querySelector(`#main`);
-const showScreen = (it) => {
-  if (it >= 0) {
-    console.log(main.children);
-    if (main.children.length !== 0) {
-      main.removeChild();
-    }
-
-    main.appendChild(screens[it].content);
+const showCurrentScreen = (it) => {
+  while (main.firstChild) {
+    main.removeChild(main.firstChild);
   }
-};
-showScreen(firstScreen);
+  main.appendChild(templates[it].content.cloneNode(true));
+}; showCurrentScreen(currentScreen);
 
 document.addEventListener(`keydown`, (evt) => {
-  if (evt.keyCode === 37) {
-    console.log('sss');
-    showScreen(firstScreen++);
+  if (evt.keyCode === KEYCODE_ARROW_RIGHT && currentScreen < templates.length - 1) {
+    showCurrentScreen(++currentScreen);
+  } else if (evt.keyCode === KEYCODE_ARROW_LEFT && currentScreen > 0) {
+    showCurrentScreen(--currentScreen);
   }
 });
-
