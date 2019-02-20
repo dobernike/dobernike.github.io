@@ -6,7 +6,6 @@ const KEY_CODE = {
 };
 
 let currentScreen = 0;
-
 const templates = [`intro`, `greeting`, `rules`, `game-1`, `game-2`, `game-3`, `stats`]
   .map((template) => {
     return document.getElementById(`${template}`);
