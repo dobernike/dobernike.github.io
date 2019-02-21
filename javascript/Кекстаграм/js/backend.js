@@ -34,7 +34,7 @@
       xhrFunction('GET', URL, onLoad, onError);
     },
     save: function (data, onLoad, onError) {
-      var URL = 'https://js.dump.academy/kekstagram';
+      var URL = 'https://echo.htmlacademy.ru';
 
       xhrFunction('POST', URL, onLoad, onError, data);
     }
