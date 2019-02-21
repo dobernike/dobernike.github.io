@@ -4,12 +4,13 @@
   var LINE_START = 0;
   var LINE_END = 450;
   var scalePinProcent = 100;
+  var calc = 450;
 
 
   var pin = document.querySelector('.effect-level__pin');
   var lineDepth = document.querySelector('.effect-level__depth');
 
-  var procentIt = function(value) {
+  var procentIt = function (value) {
     scalePinProcent = Math.floor((value / 450) * 100);
     return scalePinProcent;
   };
@@ -24,8 +25,7 @@
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
 
-      console.log(scalePinProcent);
-
+      // console.log(scalePinProcent);
 
 
       var shift = {
@@ -37,13 +37,20 @@
         x: moveEvt.clientX
       };
 
-      var calc = (pin.offsetLeft + shift.x);
+      calc = (pin.offsetLeft + shift.x);
 
       if (calc >= LINE_START && calc <= LINE_END) {
         pin.style.left = calc + 'px';
         lineDepth.style.width = calc + 'px';
 
-        scalePinProcent = procentIt(calc);
+        // scalePinProcent = procentIt(window.calc);
+
+        // window.slider = {
+        //   pinProcent: procentIt(calc)
+        // };
+
+        window.pinEditor(procentIt(calc));
+        // console.log(window.slider.pinProcent);
       }
     };
 
@@ -58,7 +65,5 @@
     pin.addEventListener('mouseup', onMouseup);
   });
 
-  window.slider = {
-    pinProcent: scalePinProcent
-  };
+
 })();

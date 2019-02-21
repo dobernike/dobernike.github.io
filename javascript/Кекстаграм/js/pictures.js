@@ -203,46 +203,32 @@ hide(document.querySelector('.comments-loader'));
 
 // preview-effect
 var ESCAPE_KEYCODE = 27;
-var SCALE_PIN_MAX = 100;
-var SCALE_PIN_MIN = 0;
-// var EFFECT_CHROME_MIN = 0;
-// var EFFECT_CHROME_MAX = 1;
-// var EFFECT_SEPIA_MIN = 0;
-// var EFFECT_SEPIA_MAX = 1;
-// var EFFECT_MARVIN_MIN = 0;
-// var EFFECT_MARVIN_MAX = 100;
-// var EFFECT_FOBOS_MIN = 0;
-// var EFFECT_FOBOS_MAX = 5;
-// var EFFECT_HEAT_MIN = 0;
-// var EFFECT_HEAT_MAX = 3;
+var SCALE_PIN_MAX = 450;
+var SCALE_PIN_MAX_PERCENT = 100;
+
 
 var uploadFile = document.querySelector('#upload-file');
 var imgUploadOverlay = document.querySelector('.img-upload__overlay');
 var uploadCancel = imgUploadOverlay.querySelector('#upload-cancel');
 // var effectLevelLine = imgUploadOverlay.querySelector('.effect-level__line');
 var effectLevelDepth = imgUploadOverlay.querySelector('.effect-level__depth');
-// var filterChecked = imgUploadOverlay.querySelector('.effects__radio:checked + .effects__label > .effects__preview');
+
 // var effectsPreviews = imgUploadOverlay.querySelectorAll('.effects__preview');
 var scaleControlValue = imgUploadOverlay.querySelector('.scale__control--value');
-var imagePreview = imgUploadOverlay.querySelector('.img-upload__preview > img');
+
 var scalePin = imgUploadOverlay.querySelector('.effect-level__pin');
 // console.log(window.slider);
+var imagePreview = document.querySelector('.img-upload__preview > img');
 
-var pinEditor = function () {
-  // imagePreview.style.filter = getComputedStyle(filterChecked).filter;
+window.pinEditor = function (scalePinProcent) {
+  var filterChecked = document.querySelector('.effects__radio:checked + .effects__label > .effects__preview');
+  imagePreview.style.filter = getComputedStyle(filterChecked).filter;
 
-
-  // var EFFECT_SEPIA_MIN = 0;
-  // var EFFECT_SEPIA_MAX = 1;
-  // var SCALE_PIN_MAX = 100;
-  // var filterValueTest = 'sepia(' + 1 + ')';
-  var scalePinProcent = 100;
-  // var math = ((SCALE_PIN_MIN + scalePinProcent) * 1);
-  // console.log(math);
-  // console.log(scalePinProcent);
-  // var filterValueTest = 'invert(' + (SCALE_PIN_MIN + scalePinProcent) * 1 + '%)';
-  // console.log(filterValueTest);
-  // console.log(scalePinProcent);
+  var EFFECT_CHROME_COEFICIENT = 0.01;
+  var EFFECT_SEPIA_COEFICIENT = 0.01;
+  var EFFECT_MARVIN_COEFICIENT = 1;
+  var EFFECT_FOBOS_COEFICIENT = 20;
+  var EFFECT_HEAT_COEFICIENT = 20;
 
 
   var filterValue = '';
@@ -251,19 +237,19 @@ var pinEditor = function () {
       filterValue = 0;
       break;
     case 'effects__preview--chrome':
-      filterValue = 'grayscale(' + ((SCALE_PIN_MIN + scalePinProcent) * 0.01) + ')';
+      filterValue = 'grayscale(' + scalePinProcent * EFFECT_CHROME_COEFICIENT + ')';
       break;
     case 'effects__preview--sepia':
-      filterValue = 'sepia(' + ((SCALE_PIN_MIN + scalePinProcent) * 0.01) + ')';
+      filterValue = 'sepia(' + scalePinProcent * EFFECT_SEPIA_COEFICIENT + ')';
       break;
     case 'effects__preview--marvin':
-      filterValue = 'invert(' + (SCALE_PIN_MIN + scalePinProcent) * 1 + '%)';
+      filterValue = 'invert(' + scalePinProcent * EFFECT_MARVIN_COEFICIENT + '%)';
       break;
     case 'effects__preview--phobos':
-      filterValue = 'blur(' + ((SCALE_PIN_MIN + scalePinProcent) / 20) + 'px)';
+      filterValue = 'blur(' + scalePinProcent / EFFECT_FOBOS_COEFICIENT + 'px)';
       break;
     case 'effects__preview--heat':
-      filterValue = 'brightness(' + ((SCALE_PIN_MIN + scalePinProcent) / 20) + ')';
+      filterValue = 'brightness(' + scalePinProcent / EFFECT_HEAT_COEFICIENT + ')';
       break;
     default:
       break;
@@ -271,19 +257,12 @@ var pinEditor = function () {
 
 
   imagePreview.style.filter = filterValue;
-  // SCALE_PIN_MAX = 0;
-  // resetEditor();
 };
 
 
-// scalePin.addEventListener('mouseup', function () {
-//   pinEditor();
-// });
-
-
 var resetEditor = function () {
-  effectLevelDepth.style.width = SCALE_PIN_MAX;
-  scalePin.style.left = SCALE_PIN_MAX;
+  effectLevelDepth.style.width = SCALE_PIN_MAX + 'px';
+  scalePin.style.left = SCALE_PIN_MAX + 'px';
   scaleControlValue.value = SCALE_PIN_MAX + '%';
   imagePreview.className = '';
 }; resetEditor();
@@ -291,7 +270,9 @@ var resetEditor = function () {
 // Делегирование еффектов
 var addEventToEffect = function (effect) {
   effect.addEventListener('click', function () {
+    resetEditor();
     imagePreview.className = effect.classList[1];
+    window.pinEditor(SCALE_PIN_MAX_PERCENT);
   });
 };
 
