@@ -159,17 +159,18 @@
   // var photos = [];
 
   var successHandler = function (photoArr) {
-
+    var newArray = window.showFilter(photoArr);
+    console.log(photoArr);
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photoArr.length; i++) {
-      fragment.appendChild(renderPhoto(photoArr[i]));
+    for (var i = 0; i < newArray.length; i++) {
+      fragment.appendChild(renderPhoto(newArray[i]));
     }
     pictures.appendChild(fragment);
 
     var picturesLinks = document.querySelectorAll('.picture');
     for (var j = 0; j < picturesLinks.length; j++) {
       var pictureItem = picturesLinks[j];
-      addPictureLinkHandler(pictureItem, photoArr[j]);
+      addPictureLinkHandler(pictureItem, newArray[j]);
     }
   };
 
