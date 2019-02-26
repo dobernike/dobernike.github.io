@@ -158,9 +158,13 @@
 
   // var photos = [];
 
-  var successHandler = function (photoArr) {
-    var newArray = window.showFilter(photoArr);
-    console.log(photoArr);
+  window.render = function (newArray) {
+    // pictures.nextSibling = false;
+    var imgUpload = document.querySelector('.img-upload');
+    while (imgUpload.nextSibling) {
+      imgUpload.nextSibling.remove();
+    }
+    // pictures.innerHTML = '';
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < newArray.length; i++) {
       fragment.appendChild(renderPhoto(newArray[i]));
@@ -172,6 +176,11 @@
       var pictureItem = picturesLinks[j];
       addPictureLinkHandler(pictureItem, newArray[j]);
     }
+  };
+
+  var successHandler = function (photoArr) {
+    var newArray = window.showFilter(photoArr);
+    window.render(newArray);
   };
 
 

@@ -9,6 +9,7 @@
     var filterPopular = imgFilters.querySelector('#filter-popular');
     var filterNew = imgFilters.querySelector('#filter-new');
     var filterDiscussed = imgFilters.querySelector('#filter-discussed');
+
     var sortedArray = photoArray;
     var addEventToFilterBtn = function (first, second, third, arr) {
       first.addEventListener('click', function () {
@@ -16,22 +17,29 @@
         second.classList.remove('img-filters__button--active');
         third.classList.remove('img-filters__button--active');
 
+        sortedArray = [];
+
         if (first === filterPopular) {
-          sortedArray = arr;
+          sortedArray = arr.slice();
         }
+
         if (first === filterNew) {
-          sortedArray = [];
-          arr.forEach(function (it) {
+          while (sortedArray.length < 10) {
             var result = Math.floor(Math.random() * arr.length);
-            if (sortedArray.indexOf(result)) {
-              sortedArray.push(result);
+            if (sortedArray.indexOf(arr[result]) === -1) {
+              sortedArray.push(arr[result]);
             }
+          }
+        }
+
+        if (first === filterDiscussed) {
+          sortedArray = arr.slice();
+          sortedArray.sort(function (a, b) {
+            return b.comments.length - a.comments.length;
           });
         }
-        if (first === filterDiscussed) {
-          sortedArray = [];
-          sortedArray.sort(); // need to end sort;
-        }
+
+        window.render(sortedArray);
       });
     };
 
@@ -39,6 +47,6 @@
     addEventToFilterBtn(filterNew, filterPopular, filterDiscussed, photoArray);
     addEventToFilterBtn(filterDiscussed, filterNew, filterPopular, photoArray);
 
-    return photoArray;
+    return sortedArray;
   };
 })();
