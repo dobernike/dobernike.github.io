@@ -1,5 +1,3 @@
-'use strict';
-
 const KEY_CODE = {
   left: 37,
   right: 39
