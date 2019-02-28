@@ -167,7 +167,7 @@ gulp.task(`scripts`, () => {
     .pipe(sourcemaps.init())
     .pipe(rollup({}, `iife`))
     .pipe(sourcemaps.write(``))
-    .pipe(gulp.dest(`build/js/`));
+    .pipe(gulp.dest(`build/js`));
 });
 
 gulp.task(`imagemin`, [`copy`], () => {
