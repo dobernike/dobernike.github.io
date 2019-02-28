@@ -28,23 +28,39 @@ document.addEventListener(`keydown`, (evt) => {
   }
 });
 
-document.addEventListener(`click`, (evt) => {
-  const asterisk = document.querySelector(`.asterisk`);
-  if (evt.target === asterisk) {
-    showCurrentScreen(++currentScreen);
-  }
 
-  const greetingContinue = document.querySelector(`.greeting__continue`);
+let greetingContinue;
+let back;
+
+const showNextScreen = () => {
   if (greetingContinue) {
-    greetingContinue.addEventListener(`click`, () => {
-      showCurrentScreen(++currentScreen);
-    });
+    greetingContinue.removeEventListener(`click`, showNextScreen);
   }
+  showCurrentScreen(++currentScreen);
+};
 
-  const back = document.querySelector(`.back`);
+const showPrevScreen = () => {
   if (back) {
-    back.addEventListener(`click`, () => {
-      showCurrentScreen(--currentScreen);
-    });
+    back.removeEventListener(`click`, showPrevScreen);
+  }
+  showCurrentScreen(--currentScreen);
+};
+
+document.addEventListener(`click`, (evt) => {
+  const introAsterisk = document.querySelector(`.intro__asterisk`);
+  const greetingAsterisk = document.querySelector(`.greeting__asterisk`);
+  greetingContinue = document.querySelector(`.greeting__continue`);
+  back = document.querySelector(`.back`);
+  if (evt.target === introAsterisk) {
+    showNextScreen();
+  }
+  if (evt.target === greetingAsterisk) {
+    showPrevScreen();
+  }
+  if (greetingContinue) {
+    greetingContinue.addEventListener(`click`, showNextScreen);
+  }
+  if (back) {
+    back.addEventListener(`click`, showPrevScreen);
   }
 });
