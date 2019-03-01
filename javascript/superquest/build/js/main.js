@@ -14,8 +14,7 @@
     mainElement.appendChild(element);
   };
 
-  const element = document.createElement(`div`);
-  element.innerHTML = `<div>
+  const template = `<div>
 <header class="header">
   <div>Мир: 0</div>
   <div>Жизни: <span class="heart__full">💚</span>
@@ -47,7 +46,9 @@
 <small>Для справки введите <i>help</i></small>
 </div>`;
 
-  const template = `<div class="end">
+  var gameScreen = render(template);
+
+  const template$1 = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
   А?!<br>
   Точно?!<br>
@@ -60,15 +61,15 @@
 </div>
 </div>`;
 
-  const element$1 = render(template);
+  const element = render(template$1);
 
-  const agreeButton = element$1.querySelector(`.repeat-action`);
+  const agreeButton = element.querySelector(`.repeat-action`);
 
   agreeButton.addEventListener(`click`, () => {
-    changeScreen(element);
+    changeScreen(gameScreen);
   });
 
-  changeScreen(element$1);
+  changeScreen(element);
 
 }());
 

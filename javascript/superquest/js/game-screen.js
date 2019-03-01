@@ -1,5 +1,6 @@
-const element = document.createElement(`div`);
-element.innerHTML = `<div>
+import { render } from './util.js';
+
+const template = `<div>
 <header class="header">
   <div>Мир: 0</div>
   <div>Жизни: <span class="heart__full">💚</span>
@@ -31,4 +32,4 @@ element.innerHTML = `<div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
 
-export default element;
+export default render(template);
