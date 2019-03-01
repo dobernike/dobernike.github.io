@@ -1,3 +1,5 @@
+// import { changeScreen } from "../../superquest/js/util";
+
 const KEY_CODE = {
   left: 37,
   right: 39
