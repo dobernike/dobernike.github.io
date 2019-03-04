@@ -115,7 +115,8 @@ const plumber = require(`gulp-plumber`);
 const postcss = require(`gulp-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const server = require(`browser-sync`).create();
-// const mocha = require('gulp-mocha');
+const mocha = require('gulp-mocha');
+const commonjs = require(`rollup-plugin-commonjs`);
 const mqpacker = require(`css-mqpacker`);
 const minify = require(`gulp-csso`);
 const rename = require(`gulp-rename`);
@@ -123,6 +124,19 @@ const imagemin = require(`gulp-imagemin`);
 const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
+
+gulp.task(`test`, () => {
+  return gulp.src(`js/**/*.test.js`)
+    .pipe(rollup({
+      plugin: [
+        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
+      ]
+    }, `cjs`)) // Выхожной формат тестов - CommonJS
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec` // Вид в котором будут отображаться результаты тестирования
+    }));
+});
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
