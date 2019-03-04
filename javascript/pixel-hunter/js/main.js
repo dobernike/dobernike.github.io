@@ -1,7 +1,10 @@
-import intro from './intro.js';
 import { changeScreen } from './util.js';
+import intro from './intro.js';
 
+// changeScreen(intro);
 changeScreen(intro);
+
+
 // const KEY_CODE = {
 //   left: 37,
 //   right: 39

@@ -1,4 +1,5 @@
-import { render } from './util.js';
+import { render, changeScreen } from './util.js';
+import greeting from './greeting.js';
 
 const template = `<header class="header">
   <button class="back">
@@ -120,5 +121,11 @@ const template = `<header class="header">
     </tr>
   </table>
 </section>`;
+const stats = render(template);
 
-export default render(template);
+const back = stats.querySelector(`.back`);
+back.addEventListener(`click`, () => {
+  changeScreen(greeting);
+});
+
+export default stats;

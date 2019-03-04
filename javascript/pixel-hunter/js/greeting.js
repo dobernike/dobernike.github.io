@@ -1,4 +1,7 @@
-import { render } from './util.js';
+import { render, changeScreen } from './util.js';
+import rules from './rules.js';
+import intro from './intro.js';
+
 
 const template = `<section class="greeting central--blur">
 <img class="greeting__logo" src="img/logo_ph-big.svg" width="201" height="89" alt="Pixel Hunter">
@@ -25,4 +28,17 @@ const template = `<section class="greeting central--blur">
 </button>
 </section>`;
 
-export default render(template);
+const greeting = render(template);
+
+const greetingAsterisk = greeting.querySelector(`.greeting__asterisk`);
+greetingAsterisk.addEventListener(`click`, () => {
+  changeScreen(intro);
+});
+
+const greetingContinue = greeting.querySelector(`.greeting__continue`);
+greetingContinue.addEventListener(`click`, () => {
+  changeScreen(rules);
+});
+
+
+export default greeting;

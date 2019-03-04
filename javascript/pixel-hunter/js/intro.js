@@ -6,14 +6,11 @@ const template = `<section class="intro">
 <p class="intro__motto"><sup>*</sup> Это не фото. Это рисунок маслом нидерландского художника-фотореалиста Tjalf Sparnaay.</p>
 </section>`;
 
-const introAsterisk = document.querySelector(`.intro__asterisk`);
-// console.log(introAsterisk);
+const intro = render(template);
+const introAsterisk = intro.querySelector(`.intro__asterisk`);
 
-// introAsterisk.onclick = () => {
-//   changeScreen(greeting);
-// };
-// introAsterisk.addEventListener(`click`, () => {
-//   changeScreen(greeting);
-// });
+introAsterisk.addEventListener(`click`, () => {
+  changeScreen(greeting);
+});
 
-export default render(template);
+export default intro;

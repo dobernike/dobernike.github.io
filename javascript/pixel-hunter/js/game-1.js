@@ -1,4 +1,7 @@
-import { render } from './util.js';
+import { render, changeScreen } from './util.js';
+import nextGame from './game-2.js';
+import greeting from './greeting.js';
+
 
 const template = `<header class="header">
   <button class="back">
@@ -66,4 +69,48 @@ const template = `<header class="header">
   </ul>
 </section>`;
 
-export default render(template);
+const game = render(template);
+
+const back = game.querySelector(`.back`);
+back.addEventListener(`click`, () => {
+  changeScreen(greeting);
+});
+
+const gameAnswers = game.querySelectorAll(`.game__answer`);
+gameAnswers.forEach((it) => {
+  it.addEventListener(`change`, () => {
+    if (game.querySelectorAll(`input:checked`).length > 1) {
+      changeScreen(nextGame);
+    }
+  });
+});
+
+// const inputs = game.querySelectorAll(`input`);
+// inputs.forEach((it) => {
+// });
+// const secondCheckboxes = game.querySelectorAll(`input[name=question2]`);
+// console.log(firstCheckboxes)
+
+// const isChecked = (...inputChecboxes) => {
+//   // const allChecboxes = [inputChecboxes];
+//   console.log(inputChecboxes);
+
+//   inputChecboxes.forEach((it) => {
+//     console.log(it.isChecked);
+//     console.log(inputChecboxes);
+//     if (it.isChecked) {
+//       console.log('123');
+//     }
+//   });
+//   // inputChecbox.forEach((it) => {
+//   // console.log(it.checked);
+
+//   // });
+// };
+
+// document.addEventListener(`click`, () => {
+//   isChecked(firstCheckboxes);
+// });
+// console.log(isChecked(firstCheckboxes, secondCheckboxes));
+
+export default game;

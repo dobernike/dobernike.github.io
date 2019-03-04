@@ -1,4 +1,6 @@
-import { render } from './util.js';
+import { render, changeScreen } from './util.js';
+import nextGame from './game-3.js';
+import greeting from './greeting.js';
 
 const template = `<header class="header">
   <button class="back">
@@ -55,4 +57,20 @@ const template = `<header class="header">
   </ul>
 </section>`;
 
-export default render(template);
+const game = render(template);
+
+const back = game.querySelector(`.back`);
+back.addEventListener(`click`, () => {
+  changeScreen(greeting);
+});
+
+const gameAnswers = game.querySelectorAll(`.game__answer`);
+gameAnswers.forEach((it) => {
+  it.addEventListener(`change`, () => {
+    if (game.querySelectorAll(`input:checked`).length > 0) {
+      changeScreen(nextGame);
+    }
+  });
+});
+
+export default game;

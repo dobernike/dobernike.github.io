@@ -1,4 +1,7 @@
-import { render } from './util.js';
+import { render, changeScreen } from './util.js';
+import game from './game-1.js';
+import greeting from './greeting.js';
+
 
 const template = `<header class="header">
 <button class="back">
@@ -37,4 +40,28 @@ const template = `<header class="header">
 </form>
 </section>`;
 
-export default render(template);
+const rules = render(template);
+
+const back = rules.querySelector(`.back`);
+back.addEventListener(`click`, () => {
+  changeScreen(greeting);
+});
+
+const rulesForm = rules.querySelector(`.rules__form`);
+const rulesInput = rules.querySelector(`.rules__input`);
+const rulesButton = rules.querySelector(`.rules__button`);
+
+rulesInput.addEventListener(`input`, () => {
+  if (rulesInput.value !== ``) {
+    rulesButton.disabled = false;
+  } else {
+    rulesButton.disabled = true;
+  }
+});
+
+rulesForm.addEventListener(`submit`, (evt) => {
+  evt.preventDefault();
+  changeScreen(game);
+});
+
+export default rules;
