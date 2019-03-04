@@ -125,19 +125,6 @@ const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
 
-gulp.task(`test`, () => {
-  return gulp.src(`js/**/*.test.js`)
-    .pipe(rollup({
-      plugin: [
-        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
-      ]
-    }, `cjs`)) // Выхожной формат тестов - CommonJS
-    .pipe(gulp.dest(`build/test`))
-    .pipe(mocha({
-      reporter: `spec` // Вид в котором будут отображаться результаты тестирования
-    }));
-});
-
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
     pipe(plumber()).
@@ -175,6 +162,7 @@ gulp.task(`sprite`, () => {
 //     pipe(plumber()).
 //     pipe(gulp.dest(`build/js/`));
 // });
+// gulp.task(`test`, ())
 gulp.task(`scripts`, () => {
   return gulp.src(`js/main.js`)
     .pipe(plumber())
@@ -243,4 +231,14 @@ gulp.task(`build`, [`assemble`], () => {
 });
 
 gulp.task(`test`, () => {
+  return gulp.src(`js/**/*test.js`)
+    .pipe(rollup({
+      plugin: [
+        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
+      ]
+    }, `cjs`)) // Выхожной формат тестов - CommonJS
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec` // Вид в котором будут отображаться результаты тестирования
+    }));
 });
