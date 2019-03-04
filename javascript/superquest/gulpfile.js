@@ -106,8 +106,6 @@
 //     .src('js/**.test.js');
 // });
 
-'use strict';
-
 const del = require(`del`);
 const gulp = require(`gulp`);
 const sass = require(`gulp-sass`);
@@ -115,7 +113,7 @@ const plumber = require(`gulp-plumber`);
 const postcss = require(`gulp-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const server = require(`browser-sync`).create();
-const mocha = require('gulp-mocha');
+const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
 const mqpacker = require(`css-mqpacker`);
 const minify = require(`gulp-csso`);
