@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-spacing */
+// eslint-disable-next-line strict
 'use strict';
 
 const del = require(`del`);
@@ -14,6 +16,8 @@ const imagemin = require(`gulp-imagemin`);
 const svgstore = require(`gulp-svgstore`);
 const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
+const mocha = require(`gulp-mocha`);
+const commonjs = require(`rollup-plugin-commonjs`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -121,4 +125,17 @@ gulp.task(`build`, [`assemble`], () => {
 });
 
 gulp.task(`test`, () => {
+});
+
+gulp.task(`test`, () => {
+  return gulp.src(`js/**/*test.js`)
+    .pipe(rollup({
+      plugin: [
+        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
+      ]
+    }, `cjs`)) // Выхожной формат тестов - CommonJS
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec` // Вид в котором будут отображаться результаты тестирования
+    }));
 });
