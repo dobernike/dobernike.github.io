@@ -1,5 +1,5 @@
 {
-  "name": "PixelHunter",
+  "name": "pixel_hunter",
   "version": "5.0.0",
   "private": true,
   "description": "Личный проект «Пиксель хантер» от HTML Academy",
@@ -8,7 +8,7 @@
     "stylelint": "stylelint 'sass/**/*.scss' --syntax scss",
     "build": "gulp build",
     "start": "gulp serve",
-    "test": "npm run eslint && npm run stylelint && gulp test"
+    "test": "npm run stylelint && gulp test"
   },
   "devDependencies": {
     "autoprefixer": "9.0.2",

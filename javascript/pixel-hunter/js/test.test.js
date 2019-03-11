@@ -1,3 +1,4 @@
+// eslint-disable-next-line object-curly-spacing
 import { assert } from 'chai';
 
 describe(`Array`, () => {

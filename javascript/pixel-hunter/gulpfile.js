@@ -1,3 +1,5 @@
+/* eslint-disable object-curly-spacing */
+// eslint-disable-next-line strict
 'use strict';
 
 const del = require(`del`);

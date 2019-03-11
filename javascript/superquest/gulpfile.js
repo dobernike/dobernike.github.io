@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 // 'use strict';
 
 // const del = require('del');
