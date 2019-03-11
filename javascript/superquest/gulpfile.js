@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 // 'use strict';
 
 // const del = require('del');
@@ -106,8 +107,6 @@
 //     .src('js/**.test.js');
 // });
 
-'use strict';
-
 const del = require(`del`);
 const gulp = require(`gulp`);
 const sass = require(`gulp-sass`);
@@ -115,7 +114,8 @@ const plumber = require(`gulp-plumber`);
 const postcss = require(`gulp-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const server = require(`browser-sync`).create();
-// const mocha = require('gulp-mocha');
+const mocha = require(`gulp-mocha`);
+const commonjs = require(`rollup-plugin-commonjs`);
 const mqpacker = require(`css-mqpacker`);
 const minify = require(`gulp-csso`);
 const rename = require(`gulp-rename`);
@@ -161,6 +161,7 @@ gulp.task(`sprite`, () => {
 //     pipe(plumber()).
 //     pipe(gulp.dest(`build/js/`));
 // });
+// gulp.task(`test`, ())
 gulp.task(`scripts`, () => {
   return gulp.src(`js/main.js`)
     .pipe(plumber())
@@ -229,4 +230,14 @@ gulp.task(`build`, [`assemble`], () => {
 });
 
 gulp.task(`test`, () => {
+  return gulp.src(`js/**/*test.js`)
+    .pipe(rollup({
+      plugin: [
+        commonjs() // Сообщает Rollup, что модули можно загружать из node_modules
+      ]
+    }, `cjs`)) // Выхожной формат тестов - CommonJS
+    .pipe(gulp.dest(`build/test`))
+    .pipe(mocha({
+      reporter: `spec` // Вид в котором будут отображаться результаты тестирования
+    }));
 });
