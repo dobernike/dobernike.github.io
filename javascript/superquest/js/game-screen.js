@@ -1,3 +1,4 @@
+// eslint-disable-next-line object-curly-spacing
 import { render } from './util.js';
 
 const template = `<div>
