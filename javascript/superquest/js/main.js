@@ -1,4 +1,7 @@
 import {changeScreen} from './util.js';
-import welcomeScreen from './welcome-screen.js';
+// import welcomeScreen from './welcome-screen.js';
+// for development
+import header from './header.js';
+import welcomeScreen from './game-screen.js';
 
-changeScreen(welcomeScreen);
+changeScreen(header, welcomeScreen);

@@ -6,8 +6,11 @@ export const render = (template) => {
 
 const mainElement = document.querySelector(`#main`);
 
-export const changeScreen = (element) => {
+export const changeScreen = (...element) => {
   mainElement.innerHTML = ``;
-  mainElement.appendChild(element);
+  element.forEach((it) => {
+    mainElement.appendChild(it);
+  });
+
 };
 
