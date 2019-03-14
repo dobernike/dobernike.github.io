@@ -1,7 +1,7 @@
 import { render } from './util.js';
 import { initialState } from './data/data.js';
-
-const headerTemplate = (state) => `<header class="header">
+// const headerTemplate =
+export default (state) => `<header class="header">
 <div>Мир: ${state.level}</div>
 <div>Жизни:
 ${new Array(3 - state.lives)
@@ -12,4 +12,4 @@ ${new Array(state.lives)
 <div>Время: ${state.time}</div>
 </header>`;
 
-export default render(headerTemplate(initialState));
+// export default render(headerTemplate(initialState));

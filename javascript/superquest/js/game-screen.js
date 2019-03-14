@@ -1,6 +1,7 @@
 // eslint-disable-next-line object-curly-spacing
-import { render, changeScreen } from './util.js';
+import { render, mainElement, changeScreen } from './util.js';
 import { levels, initialState } from './data/data.js';
+import header from './header.js';
 
 const screenTemplate = (lvl) => `
 <div>
@@ -22,7 +23,10 @@ const screenTemplate = (lvl) => `
 <li class="answer">RIGHT. Вы побежите вправо, прямо на гриб</li>
 <li class="answer">JUMP. Вы подпрыгните вверх</li> */
 const renderScreen = (state) => {
-   changeScreen(render(screenTemplate(levels[state.level])));
+  mainElement.innerHTML = ``;
+  mainElement.appendChild(render(header(state)));
+  mainElement.appendChild(render(screenTemplate(levels[state.level])));
+  // changeScreen(render(screenTemplate(levels[state.level])));
   const input = document.querySelector(`input`);
   input.onkeydown = (evt) => {
     if (evt.key === `Enter`) {
@@ -31,14 +35,18 @@ const renderScreen = (state) => {
       const destination = userAnswer.toLowerCase() in levels[state.level].answers ? levels[state.level].answers[userAnswer] : null;
       // input.value = ``;
       if (destination) {
+        renderScreen(Object.assign({}, state, {
+          'level': destination
+        }));
         // renderScreen()
       }
     }
   };
 };
 
-renderScreen(initialState);
+export default renderScreen(initialState);
 
-// export default renderScreen(initialState);
+// changeScreen(render(screenTemplate(levels[initialState.level])));
+// export default render(screenTemplate(levels[initialState.level]));
 
-// export default template;
+// export default render(screenTemplate(levels[initialState.level]));

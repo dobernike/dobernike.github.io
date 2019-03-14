@@ -4,13 +4,13 @@ export const render = (template) => {
   return wrapper;
 };
 
-const mainElement = document.querySelector(`#main`);
+export const mainElement = document.querySelector(`#main`);
 
-export const changeScreen = (...element) => {
+export const changeScreen = (element) => {
   mainElement.innerHTML = ``;
-  element.forEach((it) => {
-    mainElement.appendChild(it);
-  });
+  // element.forEach((it) => {
+  mainElement.appendChild(element);
+  // });
 
 };
 
