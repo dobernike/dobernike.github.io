@@ -1,4 +1,4 @@
-import {changeScreen, render} from './util.js';
+import { changeScreen, render } from './util.js';
 import gameScreen from './game-screen.js';
 
 const template = `<div class="end">
@@ -19,7 +19,7 @@ const element = render(template);
 const agreeButton = element.querySelector(`.repeat-action`);
 
 agreeButton.addEventListener(`click`, () => {
-  changeScreen(gameScreen);
+  gameScreen();
 });
 
 export default element;

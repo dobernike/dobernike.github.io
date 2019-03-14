@@ -1,5 +1,5 @@
 // eslint-disable-next-line object-curly-spacing
-import { render, mainElement, changeScreen } from './util.js';
+import { render, mainElement } from './util.js';
 import { levels, initialState } from './data/data.js';
 import header from './header.js';
 
@@ -44,7 +44,7 @@ const renderScreen = (state) => {
   };
 };
 
-export default renderScreen(initialState);
+export default () => renderScreen(initialState);
 
 // changeScreen(render(screenTemplate(levels[initialState.level])));
 // export default render(screenTemplate(levels[initialState.level]));

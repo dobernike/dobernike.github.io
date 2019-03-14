@@ -9,6 +9,14 @@
 
   const mainElement = document.querySelector(`#main`);
 
+  const changeScreen = (element) => {
+    mainElement.innerHTML = ``;
+    // element.forEach((it) => {
+    mainElement.appendChild(element);
+    // });
+
+  };
+
   const initialState = {
     level: `level-0`,
     lives: 3,
@@ -37,6 +45,8 @@
     }
   };
 
+  // import { render } from './util.js';
+  // import { initialState } from './data/data.js';
   // const headerTemplate =
   var header = (state) => `<header class="header">
 <div>Мир: ${state.level}</div>
@@ -94,12 +104,39 @@ ${new Array(state.lives)
     };
   };
 
-  renderScreen(initialState);
+  var gameScreen = () => renderScreen(initialState);
 
   // changeScreen(render(screenTemplate(levels[initialState.level])));
   // export default render(screenTemplate(levels[initialState.level]));
 
   // export default render(screenTemplate(levels[initialState.level]));
+
+  const template = `<div class="end">
+<p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
+  А?!<br>
+  Точно?!<br>
+  Уверен?!<br>
+  Стопудов?!</p>
+<p>08 есть?</p>
+<div class="repeat">
+  Ваше имя:<input type="text"><br>
+  <span class="repeat-action">Да</span>
+</div>
+</div>`;
+
+  const element = render(template);
+
+  const agreeButton = element.querySelector(`.repeat-action`);
+
+  agreeButton.addEventListener(`click`, () => {
+    gameScreen();
+  });
+
+  // for development
+
+  // import welcomeScreen from './game-screen.js';
+
+  changeScreen(element);
 
 }());
 
