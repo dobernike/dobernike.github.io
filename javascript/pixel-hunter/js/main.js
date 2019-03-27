@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 import { changeScreen } from './util.js';
 import intro from './intro.js';
 

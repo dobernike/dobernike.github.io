@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 import { render, changeScreen } from './util.js';
 import greeting from './greeting.js';
 import header from './header.js';

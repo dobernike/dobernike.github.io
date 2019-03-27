@@ -1,13 +1,17 @@
-
+/* eslint-disable object-curly-spacing */
 import header from './header';
-import data from './data/data.js';
 import { render, changeScreen } from './util.js';
 import { statistic } from './stats.js';
 import greeting from './greeting.js';
+import { levels, INITIAL_GAME } from './data/data.js';
+import { stats } from './stats.js';
 const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
 
+let initialState = Object.assign({}, INITIAL_GAME, {
+});
+
 const getOption = (typeOfGame) => {
-  const option = ``;
+  let option = ``;
 
   switch (typeOfGame) {
     case `double`:
@@ -71,58 +75,67 @@ const getOption = (typeOfGame) => {
 };
 
 const getAnswer = (typeOfGame, game) => {
-  const gameAnswer = ``;
+  let gameAnswer = ``;
 
   switch (typeOfGame) {
     case `double`:
       gameAnswer = game.querySelectorAll(`.game__answer`);
-      gameAnswers.forEach((it) => {
+      gameAnswer.forEach((it) => {
         it.addEventListener(`change`, () => {
           if (game.querySelectorAll(`input:checked`).length > 1) {
-            // changeScreen(nextGame);
+            initialState.level += 1;
+            gameScreen(levels[`wide`], initialState);
           }
         });
       });
       break;
     case `wide`:
-      gameAnswers = game.querySelectorAll(`.game__answer`);
-      gameAnswers.forEach((it) => {
+      gameAnswer = game.querySelectorAll(`.game__answer`);
+      gameAnswer.forEach((it) => {
         it.addEventListener(`change`, () => {
           if (game.querySelectorAll(`input:checked`).length > 0) {
-            // changeScreen(nextGame);
+            initialState.level += 1;
+            gameScreen(levels[`triple`], initialState);
           }
         });
       });
       break;
     case `triple`:
-      const gameAnswers = game.querySelectorAll(`.game__option`);
-      gameAnswers.forEach((it) => {
+      gameAnswer = game.querySelectorAll(`.game__option`);
+      gameAnswer.forEach((it) => {
         it.addEventListener(`click`, () => {
-          // changeScreen(nextGame);
+          initialState.level += 1;
+          gameScreen(levels[`double`], initialState);
         });
       });
       break;
 
     default:
-      gameAnswers = `Тип игры имеет неправильный формат`;
+      gameAnswer = `Тип игры имеет неправильный формат`;
       break;
   }
 
-  return gameAnswers;
+  return gameAnswer;
 };
 
 const mainElement = document.querySelector(`#main`);
 
-const gameScreen = (gameData) => {
 
+export const gameScreen = (gamelevels, state) => {
+  console.log(state);
+  console.log(state.level);
+  if (state.level === 10) {
+    changeScreen(stats);
+    return;
+  }
   const content = `
   ${header}
   <section class="game">
     <p class="game__task">
-      ${gameData.question.text}
+      ${gamelevels.question.text}
     </p>
-    <form class="game__content  game__content--${gameData.type}">
-      ${getOption(gameData.type)}
+    <form class="game__content  game__content--${gamelevels.type}">
+      ${getOption(gamelevels.type)}
     </form>
     ${statistic}
   </section>
@@ -135,65 +148,8 @@ const gameScreen = (gameData) => {
     changeScreen(greeting);
   });
 
-  getAnswer(gameData.type, screen);
+  getAnswer(gamelevels.type, screen);
 
   mainElement.innerHTML = ``;
   mainElement.appendChild(screen);
-  // return gameScreen;
-}; gameScreen(data);
-
-// export default
-
-/*  3
-    <div class="game__option">
-      <img src="${img[2]}" alt="Option 1" width="304" height="455">
-    </div>
-
-    <div class="game__option  game__option--selected">
-      <img src="${img[2]}" alt="Option 2" width="304" height="455">
-    </div>
-
-    <div class="game__option">
-      <img src="${img[2]}" alt="Option 3" width="304" height="455">
-    </div>
-*/
-
-/*  2
-    <div class="game__option">
-      <img src="${img[1]}" alt="Option 1" width="705" height="455">
-      <label class="game__answer  game__answer--photo">
-        <input class="visually-hidden" name="question1" type="radio" value="photo">
-        <span>Фото</span>
-      </label>
-      <label class="game__answer  game__answer--paint">
-        <input class="visually-hidden" name="question1" type="radio" value="paint">
-        <span>Рисунок</span>
-      </label>
-    </div>
-*/
-
-/*  1
-    <div class="game__option">
-      <img src="${img[0]}" alt="Option 1" width="468" height="458">
-      <label class="game__answer game__answer--photo">
-        <input class="visually-hidden" name="question1" type="radio" value="photo">
-        <span>Фото</span>
-      </label>
-      <label class="game__answer game__answer--paint">
-        <input class="visually-hidden" name="question1" type="radio" value="paint">
-        <span>Рисунок</span>
-      </label>
-    </div>
-
-    <div class="game__option">
-      <img src="${img[0]}" alt="Option 2" width="468" height="458">
-      <label class="game__answer  game__answer--photo">
-        <input class="visually-hidden" name="question2" type="radio" value="photo">
-        <span>Фото</span>
-      </label>
-      <label class="game__answer  game__answer--paint">
-        <input class="visually-hidden" name="question2" type="radio" value="paint">
-        <span>Рисунок</span>
-      </label>
-    </div>
-*/
+};

@@ -1,4 +1,4 @@
-// eslint-disable-next-line object-curly-spacing
+/* eslint-disable object-curly-spacing */
 import { render, mainElement } from './util.js';
 import { levels, initialState } from './data/data.js';
 import header from './header.js';

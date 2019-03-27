@@ -1,5 +1,12 @@
-export default {
+export const INITIAL_GAME = Object.freeze({
+  level: 0,
+  lives: 3,
+  time: 0
+});
+
+export const levels = {
   'double': {
+    type: `double`,
     question: {
       text: `Угадайте для каждого изображения фото или рисунок?`,
       answers: {
@@ -16,6 +23,7 @@ export default {
     statistic: null
   },
   'wide': {
+    type: `wide`,
     question: {
       text: `Угадайте для каждого изображения фото или рисунок?`,
       answers: {
@@ -32,6 +40,7 @@ export default {
     statistic: null
   },
   'triple': {
+    type: `triple`,
     question: {
       text: `Угадайте для каждого изображения фото или рисунок?`,
       answers: {

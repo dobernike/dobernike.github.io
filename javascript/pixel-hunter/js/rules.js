@@ -1,7 +1,9 @@
+/* eslint-disable object-curly-spacing */
 import { render, changeScreen } from './util.js';
-import game from './game-1.js';
 import greeting from './greeting.js';
 import header from './header.js';
+import { levels, INITIAL_GAME } from './data/data.js';
+import { gameScreen } from './game-screen.js';
 
 const template = `${header}
 <section class="rules">
@@ -42,7 +44,8 @@ rulesInput.addEventListener(`input`, () => {
 
 rulesForm.addEventListener(`submit`, (evt) => {
   evt.preventDefault();
-  changeScreen(game);
+  // changeScreen(game);
+  gameScreen(levels[`double`], INITIAL_GAME);
 });
 
 export default rules;
