@@ -3,12 +3,12 @@ import header from './header';
 import { render, changeScreen } from './util.js';
 import { statistic } from './stats.js';
 import greeting from './greeting.js';
-import { levels, INITIAL_GAME } from './data/data.js';
+import { levels, INITIAL_GAME, statsAnswers } from './data/data.js';
 import { stats } from './stats.js';
-const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
+import changeLevel from './data/change-level.js';
+import timer from './data/timer.js';
+// const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
 
-let initialState = Object.assign({}, INITIAL_GAME, {
-});
 
 const getOption = (typeOfGame) => {
   let option = ``;
@@ -16,7 +16,7 @@ const getOption = (typeOfGame) => {
   switch (typeOfGame) {
     case `double`:
       option = `<div class="game__option">
-    <img src="${mockPhoto}" alt="Option 1" width="468" height="458">
+    <img src="${levels.double.question.answers.question1.src}" alt="Option 1" width="468" height="458">
     <label class="game__answer game__answer--photo">
       <input class="visually-hidden" name="question1" type="radio" value="photo">
       <span>Фото</span>
@@ -28,7 +28,7 @@ const getOption = (typeOfGame) => {
   </div>
 
   <div class="game__option">
-    <img src="${mockPhoto}" alt="Option 2" width="468" height="458">
+    <img src="${levels.double.question.answers.question2.src}" alt="Option 2" width="468" height="458">
     <label class="game__answer  game__answer--photo">
       <input class="visually-hidden" name="question2" type="radio" value="photo">
       <span>Фото</span>
@@ -41,7 +41,7 @@ const getOption = (typeOfGame) => {
       break;
     case `wide`:
       option = `<div class="game__option">
-    <img src="${mockPhoto}" alt="Option 1" width="705" height="455">
+    <img src="${levels.wide.question.answers.question1.src}" alt="Option 1" width="705" height="455">
     <label class="game__answer  game__answer--photo">
       <input class="visually-hidden" name="question1" type="radio" value="photo">
       <span>Фото</span>
@@ -54,15 +54,15 @@ const getOption = (typeOfGame) => {
       break;
     case `triple`:
       option = `<div class="game__option">
-    <img src="${mockPhoto}" alt="Option 1" width="304" height="455">
+    <img src="${levels.triple.question.answers.question1.src}" alt="Option 1" width="304" height="455">
   </div>
 
   <div class="game__option  game__option--selected">
-    <img src="${mockPhoto}" alt="Option 2" width="304" height="455">
+    <img src="${levels.triple.question.answers.question2.src}" alt="Option 2" width="304" height="455">
   </div>
 
   <div class="game__option">
-    <img src="${mockPhoto}" alt="Option 3" width="304" height="455">
+    <img src="${levels.triple.question.answers.question3.src}" alt="Option 3" width="304" height="455">
   </div>`;
       break;
 
@@ -82,9 +82,17 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = game.querySelectorAll(`.game__answer`);
       gameAnswer.forEach((it) => {
         it.addEventListener(`change`, () => {
+
           if (game.querySelectorAll(`input:checked`).length > 1) {
-            initialState.level += 1;
-            gameScreen(levels[`wide`], initialState);
+            let answers = game.querySelectorAll(`input:checked`);
+            if (answers[0].value === levels.double.question.answers.question1.answer && answers[1].value === levels.double.question.answers.question2.answer) {
+              copyStatsAnswers[`level-${currentLevel}`] = timer();
+            } else {
+              copyStatsAnswers[`level-${currentLevel}`] = `wrong`;
+            }
+            // console.log();
+            // initialState.level += 1;
+            gameScreen(levels[`wide`], changeLevel(INITIAL_GAME, currentLevel += 1));
           }
         });
       });
@@ -93,10 +101,14 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = game.querySelectorAll(`.game__answer`);
       gameAnswer.forEach((it) => {
         it.addEventListener(`change`, () => {
-          if (game.querySelectorAll(`input:checked`).length > 0) {
-            initialState.level += 1;
-            gameScreen(levels[`triple`], initialState);
+          if (it.value === levels.double.question.answers.question1.answer) {
+            copyStatsAnswers[`level-${currentLevel}`] = timer();
+          } else {
+            copyStatsAnswers[`level-${currentLevel}`] = `wrong`;
           }
+          // initialState.level += 1;
+          gameScreen(levels[`triple`], changeLevel(INITIAL_GAME, currentLevel += 1));
+
         });
       });
       break;
@@ -104,8 +116,13 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = game.querySelectorAll(`.game__option`);
       gameAnswer.forEach((it) => {
         it.addEventListener(`click`, () => {
-          initialState.level += 1;
-          gameScreen(levels[`double`], initialState);
+          if (it.value === levels.double.question.answers.question1.answer) {
+            copyStatsAnswers[`level-${currentLevel}`] = timer();
+          } else {
+            copyStatsAnswers[`level-${currentLevel}`] = `wrong`;
+          }
+          // initialState.level += 1;
+          gameScreen(levels[`double`], changeLevel(INITIAL_GAME, currentLevel += 1));
         });
       });
       break;
@@ -121,9 +138,10 @@ const getAnswer = (typeOfGame, game) => {
 const mainElement = document.querySelector(`#main`);
 
 
+export let currentLevel = 0;
+export let copyStatsAnswers = Object.assign({}, statsAnswers);
+
 export const gameScreen = (gamelevels, state) => {
-  console.log(state);
-  console.log(state.level);
   if (state.level === 10) {
     changeScreen(stats);
     return;
@@ -137,7 +155,7 @@ export const gameScreen = (gamelevels, state) => {
     <form class="game__content  game__content--${gamelevels.type}">
       ${getOption(gamelevels.type)}
     </form>
-    ${statistic}
+    ${statistic(copyStatsAnswers)}
   </section>
   `;
 
@@ -145,6 +163,8 @@ export const gameScreen = (gamelevels, state) => {
 
   const back = screen.querySelector(`.back`);
   back.addEventListener(`click`, () => {
+    currentLevel = 0;
+    copyStatsAnswers = Object.assign({}, statsAnswers);
     changeScreen(greeting);
   });
 

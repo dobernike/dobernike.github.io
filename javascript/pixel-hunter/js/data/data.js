@@ -1,3 +1,7 @@
+/* eslint-disable object-curly-spacing */
+import { paintings, photos } from './mock.js';
+
+
 export const INITIAL_GAME = Object.freeze({
   level: 0,
   lives: 3,
@@ -10,13 +14,13 @@ export const levels = {
     question: {
       text: `Угадайте для каждого изображения фото или рисунок?`,
       answers: {
-        first: {
-          itIsPhoto: true,
-          src: `url(...)`
+        question1: {
+          answer: `paint`,
+          src: paintings[0]
         },
-        second: {
-          itIsPhoto: false,
-          src: `url(...)`
+        question2: {
+          answer: `photo`,
+          src: photos[0]
         }
       }
     },
@@ -25,15 +29,11 @@ export const levels = {
   'wide': {
     type: `wide`,
     question: {
-      text: `Угадайте для каждого изображения фото или рисунок?`,
+      text: `Угадай, фото или рисунок?`,
       answers: {
-        first: {
-          itIsPhoto: true,
-          src: `url(...)`
-        },
-        second: {
-          itIsPhoto: false,
-          src: `url(...)`
+        question1: {
+          answer: `paint`,
+          src: paintings[1]
         }
       }
     },
@@ -42,21 +42,38 @@ export const levels = {
   'triple': {
     type: `triple`,
     question: {
-      text: `Угадайте для каждого изображения фото или рисунок?`,
+      text: `Найдите рисунок среди изображений`,
       answers: {
-        first: {
-          itIsPhoto: true,
-          src: `url(...)`
+        question1: {
+          answer: `photo`,
+          src: photos[1]
         },
-        second: {
-          itIsPhoto: false,
-          src: `url(...)`
+        question2: {
+          answer: `paint`,
+          src: paintings[2]
+        },
+        question3: {
+          answer: `photo`,
+          src: photos[2]
         }
       }
     },
     statistic: null
   }
 };
+
+export const statsAnswers = Object.freeze({
+  'level-0': `unknown`,
+  'level-1': `unknown`,
+  'level-2': `unknown`,
+  'level-3': `unknown`,
+  'level-4': `unknown`,
+  'level-5': `unknown`,
+  'level-6': `unknown`,
+  'level-7': `unknown`,
+  'level-8': `unknown`,
+  'level-9': `unknown`,
+});
 
 
 // export default {

@@ -1,3 +1,7 @@
+/* eslint-disable consistent-return */
+const time = 29;
 export default () => {
-  return 1;
+  if (time < 30) {
+    return `fast`;
+  }
 };
