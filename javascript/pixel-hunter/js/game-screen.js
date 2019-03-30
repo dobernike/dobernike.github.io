@@ -4,7 +4,7 @@ import { render, changeScreen } from './util.js';
 import { statistic } from './stats.js';
 import greeting from './greeting.js';
 import { levels, INITIAL_GAME, statsAnswers } from './data/data.js';
-import { stats } from './stats.js';
+import { renderStats } from './stats.js';
 import changeLevel from './data/change-level.js';
 import timer from './data/timer.js';
 // const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
@@ -101,7 +101,8 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = game.querySelectorAll(`.game__answer`);
       gameAnswer.forEach((it) => {
         it.addEventListener(`change`, () => {
-          if (it.value === levels.double.question.answers.question1.answer) {
+          let answer = game.querySelector(`input:checked`);
+          if (answer.value === levels.wide.question.answers.question1.answer) {
             copyStatsAnswers[`level-${currentLevel}`] = timer();
           } else {
             copyStatsAnswers[`level-${currentLevel}`] = `wrong`;
@@ -116,7 +117,7 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = game.querySelectorAll(`.game__option`);
       gameAnswer.forEach((it) => {
         it.addEventListener(`click`, () => {
-          if (it.value === levels.double.question.answers.question1.answer) {
+          if (it.classList.contains(`game__option--selected`)) {
             copyStatsAnswers[`level-${currentLevel}`] = timer();
           } else {
             copyStatsAnswers[`level-${currentLevel}`] = `wrong`;
@@ -143,7 +144,7 @@ export let copyStatsAnswers = Object.assign({}, statsAnswers);
 
 export const gameScreen = (gamelevels, state) => {
   if (state.level === 10) {
-    changeScreen(stats);
+    changeScreen(renderStats(copyStatsAnswers));
     return;
   }
   const content = `
@@ -162,14 +163,17 @@ export const gameScreen = (gamelevels, state) => {
   const screen = render(content);
 
   const back = screen.querySelector(`.back`);
-  back.addEventListener(`click`, () => {
-    currentLevel = 0;
-    copyStatsAnswers = Object.assign({}, statsAnswers);
-    changeScreen(greeting);
-  });
-
+  addEventToBack(back);
   getAnswer(gamelevels.type, screen);
 
   mainElement.innerHTML = ``;
   mainElement.appendChild(screen);
+};
+
+export const addEventToBack = (button) => {
+  button.addEventListener(`click`, () => {
+    currentLevel = 0;
+    copyStatsAnswers = Object.assign({}, statsAnswers);
+    changeScreen(greeting);
+  });
 };
