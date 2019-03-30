@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 import { assert } from 'chai';
 import calcScores from './calc-scores.js';
 
