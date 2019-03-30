@@ -1,7 +1,7 @@
-// eslint-disable-next-line object-curly-spacing
+/* eslint-disable object-curly-spacing */
 import { assert } from 'chai';
-// eslint-disable-next-line object-curly-spacing
-import { changeLevel, INITIAL_GAME } from './change-level';
+import changeLevel from './change-level';
+import { INITIAL_GAME } from './data.js';
 
 describe(`Check level changer`, () => {
 
