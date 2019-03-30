@@ -7,6 +7,7 @@ import { levels, INITIAL_GAME, statsAnswers } from './data/data.js';
 import { renderStats } from './stats.js';
 import changeLevel from './data/change-level.js';
 import timer from './data/timer.js';
+import countLives from './data/count-lives.js';
 // const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
 
 
@@ -132,7 +133,6 @@ const getAnswer = (typeOfGame, game) => {
       gameAnswer = `Тип игры имеет неправильный формат`;
       break;
   }
-
   return gameAnswer;
 };
 
@@ -143,10 +143,11 @@ export let currentLevel = 0;
 export let copyStatsAnswers = Object.assign({}, statsAnswers);
 
 export const gameScreen = (gamelevels, state) => {
-  if (state.level === 10) {
+  if (state.level === 10 || countLives(copyStatsAnswers) < 1) {
     changeScreen(renderStats(copyStatsAnswers));
     return;
   }
+
   const content = `
   ${header}
   <section class="game">
