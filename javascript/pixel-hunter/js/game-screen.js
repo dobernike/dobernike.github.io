@@ -8,16 +8,45 @@ import { renderStats } from './stats.js';
 import changeLevel from './data/change-level.js';
 import timer from './data/timer.js';
 import countLives from './data/count-lives.js';
+// import { resize } from './data/resize.js';
 // const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
 
+
+// const realImgSize = (imgSrc) => {
+//   const i = document.createElement(`img`);
+//   // const i = new Image();
+//   i.setAttribute(`width`, `auto`);
+//   i.setAttribute(`height`, `auto`);
+//   i.src = imgSrc;
+//   console.log(i);
+//   console.log(i.style.width);
+//   console.log(i.style.height);
+//   return {
+//     width: 200,
+//     height: 300
+//   };
+// };
 
 const getOption = (typeOfGame) => {
   let option = ``;
 
+  // const doubleImg1 = levels.double.question.answers.question1.src;
+
+  // const doubleImgSize = {
+  //   width: `<img src="${doubleImg1}" width="auto">`.width,
+  //   height: `<img src="${doubleImg1}" height="auto">`.height,
+  // };
+
+  // const expectedSizeDouble = levels.double.question.imgSize;
+  // const urlSize = realImgSize(doubleImg1);
+  // console.log(urlSize);
+  // const resizeDoubleImg = resize(expectedSizeDouble, urlSize);
+
+
   switch (typeOfGame) {
     case `double`:
       option = `<div class="game__option">
-    <img src="${levels.double.question.answers.question1.src}" alt="Option 1" width="468" height="458">
+    <img src="${levels.double.question.answers.question1.src}" alt="Option 1" width="${levels.double.question.imgSize.width}" height="${levels.double.question.imgSize.height}">
     <label class="game__answer game__answer--photo">
       <input class="visually-hidden" name="question1" type="radio" value="photo">
       <span>Фото</span>
@@ -29,7 +58,7 @@ const getOption = (typeOfGame) => {
   </div>
 
   <div class="game__option">
-    <img src="${levels.double.question.answers.question2.src}" alt="Option 2" width="468" height="458">
+    <img src="${levels.double.question.answers.question2.src}" alt="Option 2" width="${levels.double.question.imgSize.width}" height="${levels.double.question.imgSize.height}">
     <label class="game__answer  game__answer--photo">
       <input class="visually-hidden" name="question2" type="radio" value="photo">
       <span>Фото</span>
@@ -42,7 +71,7 @@ const getOption = (typeOfGame) => {
       break;
     case `wide`:
       option = `<div class="game__option">
-    <img src="${levels.wide.question.answers.question1.src}" alt="Option 1" width="705" height="455">
+    <img src="${levels.wide.question.answers.question1.src}" alt="Option 1" width="${levels.wide.question.imgSize.width}" height="${levels.wide.question.imgSize.height}">
     <label class="game__answer  game__answer--photo">
       <input class="visually-hidden" name="question1" type="radio" value="photo">
       <span>Фото</span>
@@ -55,15 +84,15 @@ const getOption = (typeOfGame) => {
       break;
     case `triple`:
       option = `<div class="game__option">
-    <img src="${levels.triple.question.answers.question1.src}" alt="Option 1" width="304" height="455">
+    <img src="${levels.triple.question.answers.question1.src}" alt="Option 1" width="${levels.triple.question.imgSize.width}" height="${levels.triple.question.imgSize.height}">
   </div>
 
   <div class="game__option  game__option--selected">
-    <img src="${levels.triple.question.answers.question2.src}" alt="Option 2" width="304" height="455">
+    <img src="${levels.triple.question.answers.question2.src}" alt="Option 2"  width="${levels.triple.question.imgSize.width}" height="${levels.triple.question.imgSize.height}">
   </div>
 
   <div class="game__option">
-    <img src="${levels.triple.question.answers.question3.src}" alt="Option 3" width="304" height="455">
+    <img src="${levels.triple.question.answers.question3.src}" alt="Option 3"  width="${levels.triple.question.imgSize.width}" height="${levels.triple.question.imgSize.height}">
   </div>`;
       break;
 
