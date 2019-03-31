@@ -4,60 +4,60 @@ let width = 0;
 
 export const resize = (expected, given) => {
 
-  if (expected.height === 256 && expected.width === 256) {
+  if (expected.width === 256 && expected.height === 256) {
     if (given.width === given.height) {
-      height = 256;
       width = 256;
-    } else if (given.width < given.height) {
       height = 256;
-      width = 128;
     } else if (given.width > given.height) {
-      height = 128;
       width = 256;
-    }
-  } else if (expected.height === 256 && expected.width === 128) {
-    if (given.width === given.height) {
-      width = 128;
-      height = 256;
-    } else if (given.width < given.height) {
-      height = 256;
-      width = 64;
-    } else if (given.width > given.height) {
       height = 128;
+    } else if (given.width < given.height) {
       width = 128;
+      height = 256;
     }
-  } else if (expected.height === 468 && expected.width === 458) {
-    if (given.width === given.height) {
-      height = 458;
+  } else if (expected.width === 256 && expected.height === 128) {
+    if ((given.width / 2) === given.height) {
+      width = 256;
+      height = 128;
+    } else if (given.width > given.height) {
+      width = 256;
+      height = 64;
+    } else if (given.width === given.height) {
+      width = 128;
+      height = 128;
+    }
+  } else if (expected.width === 468 && expected.height === 458) {
+    if ((given.width - given.height) % 10 === 0 && given.width > given.height) {
       width = 468;
-    } else if (given.width < given.height) {
-      height = 468;
-      width = 229;
+      height = 458;
     } else if (given.width > given.height) {
-      height = 234;
-      width = 458;
+      width = 468;
+      height = 229;
+    } else if (given.width < given.height) {
+      width = 234;
+      height = 458;
     }
-  } else if (expected.height === 705 && expected.width === 455) {
-    if (given.width === given.height) {
-      height = 455;
+  } else if (expected.width === 705 && expected.height === 455) {
+    if ((given.width - given.height) % 5 === 0 && (given.width / given.height) < 2 && given.width > given.height) {
       width = 705;
-    } else if (given.width < given.height) {
-      height = 705;
-      width = 227;
-    } else if (given.width > given.height) {
-      height = 352;
-      width = 455;
-    }
-  } else if (expected.height === 304 && expected.width === 455) {
-    if (given.width === given.height) {
       height = 455;
-      width = 304;
-    } else if (given.width < given.height) {
-      height = 304;
-      width = 227;
     } else if (given.width > given.height) {
-      height = 152;
-      width = 455;
+      width = 705;
+      height = 227;
+    } else if (given.width < given.height) {
+      width = 352;
+      height = 455;
+    }
+  } else if (expected.width === 304 && expected.height === 455) {
+    if ((given.height / given.width) < 2 && given.width < given.height) {
+      width = 304;
+      height = 455;
+    } else if (given.width > given.height) {
+      width = 304;
+      height = 227;
+    } else if (given.width < given.height) {
+      width = 152;
+      height = 455;
     }
   }
 
