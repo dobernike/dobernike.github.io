@@ -13,6 +13,10 @@ export const levels = {
     type: `double`,
     question: {
       text: `Угадайте для каждого изображения фото или рисунок?`,
+      imgSize: {
+        width: 468,
+        height: 458
+      },
       answers: {
         question1: {
           answer: `paint`,
@@ -30,6 +34,10 @@ export const levels = {
     type: `wide`,
     question: {
       text: `Угадай, фото или рисунок?`,
+      imgSize: {
+        width: 705,
+        height: 455
+      },
       answers: {
         question1: {
           answer: `paint`,
@@ -43,6 +51,10 @@ export const levels = {
     type: `triple`,
     question: {
       text: `Найдите рисунок среди изображений`,
+      imgSize: {
+        width: 304,
+        height: 455
+      },
       answers: {
         question1: {
           answer: `photo`,

@@ -1,9 +1,10 @@
-let height = 0;
-let width = 0;
+let height = 256;
+let width = 256;
 
 
 export const resize = (expected, given) => {
-
+  console.log(expected);
+  console.log(given);
   if (expected.width === 256 && expected.height === 256) {
     if (given.width === given.height) {
       width = 256;
