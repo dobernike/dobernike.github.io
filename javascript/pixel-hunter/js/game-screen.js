@@ -8,7 +8,7 @@ import { renderStats } from './stats.js';
 import changeLevel from './data/change-level.js';
 import timer from './data/timer.js';
 import countLives from './data/count-lives.js';
-import { resize } from './data/resize.js';
+// import { resize } from './data/resize.js';
 // const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
 
 
