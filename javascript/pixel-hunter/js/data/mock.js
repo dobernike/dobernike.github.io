@@ -1,16 +1,52 @@
-export const paintings = [
+export const paintings = {
   // People
-  `https://k42.kn3.net/CF42609C8.jpg`,
+  img1: {
+    src: `https://k42.kn3.net/CF42609C8.jpg`,
+    size: {
+      width: 600,
+      height: 831
+    }
+  },
   // Animals
-  `https://k42.kn3.net/D2F0370D6.jpg`,
+  img2: {
+    src: `https://k42.kn3.net/D2F0370D6.jpg`,
+    size: {
+      width: 468,
+      height: 354
+    }
+  },
   // Nature
-  `https://k32.kn3.net/5C7060EC5.jpg`
-];
-export const photos = [
+  img3: {
+    src: `https://k32.kn3.net/5C7060EC5.jpg`,
+    size: {
+      width: 1200,
+      height: 900
+    }
+  }
+};
+export const photos = {
   // People
-  `http://i.imgur.com/1KegWPz.jpg`,
+  img1: {
+    src: `http://i.imgur.com/1KegWPz.jpg`,
+    size: {
+      width: 1080,
+      height: 720
+    }
+  },
   // Animals
-  `https://i.imgur.com/DiHM5Zb.jpg`,
+  img2: {
+    src: `https://i.imgur.com/DiHM5Zb.jpg`,
+    size: {
+      width: 661,
+      height: 976
+    }
+  },
   // Nature
-  `http://i.imgur.com/DKR1HtB.jpg`
-];
+  img3: {
+    src: `http://i.imgur.com/DKR1HtB.jpg`,
+    size: {
+      width: 368,
+      height: 976
+    }
+  }
+};

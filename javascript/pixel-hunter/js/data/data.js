@@ -20,11 +20,11 @@ export const levels = {
       answers: {
         question1: {
           answer: `paint`,
-          src: paintings[0]
+          src: paintings.img1.src
         },
         question2: {
           answer: `photo`,
-          src: photos[0]
+          src: photos.img1.src
         }
       }
     },
@@ -41,7 +41,7 @@ export const levels = {
       answers: {
         question1: {
           answer: `paint`,
-          src: paintings[1]
+          src: paintings.img2.src
         }
       }
     },
@@ -58,15 +58,15 @@ export const levels = {
       answers: {
         question1: {
           answer: `photo`,
-          src: photos[1]
+          src: photos.img2.src
         },
         question2: {
           answer: `paint`,
-          src: paintings[2]
+          src: paintings.img3.src
         },
         question3: {
           answer: `photo`,
-          src: photos[2]
+          src: photos.img3.src
         }
       }
     },
