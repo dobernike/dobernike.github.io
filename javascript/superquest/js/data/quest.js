@@ -17,3 +17,7 @@ export const changeLevel = (game, level) => {
   });
   return newGame;
 };
+
+export const canContinue = ``;
+
+export const die = ``;

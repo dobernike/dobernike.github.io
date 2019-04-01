@@ -1,7 +1,13 @@
 /* eslint-disable object-curly-spacing */
-import { render, mainElement } from './util.js';
-import { levels, initialState } from './data/data.js';
-import header from './header.js';
+import { render, mainElement, changeScreen } from './util.js';
+import header from './game/header.js'; // ./game/header.js
+import footer from './game/footer.js';
+import renderLevel from './game/level.js';
+import { levels, initialState } from './data/data.js'; //
+import { INITIAL_GAME, changeLevel, canContinue, die } from './data/quest.js';
+import QUEST from './data/quest-data.js';
+import showGameOver from './game/gameover-screen.js';
+
 
 const screenTemplate = (lvl) => `
 <div>
@@ -19,14 +25,12 @@ const screenTemplate = (lvl) => `
 <div class="result"></div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
-/* <li class="answer">LEFT. Вы побежите влево, от гриба</li>
-<li class="answer">RIGHT. Вы побежите вправо, прямо на гриб</li>
-<li class="answer">JUMP. Вы подпрыгните вверх</li> */
+
 const renderScreen = (state) => {
   mainElement.innerHTML = ``;
   mainElement.appendChild(render(header(state)));
   mainElement.appendChild(render(screenTemplate(levels[state.level])));
-  // changeScreen(render(screenTemplate(levels[state.level])));
+
   const input = document.querySelector(`input`);
   input.onkeydown = (evt) => {
     if (evt.key === `Enter`) {
@@ -45,8 +49,3 @@ const renderScreen = (state) => {
 };
 
 export default () => renderScreen(initialState);
-
-// changeScreen(render(screenTemplate(levels[initialState.level])));
-// export default render(screenTemplate(levels[initialState.level]));
-
-// export default render(screenTemplate(levels[initialState.level]));

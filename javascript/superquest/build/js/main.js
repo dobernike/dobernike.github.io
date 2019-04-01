@@ -17,6 +17,22 @@
 
   };
 
+  // import { render } from './util.js';
+  // import { initialState } from './data/data.js';
+  // const headerTemplate =
+  var header = (state) => `<header class="header">
+<div>Мир: ${state.level}</div>
+<div>Жизни:
+${new Array(3 - state.lives)
+    .fill(`<span class="heart__empty">♡</span>`).join(``)}
+${new Array(state.lives)
+    .fill(`<span class="heart__full">♥</span>`).join(``)}
+</div>
+<div>Время: ${state.time}</div>
+</header>`;
+
+  // export default render(headerTemplate(initialState));
+
   const initialState = {
     level: `level-0`,
     lives: 3,
@@ -45,23 +61,40 @@
     }
   };
 
-  // import { render } from './util.js';
-  // import { initialState } from './data/data.js';
-  // const headerTemplate =
-  var header = (state) => `<header class="header">
-<div>Мир: ${state.level}</div>
-<div>Жизни:
-${new Array(3 - state.lives)
-    .fill(`<span class="heart__empty">♡</span>`).join(``)}
-${new Array(state.lives)
-    .fill(`<span class="heart__full">♥</span>`).join(``)}
+  const INITIAL_GAME = Object.freeze({
+    level: 0,
+    lives: 2,
+    time: 0
+  });
+
+  /* eslint-disable object-curly-spacing */
+
+  const template = `<div>
+<header class="header">
+  <div>Мир: 0</div>
+  <div>Жизни: <span class="heart__empty">♡</span>
+    <span class="heart__full">🖤</span>
+    <span class="heart__full">🖤</span>
+  </div>
+  <div>Время: 2</div>
+</header>
 </div>
-<div>Время: ${state.time}</div>
-</header>`;
+<div>
+<div class="end">
+  <p>Вы погибли =(!</p>
+  <p>Продолжить с последнего уровня?</p>
+  <div class="repeat"><span class="repeat-action">Да</span>|<span class="repeat-action">Не</span></div>
+</div>
+</div>
+<div>
+<div class="result"></div>
+<small>Для справки введите <i>help</i></small>
+</div>`;
 
-  // export default render(headerTemplate(initialState));
+  render(template);
 
-  // eslint-disable-next-line object-curly-spacing
+  /* eslint-disable object-curly-spacing */
+
 
   const screenTemplate = (lvl) => `
 <div>
@@ -79,14 +112,12 @@ ${new Array(state.lives)
 <div class="result"></div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
-  /* <li class="answer">LEFT. Вы побежите влево, от гриба</li>
-  <li class="answer">RIGHT. Вы побежите вправо, прямо на гриб</li>
-  <li class="answer">JUMP. Вы подпрыгните вверх</li> */
+
   const renderScreen = (state) => {
     mainElement.innerHTML = ``;
     mainElement.appendChild(render(header(state)));
     mainElement.appendChild(render(screenTemplate(levels[state.level])));
-    // changeScreen(render(screenTemplate(levels[state.level])));
+
     const input = document.querySelector(`input`);
     input.onkeydown = (evt) => {
       if (evt.key === `Enter`) {
@@ -106,12 +137,7 @@ ${new Array(state.lives)
 
   var gameScreen = () => renderScreen(initialState);
 
-  // changeScreen(render(screenTemplate(levels[initialState.level])));
-  // export default render(screenTemplate(levels[initialState.level]));
-
-  // export default render(screenTemplate(levels[initialState.level]));
-
-  const template = `<div class="end">
+  const template$1 = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
   А?!<br>
   Точно?!<br>
@@ -124,7 +150,7 @@ ${new Array(state.lives)
 </div>
 </div>`;
 
-  const element = render(template);
+  const element = render(template$1);
 
   const agreeButton = element.querySelector(`.repeat-action`);
 
