@@ -1,6 +1,6 @@
 export const INITIAL_GAME = Object.freeze({
   level: 0,
-  lives: 2,
+  lives: 3,
   time: 0
 });
 
@@ -18,6 +18,13 @@ export const changeLevel = (game, level) => {
   return newGame;
 };
 
-export const canContinue = ``;
+export const canContinue = (game) => {
+  return game.lives !== 0 ? game : false;
+};
 
-export const die = ``;
+export const die = (game) => {
+  game.lives -= 1;
+  return game;
+};
+
+export const Result = ``;
