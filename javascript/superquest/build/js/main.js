@@ -35,7 +35,11 @@ ${new Array(state.lives)
   var footer = render(template);
 
   /* eslint-disable object-curly-spacing */
-
+  const render$1 = (html) => {
+    const wrapper = document.createElement(`div`);
+    wrapper.innerHTML = html.trim();
+    return wrapper;
+  };
 
   class AbstractView {
     constructor() {
@@ -58,7 +62,7 @@ ${new Array(state.lives)
     }
 
     render() {
-      return render(this.template);
+      return render$1(this.template);
     }
 
     bind(element) {
