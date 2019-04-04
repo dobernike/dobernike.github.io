@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-spacing */
 import AbstractView from './abstract-view.js';
 
 

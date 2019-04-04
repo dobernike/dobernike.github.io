@@ -14,7 +14,7 @@
     mainElement.appendChild(element);
   };
 
-  var header = (state) => `<header class="header">
+  var renderHeader = (state) => `<header class="header">
 <div>Мир: ${state.level}</div>
 <div>Жизни:
 ${new Array(3 - state.lives)
@@ -33,6 +33,9 @@ ${new Array(state.lives)
 
 
   var footer = render(template);
+
+  /* eslint-disable object-curly-spacing */
+
 
   class AbstractView {
     constructor() {
@@ -62,6 +65,9 @@ ${new Array(state.lives)
       // bind handlers if required
     }
   }
+
+  /* eslint-disable object-curly-spacing */
+
 
   const ENTER_KEY_CODE = 13;
 
@@ -179,8 +185,7 @@ ${new Array(state.lives)
   };
 
   /* eslint-disable object-curly-spacing */
-
-  /* eslint-disable object-curly-spacing */
+  // import showGameOver from './game/gameover-screen.js';
 
 
   // const ENTER_KEY_CODE = 13; //
@@ -196,11 +201,36 @@ ${new Array(state.lives)
 
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
+  // const onAnswer = (answer) => {
+  //   switch (answer.result) {
+  //     case Result.NEXT_LEVEL:
+  //       game = changeLevel(game, game.level + 1);
+  //       updateGame(game);
+  //       break;
+  //     case Result.DIE:
+  //       game = die(game);
+  //       if (!canContinue(game)) {
+  //         showGameOver(game);
+  //       } else {
+  //         updateGame(game);
+  //       }
+  //       break;
+  //     case Result.WIN:
+  //       showGameOver(game);
+  //       break;
+  //     case Result.NOOP:
+  //       // just do nothing
+  //       break;
+  //     default:
+  //       throw new Error(`Unknown result:`);
+  //   }
+  // };
+
   const updateGame = (state) => {
     const currentLevel = getLevel(state);
     const levelViewElement = new LevelView(currentLevel).element;
 
-    headerElement.innerHTML = header(state);
+    headerElement.innerHTML = renderHeader(state);
     levelElement.innerHTML = ``;
     levelElement.appendChild(levelViewElement);
 

@@ -3,9 +3,9 @@ import { render, changeScreen } from './util.js';
 import renderHeader from './game/header.js';
 import footer from './game/footer.js';
 import LevelView from './game/level-view.js';
-import { INITIAL_GAME, changeLevel, canContinue, die, Result } from './data/quest.js';
+import { INITIAL_GAME } from './data/quest.js';
 import QUEST from './data/quest-data.js';
-import showGameOver from './game/gameover-screen.js';
+// import showGameOver from './game/gameover-screen.js';
 
 
 // const ENTER_KEY_CODE = 13; //
@@ -21,30 +21,30 @@ gameContainerElement.appendChild(footer);
 
 const getLevel = (state) => QUEST[`level-${state.level}`];
 
-const onAnswer = (answer) => {
-  switch (answer.result) {
-    case Result.NEXT_LEVEL:
-      game = changeLevel(game, game.level + 1);
-      updateGame(game);
-      break;
-    case Result.DIE:
-      game = die(game);
-      if (!canContinue(game)) {
-        showGameOver(game);
-      } else {
-        updateGame(game);
-      }
-      break;
-    case Result.WIN:
-      showGameOver(game);
-      break;
-    case Result.NOOP:
-      // just do nothing
-      break;
-    default:
-      throw new Error(`Unknown result:`);
-  }
-};
+// const onAnswer = (answer) => {
+//   switch (answer.result) {
+//     case Result.NEXT_LEVEL:
+//       game = changeLevel(game, game.level + 1);
+//       updateGame(game);
+//       break;
+//     case Result.DIE:
+//       game = die(game);
+//       if (!canContinue(game)) {
+//         showGameOver(game);
+//       } else {
+//         updateGame(game);
+//       }
+//       break;
+//     case Result.WIN:
+//       showGameOver(game);
+//       break;
+//     case Result.NOOP:
+//       // just do nothing
+//       break;
+//     default:
+//       throw new Error(`Unknown result:`);
+//   }
+// };
 
 const updateGame = (state) => {
   const currentLevel = getLevel(state);
