@@ -34,28 +34,85 @@ ${new Array(state.lives)
 
   var footer = render(template);
 
-  const getAnswer = (level) => {
-    let answers = ``;
-    for (const answer of level.answers) {
-      answers += `<li class="answer"> ${answer.action.toUpperCase() + ` ` + answer.title}</li>`;
+  class AbstractView {
+    constructor() {
+      if (new.target === AbstractView) {
+        throw new Error(`Can't instantiate AbstractView, only concrete one`);
+      }
     }
-    return answers;
-  };
+
+    get template() {
+      throw new Error(`Template is required`);
+    }
+
+    get element() {
+      if (this._element) {
+        return this._element;
+      }
+      this._element = this.render();
+      this.bind(this._element);
+      return this._element;
+    }
+
+    render() {
+      return render(this.template);
+    }
+
+    bind(element) {
+      // bind handlers if required
+    }
+  }
+
+  const ENTER_KEY_CODE = 13;
 
 
-  var renderLevel = (lvl) => `
-<div>
-<div class="quest">
-  <p class="text">
-  ${lvl.text}
-  </p>
-  <input type="text">
-  <ul class="answers">
-  ${getAnswer(lvl)}
-  </ul >
-</div >
-</div >
-`;
+  class LevelView extends AbstractView {
+    constructor(level) {
+      super();
+      this.level = level;
+    }
+
+    get template() {
+      return `<div class="quest">
+    <p class="text">${this.level.text}</p>
+
+    <ul class="answers">
+    ${this.level.answers.map((it) => `<li class="answer">${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
+    </ul>
+    <input type="text">
+  </div>`;
+    }
+
+    onAnswer(answer) { }
+
+    bind() {
+      const answersElement = this.element.querySelector(`.answers`);
+
+      const answersElements = Array.from(answersElement.children);
+
+      answersElement.addEventListener(`click`, (evt) => {
+        const answerIndex = answersElements.indexOf(evt.target);
+        const answer = this.level.answers[answerIndex];
+        if (answer) {
+          this.onAnswer(answer);
+        }
+      });
+
+      this._answerInput = this.element.querySelector(`input`);
+      this._answerInput.addEventListener(`keydown`, ({ keyCode }) => {
+        if (keyCode === ENTER_KEY_CODE) {
+          const current = this.level;
+          const { value = `` } = this._answerInput;
+          const userAnswer = value.toUpperCase();
+          for (const answer of current.answers) {
+            if (userAnswer === answer.action.toUpperCase()) {
+              this.onAnswer(answer);
+            }
+          }
+        }
+      });
+    }
+  }
 
   const INITIAL_GAME = Object.freeze({
     level: 0,
@@ -68,29 +125,6 @@ ${new Array(state.lives)
     DIE: 1,
     WIN: 2,
     NEXT_LEVEL: 3
-  };
-
-  const changeLevel = (game, level) => {
-    if (typeof level !== `number`) {
-      throw new Error(`Level should not be negative value`);
-    }
-    if (level < 0) {
-      throw new Error(`Level should not be negative value`);
-    }
-
-    const newGame = Object.assign({}, game, {
-      level
-    });
-    return newGame;
-  };
-
-  const canContinue = (game) => {
-    return game.lives !== 0 ? game : false;
-  };
-
-  const die = (game) => {
-    game.lives -= 1;
-    return game;
   };
 
   /* eslint-disable object-curly-spacing */
@@ -146,24 +180,10 @@ ${new Array(state.lives)
 
   /* eslint-disable object-curly-spacing */
 
-
-  var showGameOver = (game) => {
-    const template = `${header(game)}
-<div>
-<div class="end">
-  <p>Вы погибли =(!</p>
-  <p>Продолжить с последнего уровня?</p>
-  <div class="repeat"><span class="repeat-action">Да</span>|<span class="repeat-action">Не</span></div>
-</div>
-</div>`;
-    const gameover = render(template);
-    return changeScreen(gameover);
-  };
-
   /* eslint-disable object-curly-spacing */
 
 
-  const ENTER_KEY_CODE = 13; //
+  // const ENTER_KEY_CODE = 13; //
 
   const gameContainerElement = render(``);
   const headerElement = render(``);
@@ -177,43 +197,41 @@ ${new Array(state.lives)
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
   const updateGame = (state) => {
+    const currentLevel = getLevel(state);
+    const levelViewElement = new LevelView(currentLevel).element;
+
     headerElement.innerHTML = header(state);
-    levelElement.innerHTML = renderLevel(getLevel(state));
+    levelElement.innerHTML = ``;
+    levelElement.appendChild(levelViewElement);
+
+    // const answersElement = levelElement.querySelector(`.answers`);
+
+    // const answersElements = Array.from(answersElement.children);
+
+    // answersElement.addEventListener(`click`, (evt) => {
+    //   const answerIndex = answersElements.indexOf(evt.target);
+    //   const answer = currentLevel.answers[answerIndex];
+    //   if (answer) {
+    //     onAnswer(answer);
+    //   }
+    // });
+
   };
 
-  levelElement.addEventListener(`keydown`, ({ keyCode }) => {
-    if (keyCode === ENTER_KEY_CODE) {
-      const current = getLevel(game);
-      const { value = `` } = levelElement.querySelector(`input`);
-      const userAnswer = value.toUpperCase();
+  // levelElement.addEventListener(`keydown`, ({ keyCode }) => {
+  //   if (keyCode === ENTER_KEY_CODE) {
+  //     const current = getLevel(game);
+  //     const { value = `` } = levelElement.querySelector(`input`);
+  //     const userAnswer = value.toUpperCase();
 
-      for (const answer of current.answers) {
-        if (userAnswer === answer.action.toUpperCase()) {
-          switch (answer.result) {
-            case Result.NEXT_LEVEL:
-              game = changeLevel(game, game.level + 1);
-              updateGame(game);
-              break;
-            case Result.DIE:
-              game = die(game);
-              if (!canContinue(game)) {
-                showGameOver(game);
-              }
-              break;
-            case Result.WIN:
-              showGameOver(game);
-              break;
-            case Result.NOOP:
-              // just do nothing
-              break;
-            default:
-              throw new Error(`Unknown result:`);
-          }
-          updateGame(game);
-        }
-      }
-    }
-  });
+  //     for (const answer of current.answers) {
+  //       if (userAnswer === answer.action.toUpperCase()) {
+  //         onAnswer(answer);
+  //         updateGame(game);
+  //       }
+  //     }
+  //   }
+  // });
 
   let game; //
 
