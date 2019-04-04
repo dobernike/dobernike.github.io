@@ -1,5 +1,7 @@
-import { changeScreen, render } from './util.js';
+/* eslint-disable object-curly-spacing */
+import { render } from './util.js';
 import gameScreen from './game-screen.js';
+
 
 const template = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
@@ -21,5 +23,6 @@ const agreeButton = element.querySelector(`.repeat-action`);
 agreeButton.addEventListener(`click`, () => {
   gameScreen();
 });
+
 
 export default element;

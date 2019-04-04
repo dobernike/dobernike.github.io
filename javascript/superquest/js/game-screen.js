@@ -1,52 +1,96 @@
 /* eslint-disable object-curly-spacing */
-import { render, mainElement } from './util.js';
-import { levels, initialState } from './data/data.js';
-import header from './header.js';
+import { render, changeScreen } from './util.js';
+import renderHeader from './game/header.js';
+import footer from './game/footer.js';
+import LevelView from './game/level-view.js';
+import { INITIAL_GAME } from './data/quest.js';
+import QUEST from './data/quest-data.js';
+// import showGameOver from './game/gameover-screen.js';
 
-const screenTemplate = (lvl) => `
-<div>
-<div class="quest">
-  <p class="text">
-  ${lvl.description}
-  </p>
-  <input type="text">
-  <ul class="answers">
-    ${[...Object.entries(lvl.answers)].map(([answer]) => `<li class="answer"> ${answer.toUpperCase()}</li>`).join(``)}
-  </ul>
-</div>
-</div>
-<div>
-<div class="result"></div>
-<small>Для справки введите <i>help</i></small>
-</div>`;
-/* <li class="answer">LEFT. Вы побежите влево, от гриба</li>
-<li class="answer">RIGHT. Вы побежите вправо, прямо на гриб</li>
-<li class="answer">JUMP. Вы подпрыгните вверх</li> */
-const renderScreen = (state) => {
-  mainElement.innerHTML = ``;
-  mainElement.appendChild(render(header(state)));
-  mainElement.appendChild(render(screenTemplate(levels[state.level])));
-  // changeScreen(render(screenTemplate(levels[state.level])));
-  const input = document.querySelector(`input`);
-  input.onkeydown = (evt) => {
-    if (evt.key === `Enter`) {
-      // Переход на следующий экран
-      const userAnswer = input.value.trim();
-      const destination = userAnswer.toLowerCase() in levels[state.level].answers ? levels[state.level].answers[userAnswer] : null;
-      // input.value = ``;
-      if (destination) {
-        renderScreen(Object.assign({}, state, {
-          'level': destination
-        }));
-        // renderScreen()
-      }
-    }
-  };
+
+// const ENTER_KEY_CODE = 13; //
+
+const gameContainerElement = render(``);
+const headerElement = render(``);
+const levelElement = render(``);
+
+// init game content
+gameContainerElement.appendChild(headerElement);
+gameContainerElement.appendChild(levelElement);
+gameContainerElement.appendChild(footer);
+
+const getLevel = (state) => QUEST[`level-${state.level}`];
+
+// const onAnswer = (answer) => {
+//   switch (answer.result) {
+//     case Result.NEXT_LEVEL:
+//       game = changeLevel(game, game.level + 1);
+//       updateGame(game);
+//       break;
+//     case Result.DIE:
+//       game = die(game);
+//       if (!canContinue(game)) {
+//         showGameOver(game);
+//       } else {
+//         updateGame(game);
+//       }
+//       break;
+//     case Result.WIN:
+//       showGameOver(game);
+//       break;
+//     case Result.NOOP:
+//       // just do nothing
+//       break;
+//     default:
+//       throw new Error(`Unknown result:`);
+//   }
+// };
+
+const updateGame = (state) => {
+  const currentLevel = getLevel(state);
+  const levelViewElement = new LevelView(currentLevel).element;
+
+  headerElement.innerHTML = renderHeader(state);
+  levelElement.innerHTML = ``;
+  levelElement.appendChild(levelViewElement);
+
+  // const answersElement = levelElement.querySelector(`.answers`);
+
+  // const answersElements = Array.from(answersElement.children);
+
+  // answersElement.addEventListener(`click`, (evt) => {
+  //   const answerIndex = answersElements.indexOf(evt.target);
+  //   const answer = currentLevel.answers[answerIndex];
+  //   if (answer) {
+  //     onAnswer(answer);
+  //   }
+  // });
+
 };
 
-export default () => renderScreen(initialState);
+// levelElement.addEventListener(`keydown`, ({ keyCode }) => {
+//   if (keyCode === ENTER_KEY_CODE) {
+//     const current = getLevel(game);
+//     const { value = `` } = levelElement.querySelector(`input`);
+//     const userAnswer = value.toUpperCase();
 
-// changeScreen(render(screenTemplate(levels[initialState.level])));
-// export default render(screenTemplate(levels[initialState.level]));
+//     for (const answer of current.answers) {
+//       if (userAnswer === answer.action.toUpperCase()) {
+//         onAnswer(answer);
+//         updateGame(game);
+//       }
+//     }
+//   }
+// });
 
-// export default render(screenTemplate(levels[initialState.level]));
+let game; //
+
+const startGame = () => {
+  game = Object.assign({}, INITIAL_GAME);
+
+  updateGame(game);
+  changeScreen(gameContainerElement);
+};
+
+
+export default startGame;

@@ -3,7 +3,7 @@
 
   const render = (template) => {
     const wrapper = document.createElement(`div`);
-    wrapper.innerHTML = template.trim();
+    wrapper.innerHTML = template;
     return wrapper;
   };
 
@@ -11,44 +11,10 @@
 
   const changeScreen = (element) => {
     mainElement.innerHTML = ``;
-    // element.forEach((it) => {
     mainElement.appendChild(element);
-    // });
-
   };
 
-  const initialState = {
-    level: `level-0`,
-    lives: 3,
-    time: 0
-  };
-
-  const levels = {
-    'level-0': {
-      description: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу
-  Грибного Королевства Тоадстул Пич. Её похитил злой повелитель черепах Боузер и вы отправились в Грибное Королевство,
-  чтобы победить Боузера и освободить принцессу. Вы отправляетесь в первый замок, но, чтобы в него попасть нужно
-  преодолеть несколько препятствий. Вы стоите посреди на одной из равнин Грибного Королевства и видите как на вас
-  стремительно несется хмурый гриб вашего роста. Нужно срочно что-то предпринять`,
-      answers: {
-        'left': null,
-        'jump': null,
-        'right': `level-1`
-      }
-    },
-
-    'level-1': {
-      description: `И вот вы справа. Тут ничего нет, похоже, остается только вернуться назад`,
-      answers: {
-        'left': `level-0`
-      }
-    }
-  };
-
-  // import { render } from './util.js';
-  // import { initialState } from './data/data.js';
-  // const headerTemplate =
-  var header = (state) => `<header class="header">
+  var renderHeader = (state) => `<header class="header">
 <div>Мир: ${state.level}</div>
 <div>Жизни:
 ${new Array(3 - state.lives)
@@ -59,59 +25,261 @@ ${new Array(state.lives)
 <div>Время: ${state.time}</div>
 </header>`;
 
-  // export default render(headerTemplate(initialState));
-
-  // eslint-disable-next-line object-curly-spacing
-
-  const screenTemplate = (lvl) => `
-<div>
-<div class="quest">
-  <p class="text">
-  ${lvl.description}
-  </p>
-  <input type="text">
-  <ul class="answers">
-    ${[...Object.entries(lvl.answers)].map(([answer]) => `<li class="answer"> ${answer.toUpperCase()}</li>`).join(``)}
-  </ul>
-</div>
-</div>
-<div>
+  /* eslint-disable object-curly-spacing */
+  const template = `<div>
 <div class="result"></div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
-  /* <li class="answer">LEFT. Вы побежите влево, от гриба</li>
-  <li class="answer">RIGHT. Вы побежите вправо, прямо на гриб</li>
-  <li class="answer">JUMP. Вы подпрыгните вверх</li> */
-  const renderScreen = (state) => {
-    mainElement.innerHTML = ``;
-    mainElement.appendChild(render(header(state)));
-    mainElement.appendChild(render(screenTemplate(levels[state.level])));
-    // changeScreen(render(screenTemplate(levels[state.level])));
-    const input = document.querySelector(`input`);
-    input.onkeydown = (evt) => {
-      if (evt.key === `Enter`) {
-        // Переход на следующий экран
-        const userAnswer = input.value.trim();
-        const destination = userAnswer.toLowerCase() in levels[state.level].answers ? levels[state.level].answers[userAnswer] : null;
-        // input.value = ``;
-        if (destination) {
-          renderScreen(Object.assign({}, state, {
-            'level': destination
-          }));
-          // renderScreen()
-        }
-      }
-    };
+
+
+  var footer = render(template);
+
+  /* eslint-disable object-curly-spacing */
+  const render$1 = (html) => {
+    const wrapper = document.createElement(`div`);
+    wrapper.innerHTML = html.trim();
+    return wrapper;
   };
 
-  var gameScreen = () => renderScreen(initialState);
+  class AbstractView {
+    constructor() {
+      if (new.target === AbstractView) {
+        throw new Error(`Can't instantiate AbstractView, only concrete one`);
+      }
+    }
 
-  // changeScreen(render(screenTemplate(levels[initialState.level])));
-  // export default render(screenTemplate(levels[initialState.level]));
+    get template() {
+      throw new Error(`Template is required`);
+    }
 
-  // export default render(screenTemplate(levels[initialState.level]));
+    get element() {
+      if (this._element) {
+        return this._element;
+      }
+      this._element = this.render();
+      this.bind(this._element);
+      return this._element;
+    }
 
-  const template = `<div class="end">
+    render() {
+      return render$1(this.template);
+    }
+
+    bind(element) {
+      // bind handlers if required
+    }
+  }
+
+  /* eslint-disable object-curly-spacing */
+
+
+  const ENTER_KEY_CODE = 13;
+
+
+  class LevelView extends AbstractView {
+    constructor(level) {
+      super();
+      this.level = level;
+    }
+
+    get template() {
+      return `<div class="quest">
+    <p class="text">${this.level.text}</p>
+
+    <ul class="answers">
+    ${this.level.answers.map((it) => `<li class="answer">${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
+    </ul>
+    <input type="text">
+  </div>`;
+    }
+
+    onAnswer(answer) { }
+
+    bind() {
+      const answersElement = this.element.querySelector(`.answers`);
+
+      const answersElements = Array.from(answersElement.children);
+
+      answersElement.addEventListener(`click`, (evt) => {
+        const answerIndex = answersElements.indexOf(evt.target);
+        const answer = this.level.answers[answerIndex];
+        if (answer) {
+          this.onAnswer(answer);
+        }
+      });
+
+      this._answerInput = this.element.querySelector(`input`);
+      this._answerInput.addEventListener(`keydown`, ({ keyCode }) => {
+        if (keyCode === ENTER_KEY_CODE) {
+          const current = this.level;
+          const { value = `` } = this._answerInput;
+          const userAnswer = value.toUpperCase();
+          for (const answer of current.answers) {
+            if (userAnswer === answer.action.toUpperCase()) {
+              this.onAnswer(answer);
+            }
+          }
+        }
+      });
+    }
+  }
+
+  const INITIAL_GAME = Object.freeze({
+    level: 0,
+    lives: 3,
+    time: 0
+  });
+
+  const Result = {
+    NOOP: 0,
+    DIE: 1,
+    WIN: 2,
+    NEXT_LEVEL: 3
+  };
+
+  /* eslint-disable object-curly-spacing */
+
+
+  var QUEST = {
+    'level-0': {
+      text: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу
+  Грибного Королевства Тоадстул Пич. Её похитил злой повелитель черепах Боузер и вы отправились в Грибное Королевство,
+  чтобы победить Боузера и освободить принцессу. Вы отправляетесь в первый замок, но, чтобы в него попасть нужно
+  преодолеть несколько препятствий. Вы стоите посреди на одной из равнин Грибного Королевства и видите как на вас
+  стремительно несется хмурый гриб вашего роста. Нужно срочно что-то предпринять`,
+      answers: [
+        {
+          action: `left`,
+          title: `Вы побежите влево, от гриба`,
+          result: Result.DIE
+        },
+        {
+          action: `right`,
+          title: `Вы побежите вправо, прямо на гриб`,
+          result: Result.DIE
+        },
+        {
+          action: `jump`,
+          title: `Вы прыгните вверх`,
+          result: Result.NEXT_LEVEL
+        }
+      ]
+    },
+
+    'level-1': {
+      text: `Теперь, когда угроза быть убитым грибом миновала, вы можете спокойно оглядеться по сторонам. Вы видите что над вами прямо в двумерном небе висят кирпичные блоки, которые перемещаются с непонятными металлическими конструкциями. Что вы предпримете?`,
+      answers: [
+        {
+          action: `left`,
+          title: `Вы побежите влево`,
+          result: Result.DIE
+        },
+        {
+          action: `right`,
+          title: `Вы побежите вправо`,
+          result: Result.DIE
+        },
+        {
+          action: `jump`,
+          title: `Вы прыгните вверх`,
+          result: Result.DIE
+        }
+      ]
+    }
+  };
+
+  /* eslint-disable object-curly-spacing */
+  // import showGameOver from './game/gameover-screen.js';
+
+
+  // const ENTER_KEY_CODE = 13; //
+
+  const gameContainerElement = render(``);
+  const headerElement = render(``);
+  const levelElement = render(``);
+
+  // init game content
+  gameContainerElement.appendChild(headerElement);
+  gameContainerElement.appendChild(levelElement);
+  gameContainerElement.appendChild(footer);
+
+  const getLevel = (state) => QUEST[`level-${state.level}`];
+
+  // const onAnswer = (answer) => {
+  //   switch (answer.result) {
+  //     case Result.NEXT_LEVEL:
+  //       game = changeLevel(game, game.level + 1);
+  //       updateGame(game);
+  //       break;
+  //     case Result.DIE:
+  //       game = die(game);
+  //       if (!canContinue(game)) {
+  //         showGameOver(game);
+  //       } else {
+  //         updateGame(game);
+  //       }
+  //       break;
+  //     case Result.WIN:
+  //       showGameOver(game);
+  //       break;
+  //     case Result.NOOP:
+  //       // just do nothing
+  //       break;
+  //     default:
+  //       throw new Error(`Unknown result:`);
+  //   }
+  // };
+
+  const updateGame = (state) => {
+    const currentLevel = getLevel(state);
+    const levelViewElement = new LevelView(currentLevel).element;
+
+    headerElement.innerHTML = renderHeader(state);
+    levelElement.innerHTML = ``;
+    levelElement.appendChild(levelViewElement);
+
+    // const answersElement = levelElement.querySelector(`.answers`);
+
+    // const answersElements = Array.from(answersElement.children);
+
+    // answersElement.addEventListener(`click`, (evt) => {
+    //   const answerIndex = answersElements.indexOf(evt.target);
+    //   const answer = currentLevel.answers[answerIndex];
+    //   if (answer) {
+    //     onAnswer(answer);
+    //   }
+    // });
+
+  };
+
+  // levelElement.addEventListener(`keydown`, ({ keyCode }) => {
+  //   if (keyCode === ENTER_KEY_CODE) {
+  //     const current = getLevel(game);
+  //     const { value = `` } = levelElement.querySelector(`input`);
+  //     const userAnswer = value.toUpperCase();
+
+  //     for (const answer of current.answers) {
+  //       if (userAnswer === answer.action.toUpperCase()) {
+  //         onAnswer(answer);
+  //         updateGame(game);
+  //       }
+  //     }
+  //   }
+  // });
+
+  let game; //
+
+  const startGame = () => {
+    game = Object.assign({}, INITIAL_GAME);
+
+    updateGame(game);
+    changeScreen(gameContainerElement);
+  };
+
+  /* eslint-disable object-curly-spacing */
+
+
+  const template$1 = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
   А?!<br>
   Точно?!<br>
@@ -124,17 +292,13 @@ ${new Array(state.lives)
 </div>
 </div>`;
 
-  const element = render(template);
+  const element = render(template$1);
 
   const agreeButton = element.querySelector(`.repeat-action`);
 
   agreeButton.addEventListener(`click`, () => {
-    gameScreen();
+    startGame();
   });
-
-  // for development
-
-  // import welcomeScreen from './game-screen.js';
 
   changeScreen(element);
 

@@ -1,4 +1,6 @@
+/* eslint-disable object-curly-spacing */
 import { render } from './util.js';
+
 
 const template = `<div class="end">
 <div class="scoreboard">
@@ -20,5 +22,6 @@ const template = `<div class="end">
 <br>
 <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
 </div>`;
+
 
 export default render(template);
