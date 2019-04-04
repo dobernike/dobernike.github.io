@@ -4,6 +4,13 @@ export const INITIAL_GAME = Object.freeze({
   time: 0
 });
 
+export const Result = {
+  NOOP: 0,
+  DIE: 1,
+  WIN: 2,
+  NEXT_LEVEL: 3
+};
+
 export const changeLevel = (game, level) => {
   if (typeof level !== `number`) {
     throw new Error(`Level should not be negative value`);
@@ -26,5 +33,3 @@ export const die = (game) => {
   game.lives -= 1;
   return game;
 };
-
-export const Result = ``;

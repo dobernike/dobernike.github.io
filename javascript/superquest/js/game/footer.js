@@ -5,4 +5,5 @@ const template = `<div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
 
+
 export default render(template);

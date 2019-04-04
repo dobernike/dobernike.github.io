@@ -3,7 +3,6 @@
 
   const render = (template) => {
     const wrapper = document.createElement(`div`);
-    // wrapper.innerHTML = template.trim();
     wrapper.innerHTML = template;
     return wrapper;
   };
@@ -12,15 +11,9 @@
 
   const changeScreen = (element) => {
     mainElement.innerHTML = ``;
-    // element.forEach((it) => {
     mainElement.appendChild(element);
-    // });
-
   };
 
-  // import { render } from './util.js';
-  // import { initialState } from './data/data.js';
-  // const headerTemplate =
   var header = (state) => `<header class="header">
 <div>Мир: ${state.level}</div>
 <div>Жизни:
@@ -32,13 +25,12 @@ ${new Array(state.lives)
 <div>Время: ${state.time}</div>
 </header>`;
 
-  // export default render(headerTemplate(initialState));
-
   /* eslint-disable object-curly-spacing */
   const template = `<div>
 <div class="result"></div>
 <small>Для справки введите <i>help</i></small>
 </div>`;
+
 
   var footer = render(template);
 
@@ -49,6 +41,7 @@ ${new Array(state.lives)
     }
     return answers;
   };
+
 
   var renderLevel = (lvl) => `
 <div>
@@ -64,17 +57,18 @@ ${new Array(state.lives)
 </div >
 `;
 
-  const initialState = {
-    level: `level-0`,
-    lives: 3,
-    time: 0
-  };
-
   const INITIAL_GAME = Object.freeze({
     level: 0,
     lives: 3,
     time: 0
   });
+
+  const Result = {
+    NOOP: 0,
+    DIE: 1,
+    WIN: 2,
+    NEXT_LEVEL: 3
+  };
 
   const changeLevel = (game, level) => {
     if (typeof level !== `number`) {
@@ -99,6 +93,9 @@ ${new Array(state.lives)
     return game;
   };
 
+  /* eslint-disable object-curly-spacing */
+
+
   var QUEST = {
     'level-0': {
       text: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу
@@ -110,26 +107,17 @@ ${new Array(state.lives)
         {
           action: `left`,
           title: `Вы побежите влево, от гриба`,
-          // result: die(),
-          go: () => {
-            return null;
-          }
+          result: Result.DIE
         },
         {
           action: `right`,
           title: `Вы побежите вправо, прямо на гриб`,
-          // result: die()
-          go: () => {
-            return null;
-          }
+          result: Result.DIE
         },
         {
           action: `jump`,
           title: `Вы прыгните вверх`,
-          // result: Result.NEXT_LEVEL
-          go: () => {
-            return 1;
-          }
+          result: Result.NEXT_LEVEL
         }
       ]
     },
@@ -140,32 +128,24 @@ ${new Array(state.lives)
         {
           action: `left`,
           title: `Вы побежите влево`,
-          // result: die()
-          go: () => {
-            return null;
-          }
+          result: Result.DIE
         },
         {
           action: `right`,
           title: `Вы побежите вправо`,
-          // result: die()
-          go: () => {
-            return null;
-          }
+          result: Result.DIE
         },
         {
           action: `jump`,
           title: `Вы прыгните вверх`,
-          // result: die()
-          go: () => {
-            return null;
-          }
+          result: Result.DIE
         }
       ]
     }
   };
 
   /* eslint-disable object-curly-spacing */
+
 
   var showGameOver = (game) => {
     const template = `${header(game)}
@@ -182,58 +162,70 @@ ${new Array(state.lives)
 
   /* eslint-disable object-curly-spacing */
 
+
   const ENTER_KEY_CODE = 13; //
+
+  const gameContainerElement = render(``);
+  const headerElement = render(``);
+  const levelElement = render(``);
+
+  // init game content
+  gameContainerElement.appendChild(headerElement);
+  gameContainerElement.appendChild(levelElement);
+  gameContainerElement.appendChild(footer);
+
+  const getLevel = (state) => QUEST[`level-${state.level}`];
+
+  const updateGame = (state) => {
+    headerElement.innerHTML = header(state);
+    levelElement.innerHTML = renderLevel(getLevel(state));
+  };
+
+  levelElement.addEventListener(`keydown`, ({ keyCode }) => {
+    if (keyCode === ENTER_KEY_CODE) {
+      const current = getLevel(game);
+      const { value = `` } = levelElement.querySelector(`input`);
+      const userAnswer = value.toUpperCase();
+
+      for (const answer of current.answers) {
+        if (userAnswer === answer.action.toUpperCase()) {
+          switch (answer.result) {
+            case Result.NEXT_LEVEL:
+              game = changeLevel(game, game.level + 1);
+              updateGame(game);
+              break;
+            case Result.DIE:
+              game = die(game);
+              if (!canContinue(game)) {
+                showGameOver(game);
+              }
+              break;
+            case Result.WIN:
+              showGameOver(game);
+              break;
+            case Result.NOOP:
+              // just do nothing
+              break;
+            default:
+              throw new Error(`Unknown result:`);
+          }
+          updateGame(game);
+        }
+      }
+    }
+  });
 
   let game; //
 
   const startGame = () => {
     game = Object.assign({}, INITIAL_GAME);
 
-    const gameContainerElement = render(``);
-    const headerElement = render(``);
-    const levelElement = render(``);
-
-    // init game content
-    gameContainerElement.appendChild(headerElement);
-    gameContainerElement.appendChild(levelElement);
-    gameContainerElement.appendChild(footer);
-
-    const getLevel = () => QUEST[`level-${game.level}`];
-
-    const updateGame = (state) => {
-      headerElement.innerHTML = header(state);
-      levelElement.innerHTML = renderLevel(getLevel(state.level));
-    };
-
-    levelElement.addEventListener(`keydown`, ({ keyCode }) => {
-      if (keyCode === ENTER_KEY_CODE) {
-        const current = getLevel(game.level);
-        const { value = `` } = levelElement.querySelector(`input`);
-        const userAnswer = value.toUpperCase();
-
-        for (const answer of current.answers) {
-          if (userAnswer === answer.action.toUpperCase()) {
-            const nextLevel = answer.go();
-            try {
-              game = changeLevel(game, nextLevel);
-            } catch (e) {
-              game = die(game);
-            }
-            updateGame(game);
-            if (!canContinue(game)) {
-              showGameOver(game);
-            }
-          }
-        }
-      }
-    });
-
     updateGame(game);
     changeScreen(gameContainerElement);
-
   };
 
-  var gameScreen = () => startGame(initialState);
+  /* eslint-disable object-curly-spacing */
+
 
   const template$1 = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
@@ -253,12 +245,8 @@ ${new Array(state.lives)
   const agreeButton = element.querySelector(`.repeat-action`);
 
   agreeButton.addEventListener(`click`, () => {
-    gameScreen();
+    startGame();
   });
-
-  // for development
-
-  // import welcomeScreen from './game-screen.js';
 
   changeScreen(element);
 

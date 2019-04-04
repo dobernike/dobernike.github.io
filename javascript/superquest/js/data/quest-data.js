@@ -1,3 +1,7 @@
+/* eslint-disable object-curly-spacing */
+import { Result } from "./quest";
+
+
 export default {
   'level-0': {
     text: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу
@@ -9,26 +13,17 @@ export default {
       {
         action: `left`,
         title: `Вы побежите влево, от гриба`,
-        // result: die(),
-        go: () => {
-          return null;
-        }
+        result: Result.DIE
       },
       {
         action: `right`,
         title: `Вы побежите вправо, прямо на гриб`,
-        // result: die()
-        go: () => {
-          return null;
-        }
+        result: Result.DIE
       },
       {
         action: `jump`,
         title: `Вы прыгните вверх`,
-        // result: Result.NEXT_LEVEL
-        go: () => {
-          return 1;
-        }
+        result: Result.NEXT_LEVEL
       }
     ]
   },
@@ -39,26 +34,17 @@ export default {
       {
         action: `left`,
         title: `Вы побежите влево`,
-        // result: die()
-        go: () => {
-          return null;
-        }
+        result: Result.DIE
       },
       {
         action: `right`,
         title: `Вы побежите вправо`,
-        // result: die()
-        go: () => {
-          return null;
-        }
+        result: Result.DIE
       },
       {
         action: `jump`,
         title: `Вы прыгните вверх`,
-        // result: die()
-        go: () => {
-          return null;
-        }
+        result: Result.DIE
       }
     ]
   }

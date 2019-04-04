@@ -2,6 +2,7 @@
 import { render, changeScreen } from '../util.js';
 import header from './header.js';
 
+
 export default (game) => {
   const template = `${header(game)}
 <div>

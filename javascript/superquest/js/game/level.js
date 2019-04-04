@@ -6,6 +6,7 @@ const getAnswer = (level) => {
   return answers;
 };
 
+
 export default (lvl) => `
 <div>
 <div class="quest">
