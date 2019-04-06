@@ -29,7 +29,7 @@ export default class AbstractView {
     return render(this.template);
   }
 
-  bind(element) {
+  bind() {
     // bind handlers if required
   }
 }
