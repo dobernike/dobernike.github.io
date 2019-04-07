@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-spacing */
-import { render } from './util.js';
+import { render } from '../utils/util.js';
 import header from './header.js';
 import { copyStatsAnswers, addEventToBack } from './game-screen.js';
-import countLives from './data/count-lives.js';
-import { calcSummaryScores, calcCorrect, calcFast, calcSlow } from './data/calc-scores.js';
+import countLives from '../data/count-lives.js';
+import { calcSummaryScores, calcCorrect, calcFast, calcSlow } from '../data/calc-scores.js';
 
 
 export const statistic = (answers) => `

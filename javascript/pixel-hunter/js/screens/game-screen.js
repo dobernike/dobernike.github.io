@@ -1,43 +1,18 @@
 /* eslint-disable object-curly-spacing */
 import header from './header';
-import { render, changeScreen } from './util.js';
-import { statistic } from './stats.js';
+import { render, changeScreen } from '../utils/util.js';
+import { statistic, renderStats } from './stats.js';
 import greeting from './greeting.js';
-import { levels, INITIAL_GAME, statsAnswers } from './data/data.js';
-import { renderStats } from './stats.js';
-import changeLevel from './data/change-level.js';
-import timer from './data/timer.js';
-import countLives from './data/count-lives.js';
-import { paintings, photos } from './data/mock.js';
-import { resize } from './data/resize.js';
-// const mockPhoto = `https://k42.kn3.net/CF42609C8.jpg`;
+import { levels, INITIAL_GAME, statsAnswers } from '../data/data.js';
+import changeLevel from '../data/change-level.js';
+import timer from '../data/timer.js';
+import countLives from '../data/count-lives.js';
+import { paintings, photos } from '../data/mock.js';
+import { resize } from '../data/resize.js';
 
-
-// const realImgSize = (imgSrc) => {
-//   const i = document.createElement(`img`);
-//   // const i = new Image();
-//   i.setAttribute(`width`, `auto`);
-//   i.setAttribute(`height`, `auto`);
-//   i.src = imgSrc;
-//   console.log(i);
-//   console.log(i.style.width);
-//   console.log(i.style.height);
-//   return {
-//     width: 200,
-//     height: 300
-//   };
-// };
 
 const getOption = (typeOfGame) => {
   let option = ``;
-
-  // const doubleImg1 = levels.double.question.answers.question1.src;
-
-  // const doubleImgSize = {
-  //   width: `<img src="${doubleImg1}" width="auto">`.width,
-  //   height: `<img src="${doubleImg1}" height="auto">`.height,
-  // };
-
   // for double
   const expectedSizeDouble = levels.double.question.imgSize;
   const srcSizeDoubleImg1 = paintings.img1.size;
@@ -45,12 +20,10 @@ const getOption = (typeOfGame) => {
 
   const srcSizeDoubleImg2 = paintings.img1.size;
   const resizeDoubleImg2 = resize(expectedSizeDouble, srcSizeDoubleImg2);
-
   // for wide
   const expectedSizeWide = levels.wide.question.imgSize;
   const srcSizeWideImg1 = paintings.img2.size;
   const resizeWideImg1 = resize(expectedSizeWide, srcSizeWideImg1);
-
   // for triple
   const expectedSizeTriple = levels.triple.question.imgSize;
   const srcSizeTripleImg1 = photos.img2.size;

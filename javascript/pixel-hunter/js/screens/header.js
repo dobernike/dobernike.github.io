@@ -1,4 +1,3 @@
-
 export default `<header class="header">
 <button class="back">
   <span class="visually-hidden">Вернуться к началу</span>

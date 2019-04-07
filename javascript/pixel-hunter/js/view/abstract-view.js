@@ -4,6 +4,7 @@ const render = (html) => {
   return wrapper;
 };
 
+
 export default class AbstractView {
   constructor() {
     if (new.target === AbstractView) {
