@@ -10,7 +10,7 @@ export default () => {
 
   greeting.onAsteriskClick = () => changeScreen(intro().element);
 
-  greeting.onContiueClick = () => changeScreen(rules);
+  greeting.onContiueClick = () => changeScreen(rules().element);
 
   return greeting;
 };

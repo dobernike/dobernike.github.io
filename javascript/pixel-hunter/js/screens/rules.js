@@ -1,53 +1,17 @@
 /* eslint-disable object-curly-spacing */
-import { render, changeScreen } from '../utils/util.js';
+import RulesView from '../view/rules-view.js';
+import { changeScreen } from '../utils/util.js';
 import greeting from './greeting.js';
-import header from './header.js';
 import { levels, INITIAL_GAME } from '../data/data.js';
 import { gameScreen } from './game-screen.js';
 
 
-const template = `${header}
-<section class="rules">
-<h2 class="rules__title">Правила</h2>
-<ul class="rules__description">
-  <li>Угадай 10 раз для каждого изображения фото
-    <img class="rules__icon" src="img/icon-photo.png" width="32" height="31" alt="Фото"> или рисунок
-    <img class="rules__icon" src="img/icon-paint.png" width="32" height="31" alt="Рисунок"></li>
-  <li>Фотографиями или рисунками могут быть оба изображения.</li>
-  <li>На каждую попытку отводится 30 секунд.</li>
-  <li>Ошибиться можно не более 3 раз.</li>
-</ul>
-<p class="rules__ready">Готовы?</p>
-<form class="rules__form">
-  <input class="rules__input" type="text" placeholder="Ваше Имя">
-  <button class="rules__button  continue" type="submit" disabled>Go!</button>
-</form>
-</section>`;
+export default () => {
+  const rules = new RulesView();
 
-const rules = render(template);
+  rules.onClick = () => changeScreen(greeting().element);
 
-const back = rules.querySelector(`.back`);
-back.addEventListener(`click`, () => {
-  changeScreen(greeting().element);
-});
+  rules.onSubmit = () => gameScreen(levels[`double`], INITIAL_GAME);
 
-const rulesForm = rules.querySelector(`.rules__form`);
-const rulesInput = rules.querySelector(`.rules__input`);
-const rulesButton = rules.querySelector(`.rules__button`);
-
-rulesInput.addEventListener(`input`, () => {
-  if (rulesInput.value !== ``) {
-    rulesButton.disabled = false;
-  } else {
-    rulesButton.disabled = true;
-  }
-});
-
-rulesForm.addEventListener(`submit`, (evt) => {
-  evt.preventDefault();
-  // changeScreen(game);
-  gameScreen(levels[`double`], INITIAL_GAME);
-});
-
-
-export default rules;
+  return rules;
+};

@@ -29,12 +29,12 @@ export default class HeaderView extends AbstractView {
     </header>`;
   }
 
-  bind() {
-    this.element.addEventListener(`click`, (evt) => {
+  bind(it) {
+    const back = it.element.querySelector(`.back`);
+    back.addEventListener(`click`, (evt) => {
       evt.preventDefault();
-      this.onClick();
+      it.onClick();
     });
   }
 
-  onClick() { }
 }
