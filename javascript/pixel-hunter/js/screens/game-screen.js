@@ -1,8 +1,9 @@
 /* eslint-disable object-curly-spacing */
 import GameView from '../view/game-view.js';
+import StatsView from '../view/stats-view.js';
 
 import { changeScreen } from '../utils/util.js';
-import { renderStats } from './stats.js';
+// import { renderStats } from './stats.js';
 import greeting from './greeting.js';
 import { levels, statsAnswers } from '../data/data.js';
 import changeLevel from '../data/change-level.js';
@@ -16,14 +17,11 @@ export const gameScreen = (gamelevels, state) => {
   const gameView = new GameView(gamelevels, copyStatsAnswers, levels, currentLevel, state);
 
   if (state.level === 10 || countLives(copyStatsAnswers) < 1) {
-    changeScreen(renderStats(copyStatsAnswers));
+    changeScreen(new StatsView(copyStatsAnswers).element);
     return;
   }
-
   gameView.onClick = () => {
-    currentLevel = 0;
-    copyStatsAnswers = Object.assign({}, statsAnswers);
-    changeScreen(greeting().element);
+    backButton();
   };
 
   gameView.onCheck = (it) => {
@@ -31,4 +29,10 @@ export const gameScreen = (gamelevels, state) => {
   };
 
   changeScreen(gameView.element);
+};
+
+export const backButton = () => {
+  currentLevel = 0;
+  copyStatsAnswers = Object.assign({}, statsAnswers);
+  changeScreen(greeting().element);
 };
