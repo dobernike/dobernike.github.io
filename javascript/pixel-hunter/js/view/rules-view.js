@@ -31,7 +31,7 @@ export default class RulesView extends AbstractView {
   }
 
   bind() {
-    // Вызывает метод, который по нажатию на кнопку back вызывает метод этого класса onClick();
+    // Вызывает метод bind класса HeaderView, который по нажатию на кнопку back вызывает метод onClick() этого класса
     header.bind(this);
 
     const rulesInput = this.element.querySelector(`.rules__input`);
