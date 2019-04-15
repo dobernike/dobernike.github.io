@@ -1,9 +1,7 @@
 /* eslint-disable object-curly-spacing */
 import StatsView from '../view/stats-view.js';
-
-import { changeScreen } from '../utils/util.js';
-import greeting from './greeting.js';
 import { backButton } from './game-screen.js';
+
 
 export const statistic = (answers) => `
 <ul class="stats">
