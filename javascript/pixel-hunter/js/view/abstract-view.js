@@ -1,9 +1,9 @@
-/* eslint-disable object-curly-spacing */
 const render = (html) => {
   const wrapper = document.createElement(`div`);
   wrapper.innerHTML = html.trim();
   return wrapper;
 };
+
 
 export default class AbstractView {
   constructor() {
@@ -13,7 +13,7 @@ export default class AbstractView {
   }
 
   get template() {
-    throw new Error(`Template is required`);
+    throw new Error(`template is requered`);
   }
 
   get element() {
