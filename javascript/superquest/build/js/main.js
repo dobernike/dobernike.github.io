@@ -65,7 +65,7 @@ ${new Array(state.lives)
       return render$1(this.template);
     }
 
-    bind(element) {
+    bind() {
       // bind handlers if required
     }
   }

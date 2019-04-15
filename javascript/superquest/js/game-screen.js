@@ -1,14 +1,12 @@
 /* eslint-disable object-curly-spacing */
 import { render, changeScreen } from './util.js';
-import renderHeader from './game/header.js';
-import footer from './game/footer.js';
+import renderHeader from './game/header.js'; // import HeaderView from './game/header-view.js';
 import LevelView from './game/level-view.js';
-import { INITIAL_GAME } from './data/quest.js';
+import footer from './game/footer.js';
+import { Result, INITIAL_GAME, changeLevel, canContinue, die } from './data/quest.js';
 import QUEST from './data/quest-data.js';
-// import showGameOver from './game/gameover-screen.js';
-
-
-// const ENTER_KEY_CODE = 13; //
+// import GameOverView from './game/gameover-view.js';
+// import scoreboard from './game/scoreboard-screen.js';
 
 const gameContainerElement = render(``);
 const headerElement = render(``);
@@ -18,6 +16,8 @@ const levelElement = render(``);
 gameContainerElement.appendChild(headerElement);
 gameContainerElement.appendChild(levelElement);
 gameContainerElement.appendChild(footer);
+
+let game;
 
 const getLevel = (state) => QUEST[`level-${state.level}`];
 
@@ -82,8 +82,6 @@ const updateGame = (state) => {
 //     }
 //   }
 // });
-
-let game; //
 
 const startGame = () => {
   game = Object.assign({}, INITIAL_GAME);
