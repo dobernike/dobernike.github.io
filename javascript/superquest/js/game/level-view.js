@@ -22,8 +22,6 @@ export default class LevelView extends AbstractView {
   </div>`;
   }
 
-  onAnswer(answer) { }
-
   bind() {
     const answersElement = this.element.querySelector(`.answers`);
 
@@ -34,6 +32,7 @@ export default class LevelView extends AbstractView {
       const answer = this.level.answers[answerIndex];
       if (answer) {
         this.onAnswer(answer);
+
       }
     });
 
@@ -50,6 +49,12 @@ export default class LevelView extends AbstractView {
         }
       }
     });
+  }
+
+  onAnswer() { }
+
+  focus() {
+    this._answerInput.focus();
   }
 }
 

@@ -14,26 +14,6 @@
     mainElement.appendChild(element);
   };
 
-  var renderHeader = (state) => `<header class="header">
-<div>Мир: ${state.level}</div>
-<div>Жизни:
-${new Array(3 - state.lives)
-    .fill(`<span class="heart__empty">♡</span>`).join(``)}
-${new Array(state.lives)
-    .fill(`<span class="heart__full">♥</span>`).join(``)}
-</div>
-<div>Время: ${state.time}</div>
-</header>`;
-
-  /* eslint-disable object-curly-spacing */
-  const template = `<div>
-<div class="result"></div>
-<small>Для справки введите <i>help</i></small>
-</div>`;
-
-
-  var footer = render(template);
-
   /* eslint-disable object-curly-spacing */
   const render$1 = (html) => {
     const wrapper = document.createElement(`div`);
@@ -70,6 +50,26 @@ ${new Array(state.lives)
     }
   }
 
+  class HeaderView extends AbstractView {
+    constructor(state) {
+      super();
+      this.state = state;
+    }
+
+    get template() {
+      return `<header class="header">
+    <div>Мир: ${this.state.level}</div>
+    <div>Жизни:
+    ${new Array(3 - this.state.lives)
+        .fill(`<span class="heart__empty">♡</span>`).join(``)}
+    ${new Array(this.state.lives)
+        .fill(`<span class="heart__full">♥</span>`).join(``)}
+    </div>
+    <div>Время: ${this.state.time}</div>
+    </header>`;
+    }
+  }
+
   /* eslint-disable object-curly-spacing */
 
 
@@ -93,8 +93,6 @@ ${new Array(state.lives)
   </div>`;
     }
 
-    onAnswer(answer) { }
-
     bind() {
       const answersElement = this.element.querySelector(`.answers`);
 
@@ -105,6 +103,7 @@ ${new Array(state.lives)
         const answer = this.level.answers[answerIndex];
         if (answer) {
           this.onAnswer(answer);
+
         }
       });
 
@@ -122,7 +121,22 @@ ${new Array(state.lives)
         }
       });
     }
+
+    onAnswer() { }
+
+    focus() {
+      this._answerInput.focus();
+    }
   }
+
+  /* eslint-disable object-curly-spacing */
+  const template = `<div>
+<div class="result"></div>
+<small>Для справки введите <i>help</i></small>
+</div>`;
+
+
+  var footer = render(template);
 
   const INITIAL_GAME = Object.freeze({
     level: 0,
@@ -135,6 +149,29 @@ ${new Array(state.lives)
     DIE: 1,
     WIN: 2,
     NEXT_LEVEL: 3
+  };
+
+  const changeLevel = (game, level) => {
+    if (typeof level !== `number`) {
+      throw new Error(`Level should not be negative value`);
+    }
+    if (level < 0) {
+      throw new Error(`Level should not be negative value`);
+    }
+
+    const newGame = Object.assign({}, game, {
+      level
+    });
+    return newGame;
+  };
+
+  const canContinue = (game) => {
+    return game.lives !== 0 ? game : false;
+  };
+
+  const die = (game) => {
+    game.lives -= 1;
+    return game;
   };
 
   /* eslint-disable object-curly-spacing */
@@ -188,11 +225,61 @@ ${new Array(state.lives)
     }
   };
 
+  class GameOverView extends AbstractView {
+    constructor(game) {
+      super();
+      this.game = game;
+    }
+
+    get template() {
+      return `
+<div>
+<div class="end">
+  <p>Вы погибли =(!</p>
+  <p>Продолжить с последнего уровня?</p>
+  <div class="repeat"><span class="repeat-action">Да</span>|<span class="repeat-action">Не</span></div>
+</div>
+</div>`;
+    }
+
+    bind() {
+      const repeatAction = this.element.querySelector(`.repeat-action`);
+      repeatAction.addEventListener(`click`, () => {
+        this.onRepeat();
+      });
+    }
+
+    onRepeat() { }
+  }
+
   /* eslint-disable object-curly-spacing */
-  // import showGameOver from './game/gameover-screen.js';
 
 
-  // const ENTER_KEY_CODE = 13; //
+  const template$1 = `<div class="end">
+<div class="scoreboard">
+  <h1>Мои лучшие результаты</h1>
+
+  <table class="scores">
+    <tbody>
+      <tr>
+        <td>
+          <small>1.</small>
+        </td>
+        <td style="text-align: right;">5 сек</td>
+        <td>????💗💗</td>
+        <td>25.05.2018</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
+</div>`;
+
+
+  var scoreboard = render(template$1);
+
+  /* eslint-disable object-curly-spacing */
 
   const gameContainerElement = render(``);
   const headerElement = render(``);
@@ -203,71 +290,54 @@ ${new Array(state.lives)
   gameContainerElement.appendChild(levelElement);
   gameContainerElement.appendChild(footer);
 
+  let game;
+
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
-  // const onAnswer = (answer) => {
-  //   switch (answer.result) {
-  //     case Result.NEXT_LEVEL:
-  //       game = changeLevel(game, game.level + 1);
-  //       updateGame(game);
-  //       break;
-  //     case Result.DIE:
-  //       game = die(game);
-  //       if (!canContinue(game)) {
-  //         showGameOver(game);
-  //       } else {
-  //         updateGame(game);
-  //       }
-  //       break;
-  //     case Result.WIN:
-  //       showGameOver(game);
-  //       break;
-  //     case Result.NOOP:
-  //       // just do nothing
-  //       break;
-  //     default:
-  //       throw new Error(`Unknown result:`);
-  //   }
-  // };
-
-  const updateGame = (state) => {
-    const currentLevel = getLevel(state);
-    const levelViewElement = new LevelView(currentLevel).element;
-
-    headerElement.innerHTML = renderHeader(state);
-    levelElement.innerHTML = ``;
-    levelElement.appendChild(levelViewElement);
-
-    // const answersElement = levelElement.querySelector(`.answers`);
-
-    // const answersElements = Array.from(answersElement.children);
-
-    // answersElement.addEventListener(`click`, (evt) => {
-    //   const answerIndex = answersElements.indexOf(evt.target);
-    //   const answer = currentLevel.answers[answerIndex];
-    //   if (answer) {
-    //     onAnswer(answer);
-    //   }
-    // });
-
+  const updateView = (container, view) => {
+    container.innerHTML = ``;
+    container.appendChild(view.element);
   };
 
-  // levelElement.addEventListener(`keydown`, ({ keyCode }) => {
-  //   if (keyCode === ENTER_KEY_CODE) {
-  //     const current = getLevel(game);
-  //     const { value = `` } = levelElement.querySelector(`input`);
-  //     const userAnswer = value.toUpperCase();
+  const showGameOver = (state) => {
+    // const view = new GameOverView(getLevel(game));
+    const view = new GameOverView(getLevel(game));
+    view.onRepeat = () => updateGame(state);
+    updateView(levelElement, view);
+  };
 
-  //     for (const answer of current.answers) {
-  //       if (userAnswer === answer.action.toUpperCase()) {
-  //         onAnswer(answer);
-  //         updateGame(game);
-  //       }
-  //     }
-  //   }
-  // });
+  const answerHandler = (answer) => {
+    switch (answer.result) {
+      case Result.NEXT_LEVEL:
+        game = changeLevel(game, game.level + 1);
+        updateGame(game);
+        break;
+      case Result.DIE:
+        game = die(game);
+        updateGame(game);
+        if (!canContinue(game)) {
+          showGameOver(game);
+        }
+        break;
+      case Result.WIN:
+        changeScreen(scoreboard);
+        break;
+      case Result.NOOP:
+        // just do nothing
+        break;
+      default:
+        throw new Error(`Unknown result: ${answer.result}`);
+    }
+  };
 
-  let game; //
+  const updateGame = (state) => {
+    updateView(headerElement, new HeaderView(state));
+    const levelView = new LevelView(getLevel(game));
+    levelView.onAnswer = answerHandler;
+    updateView(levelElement, levelView);
+    levelView.focus();
+  };
+
 
   const startGame = () => {
     game = Object.assign({}, INITIAL_GAME);
@@ -279,7 +349,7 @@ ${new Array(state.lives)
   /* eslint-disable object-curly-spacing */
 
 
-  const template$1 = `<div class="end">
+  const template$2 = `<div class="end">
 <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
   А?!<br>
   Точно?!<br>
@@ -292,7 +362,7 @@ ${new Array(state.lives)
 </div>
 </div>`;
 
-  const element = render(template$1);
+  const element = render(template$2);
 
   const agreeButton = element.querySelector(`.repeat-action`);
 
