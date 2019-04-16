@@ -297,7 +297,7 @@
     game = Object.assign({}, game, {
       time: game.time + 1
     });
-    // updateGame(game);
+    updateHeader(game);
   };
 
   let timer;
@@ -346,8 +346,12 @@
     }
   };
 
-  const updateGame = (state) => {
+  const updateHeader = (state) => {
     updateView(headerElement, new HeaderView(state));
+  };
+
+  const updateGame = (state) => {
+    updateHeader(game);
     const levelView = new LevelView(getLevel(game));
     levelView.onAnswer = answerHandler;
     updateView(levelElement, levelView);

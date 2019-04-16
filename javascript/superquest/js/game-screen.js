@@ -24,7 +24,7 @@ const tick = () => {
   game = Object.assign({}, game, {
     time: game.time + 1
   });
-  // updateGame(game);
+  updateHeader(game);
 };
 
 let timer;
@@ -79,10 +79,10 @@ const answerHandler = (answer) => {
 
 const updateHeader = (state) => {
   updateView(headerElement, new HeaderView(state));
-}
+};
 
 const updateGame = (state) => {
-  updateView(headerElement, new HeaderView(state));
+  updateHeader(game);
   const levelView = new LevelView(getLevel(game));
   levelView.onAnswer = answerHandler;
   updateView(levelElement, levelView);
