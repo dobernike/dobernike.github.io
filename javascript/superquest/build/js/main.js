@@ -281,6 +281,7 @@
 
   /* eslint-disable object-curly-spacing */
 
+  const ONE_SECOND = 1000; // 1000ms = 1s
   const gameContainerElement = render(``);
   const headerElement = render(``);
   const levelElement = render(``);
@@ -292,6 +293,22 @@
 
   let game;
 
+  const tick = () => {
+    game = Object.assign({}, game, {
+      time: game.time + 1
+    });
+    // updateGame(game);
+  };
+
+  let timer;
+
+  const startTimer = () => {
+    timer = setTimeout(() => {
+      tick();
+      startTimer();
+    }, ONE_SECOND);
+  };
+
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
   const updateView = (container, view) => {
@@ -300,7 +317,6 @@
   };
 
   const showGameOver = (state) => {
-    // const view = new GameOverView(getLevel(game));
     const view = new GameOverView(getLevel(game));
     view.onRepeat = () => updateGame(state);
     updateView(levelElement, view);
@@ -344,6 +360,7 @@
 
     updateGame(game);
     changeScreen(gameContainerElement);
+    startTimer();
   };
 
   /* eslint-disable object-curly-spacing */

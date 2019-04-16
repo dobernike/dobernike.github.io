@@ -8,6 +8,7 @@ import QUEST from './data/quest-data.js';
 import GameOverView from './game/gameover-view.js';
 import scoreboard from './game/scoreboard-screen.js';
 
+const ONE_SECOND = 1000; // 1000ms = 1s
 const gameContainerElement = render(``);
 const headerElement = render(``);
 const levelElement = render(``);
@@ -19,6 +20,26 @@ gameContainerElement.appendChild(footer);
 
 let game;
 
+const tick = () => {
+  game = Object.assign({}, game, {
+    time: game.time + 1
+  });
+  // updateGame(game);
+};
+
+let timer;
+
+const startTimer = () => {
+  timer = setTimeout(() => {
+    tick();
+    startTimer();
+  }, ONE_SECOND);
+};
+
+const stopTimer = () => {
+  clearTimeout(timer);
+};
+
 const getLevel = (state) => QUEST[`level-${state.level}`];
 
 const updateView = (container, view) => {
@@ -27,7 +48,6 @@ const updateView = (container, view) => {
 };
 
 const showGameOver = (state) => {
-  // const view = new GameOverView(getLevel(game));
   const view = new GameOverView(getLevel(game));
   view.onRepeat = () => updateGame(state);
   updateView(levelElement, view);
@@ -57,6 +77,10 @@ const answerHandler = (answer) => {
   }
 };
 
+const updateHeader = (state) => {
+  updateView(headerElement, new HeaderView(state));
+}
+
 const updateGame = (state) => {
   updateView(headerElement, new HeaderView(state));
   const levelView = new LevelView(getLevel(game));
@@ -71,6 +95,7 @@ const startGame = () => {
 
   updateGame(game);
   changeScreen(gameContainerElement);
+  startTimer();
 };
 
 
