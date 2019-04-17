@@ -21,7 +21,9 @@ export default class GameOverView extends AbstractView {
   bind() {
     const repeatAction = this.element.querySelector(`.repeat-action`);
     repeatAction.addEventListener(`click`, () => {
-      this.onRepeat();
+      if (this.game.lives) {
+        this.onRepeat();
+      }
     });
   }
 
