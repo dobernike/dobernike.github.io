@@ -48,23 +48,23 @@ const updateView = (container, view) => {
 };
 
 const showGameOver = (state) => {
-  const view = new GameOverView(getLevel(game));
+  // const view = new GameOverView(getLevel(game));
+  const view = new GameOverView(game);
   view.onRepeat = () => updateGame(state);
   updateView(levelElement, view);
 };
 
 const answerHandler = (answer) => {
+  stopTimer();
   switch (answer.result) {
     case Result.NEXT_LEVEL:
       game = changeLevel(game, game.level + 1);
       updateGame(game);
+      startTimer();
       break;
     case Result.DIE:
       game = die(game);
-      updateGame(game);
-      if (!canContinue(game)) {
-        showGameOver(game);
-      }
+      showGameOver(game);
       break;
     case Result.WIN:
       changeScreen(scoreboard);

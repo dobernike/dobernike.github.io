@@ -165,10 +165,6 @@
     return newGame;
   };
 
-  const canContinue = (game) => {
-    return game.lives !== 0 ? game : false;
-  };
-
   const die = (game) => {
     game.lives -= 1;
     return game;
@@ -218,8 +214,29 @@
         },
         {
           action: `jump`,
-          title: `Вы прыгните вверх`,
+          title: `Как что, конечно же подпрыгну и со всей силы ударюсь головой о железяку!`,
+          result: Result.NEXT_LEVEL
+        }
+      ]
+    },
+
+    'level-2': {
+      text: `Вы проходите немного вперед и снова видите над головой кирпичную кладку. Вы хотите проверить свои новые силы и со всего размаху бьетесь об нее головой. На этот раз кирпичи разлетаются во все стороны. Вы начинаете радостно прыгать и разносить головой все кирпичи, но случайно ударяетесь о еще одну металлическую штуку и видите как из нее вырастает цветок. Ваши действия?`,
+      answers: [
+        {
+          action: `left`,
+          title: `Вы побежите влево`,
           result: Result.DIE
+        },
+        {
+          action: `right`,
+          title: `Вы побежите вправо`,
+          result: Result.DIE
+        },
+        {
+          action: `1`,
+          title: `Конечно же съесть его!`,
+          result: Result.WIN
         }
       ]
     }
@@ -245,7 +262,9 @@
     bind() {
       const repeatAction = this.element.querySelector(`.repeat-action`);
       repeatAction.addEventListener(`click`, () => {
-        this.onRepeat();
+        if (this.game.lives) {
+          this.onRepeat();
+        }
       });
     }
 
@@ -309,6 +328,10 @@
     }, ONE_SECOND);
   };
 
+  const stopTimer = () => {
+    clearTimeout(timer);
+  };
+
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
   const updateView = (container, view) => {
@@ -317,23 +340,23 @@
   };
 
   const showGameOver = (state) => {
-    const view = new GameOverView(getLevel(game));
+    // const view = new GameOverView(getLevel(game));
+    const view = new GameOverView(game);
     view.onRepeat = () => updateGame(state);
     updateView(levelElement, view);
   };
 
   const answerHandler = (answer) => {
+    stopTimer();
     switch (answer.result) {
       case Result.NEXT_LEVEL:
         game = changeLevel(game, game.level + 1);
         updateGame(game);
+        startTimer();
         break;
       case Result.DIE:
         game = die(game);
-        updateGame(game);
-        if (!canContinue(game)) {
-          showGameOver(game);
-        }
+        showGameOver(game);
         break;
       case Result.WIN:
         changeScreen(scoreboard);
