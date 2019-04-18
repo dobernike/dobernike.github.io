@@ -1,7 +1,7 @@
-import WelcomeScreen from './welcome-screen.js';
+import WelcomeScreen from './view/welcome-screen.js';
 import GameScreen from './game-screen.js';
 import QuestModel from './model/quest-model.js';
-import StatsScreen from './stats-screen.js';
+// import StatsScreen from './stats-screen.js';
 
 const main = document.getElementById(`main`);
 const changeView = (element) => {

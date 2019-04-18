@@ -1,1 +1,1 @@
-{"version":3,"names":[],"mappings":"","sources":["main.js"],"sourcesContent":["// import {changeScreen} from './util.js';\n// import welcomeScreen from './welcome-screen.js';\n\n\n// changeScreen(welcomeScreen);\n\nimport Router from './router.js';\n\nconst router = new Router();\nrouter.showWelcome();\n\n"],"file":"main.js"}
+{"version":3,"names":[],"mappings":"","sources":["main.js"],"sourcesContent":["import Router from './router.js';\n\nconst router = new Router();\nrouter.constructor.showWelcome();\n"],"file":"main.js"}
