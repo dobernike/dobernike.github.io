@@ -2,9 +2,10 @@ import AbstractView from './abstract-view.js';
 
 
 export default class GameOverView extends AbstractView {
-  constructor(game) {
+  constructor(win, canContinue) {
     super();
-    this.game = game;
+    this.win = win;
+    this.canContinue = canContinue;
   }
 
   get template() {
@@ -19,9 +20,13 @@ export default class GameOverView extends AbstractView {
   }
 
   bind() {
+    console.log(`bind`);
     const repeatAction = this.element.querySelector(`.repeat-action`);
+    console.log(repeatAction)
     repeatAction.addEventListener(`click`, () => {
+      console.log(this.game);
       if (this.game.lives) {
+        console.log(`s`)
         this.onRepeat();
       }
     });

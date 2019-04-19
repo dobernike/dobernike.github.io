@@ -30,6 +30,15 @@ export const canContinue = (game) => {
 };
 
 export const die = (game) => {
-  game.lives -= 1;
+  game = Object.assign({}, game, {
+    lives: game.lives - 1
+  });
   return game;
+};
+
+export const tick = (state) => {
+  state = Object.assign({}, state, {
+    time: state.time + 1
+  });
+  return state;
 };

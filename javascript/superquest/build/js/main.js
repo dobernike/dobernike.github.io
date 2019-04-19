@@ -123,8 +123,17 @@
   };
 
   const die = (game) => {
-    game.lives -= 1;
+    game = Object.assign({}, game, {
+      lives: game.lives - 1
+    });
     return game;
+  };
+
+  const tick = (state) => {
+    state = Object.assign({}, state, {
+      time: state.time + 1
+    });
+    return state;
   };
 
   class FooterView extends AbstractView {
@@ -220,9 +229,10 @@
   }
 
   class GameOverView extends AbstractView {
-    constructor(game) {
+    constructor(win, canContinue) {
       super();
-      this.game = game;
+      this.win = win;
+      this.canContinue = canContinue;
     }
 
     get template() {
@@ -237,9 +247,13 @@
     }
 
     bind() {
+      console.log(`bind`);
       const repeatAction = this.element.querySelector(`.repeat-action`);
+      console.log(repeatAction);
       repeatAction.addEventListener(`click`, () => {
+        console.log(this.game);
         if (this.game.lives) {
+          console.log(`s`);
           this.onRepeat();
         }
       });
@@ -256,8 +270,9 @@
       // Инициализация и настройка игры
       this.model = model;
       this.header = new HeaderView(this.model.state);
-      this.content = new LevelView(this.model.getCurrentLevel);
-      console.log(model);
+      // console.log(this.model.state);
+      this.content = new LevelView(this.model.getCurrentLevel());
+      // console.log(this.model.getCurrentLevel);
       this.root = document.createElement(`div`);
       this.root.appendChild(this.header.element);
       this.root.appendChild(this.content.element);
@@ -323,7 +338,8 @@
     updateHeader() {
       // Обновление статистики игрока
       const header = new HeaderView(this.model.state);
-      this.root.replaceChild(header.element, this.header.element);
+
+      this.root.replaceChild(header.element, this.root.firstChild);
     }
 
     changeLevel() {
@@ -448,7 +464,7 @@
     }
 
     die() {
-      this._state = die(this.tates);
+      this._state = die(this.state);
     }
 
     restart() {
@@ -464,7 +480,7 @@
     }
 
     tick() {
-      // this._state = tick(this._state);
+      this._state = tick(this._state);
     }
   }
 

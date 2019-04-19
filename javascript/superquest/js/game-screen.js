@@ -12,8 +12,9 @@ export default class GameScreen {
     // Инициализация и настройка игры
     this.model = model;
     this.header = new HeaderView(this.model.state);
-    this.content = new LevelView(this.model.getCurrentLevel);
-    console.log(model);
+    // console.log(this.model.state);
+    this.content = new LevelView(this.model.getCurrentLevel());
+    // console.log(this.model.getCurrentLevel);
     this.root = document.createElement(`div`);
     this.root.appendChild(this.header.element);
     this.root.appendChild(this.content.element);
@@ -79,7 +80,8 @@ export default class GameScreen {
   updateHeader() {
     // Обновление статистики игрока
     const header = new HeaderView(this.model.state);
-    this.root.replaceChild(header.element, this.header.element);
+
+    this.root.replaceChild(header.element, this.root.firstChild);
   }
 
   changeLevel() {
