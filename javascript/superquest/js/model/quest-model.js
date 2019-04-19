@@ -1,11 +1,11 @@
 /* eslint-disable object-curly-spacing */
-import { INITIAL_GAME, changeLevel, die, tick } from '../data/quest.js';
+import { INITIAL_GAME, changeLevel, die } from '../data/quest.js';
 
 import QUEST from '../data/quest-data.js';
 
 const getLevel = (state) => QUEST[`level-${state.level}`];
 
-class QuestModel {
+export default class QuestModel {
   constructor(playerName) {
     this.playerName = playerName;
     this.restart();
@@ -40,8 +40,6 @@ class QuestModel {
   }
 
   tick() {
-    this._state = tick(this._state);
+    // this._state = tick(this._state);
   }
 }
-
-export default QuestModel;

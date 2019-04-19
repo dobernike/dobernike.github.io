@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-spacing */
-import AbstractView from '../view/abstract-view.js/index.js';
+import AbstractView from '../view/abstract-view.js';
 
 
 const ENTER_KEY_CODE = 13;

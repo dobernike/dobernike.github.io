@@ -29,7 +29,7 @@ export default class WelcomeScreen extends AbstractView {
     const agreeButton = this.element.querySelector(`.repeat-action`);
     const playerName = this.element.querySelector(`input`);
     agreeButton.addEventListener(`click`, () => {
-      console.log(playerName.value)
+      // console.log(playerName.value);
       new Router().constructor.showGame(playerName.value);
       // const gameModel = new QuestModel(inputValue);
       // const gameScreen = new GameScreen(gameModel);
@@ -48,12 +48,11 @@ export default class WelcomeScreen extends AbstractView {
 
 // const agreeButton = element.querySelector(`.repeat-action`);
 // agreeButton.addEventListener(`click`, () => {
-  // const inputValue = input.value();
-  // const gameModel = new QuestModel(inputValue);
-  // const gameScreen = new GameScreen(gameModel);
-
-  // changeView(gameScreen.element);
-  // gameScreen.startGame();
+// const inputValue = input.value();
+// const gameModel = new QuestModel(inputValue);
+// const gameScreen = new GameScreen(gameModel);
+// changeView(gameScreen.element);
+// gameScreen.startGame();
 // });
 
 

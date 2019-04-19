@@ -3,16 +3,17 @@ import { Result } from './data/quest.js';
 import FooterView from './view/footer-view.js';
 import HeaderView from './view/header-view.js';
 import LevelView from './game/level-view.js';
-import GameOverView from './view/gameover-view.js/index.js';
-import Application from './application.js';
+import GameOverView from './view/gameover-view.js';
+import Router from './router.js';
 
-class GameScreen {
+
+export default class GameScreen {
   constructor(model) {
     // Инициализация и настройка игры
     this.model = model;
     this.header = new HeaderView(this.model.state);
     this.content = new LevelView(this.model.getCurrentLevel);
-
+    console.log(model);
     this.root = document.createElement(`div`);
     this.root.appendChild(this.header.element);
     this.root.appendChild(this.content.element);
@@ -72,7 +73,7 @@ class GameScreen {
 
   exit() {
     // Выход из игры
-    Application.showStats(this.model);
+    new Router().showStats(this.model);
   }
 
   updateHeader() {
@@ -107,5 +108,3 @@ class GameScreen {
     this.content = view;
   }
 }
-
-export default GameScreen;
