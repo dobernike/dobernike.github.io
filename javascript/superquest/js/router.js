@@ -21,6 +21,7 @@ export default class Router {
 
   static showStats(model) {
     const statistics = new ScoreboardView(model);
+    statistics.onRepeat = () => this.showWelcome();
     changeScreen(statistics.element);
   }
 

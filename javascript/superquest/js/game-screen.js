@@ -64,10 +64,9 @@ export default class GameScreen {
     }
   }
 
-  restart(continueGame) {
+  restart() {
     // Продолжение или сброс игры
-    console.log(continueGame);
-    if (!continueGame) {
+    if (this.model.isDead()) {
       this.model.restart();
     }
     this.startGame();
@@ -75,7 +74,7 @@ export default class GameScreen {
 
   exit() {
     // Выход из игры
-    new Router().showStats(this.model);
+    new Router().constructor.showStats(this.model);
   }
 
   updateHeader() {
@@ -99,7 +98,7 @@ export default class GameScreen {
     // Проигрыш игрока
     const gameOver = new GameOverView(win, canContinue);
     gameOver.onRestart = this.restart.bind(this);
-    gameOver.onExit = this.exit.bind(this);
+    gameOver.onExit = this.exit;
 
     this._changeContentView(gameOver);
     this.updateHeader();

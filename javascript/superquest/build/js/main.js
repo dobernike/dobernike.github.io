@@ -325,10 +325,9 @@
       }
     }
 
-    restart(continueGame) {
+    restart() {
       // Продолжение или сброс игры
-      console.log(continueGame);
-      if (!continueGame) {
+      if (this.model.isDead()) {
         this.model.restart();
       }
       this.startGame();
@@ -336,7 +335,7 @@
 
     exit() {
       // Выход из игры
-      new Router().showStats(this.model);
+      new Router().constructor.showStats(this.model);
     }
 
     updateHeader() {
@@ -360,7 +359,7 @@
       // Проигрыш игрока
       const gameOver = new GameOverView(win, canContinue$$1);
       gameOver.onRestart = this.restart.bind(this);
-      gameOver.onExit = this.exit.bind(this);
+      gameOver.onExit = this.exit;
 
       this._changeContentView(gameOver);
       this.updateHeader();
@@ -518,6 +517,16 @@
     <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
     </div>`;
     }
+
+    bind() {
+      const repeat = this.element.querySelector(`.repeat-action`);
+      
+      repeat.addEventListener(`click`, () => {
+        this.onRepeat();
+      });
+    }
+
+    onRepeat() { }
   }
 
   const mainElement = document.querySelector(`#main`);
@@ -545,6 +554,7 @@
 
     static showStats(model) {
       const statistics = new ScoreboardView(model);
+      statistics.onRepeat = () => this.showWelcome();
       changeScreen(statistics.element);
     }
 

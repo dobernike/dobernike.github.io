@@ -29,4 +29,14 @@ export default class ScoreboardView extends AbstractView {
     <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
     </div>`;
   }
+
+  bind() {
+    const repeat = this.element.querySelector(`.repeat-action`);
+    
+    repeat.addEventListener(`click`, () => {
+      this.onRepeat();
+    });
+  }
+
+  onRepeat() { }
 }
