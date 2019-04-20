@@ -66,6 +66,7 @@ export default class GameScreen {
 
   restart(continueGame) {
     // Продолжение или сброс игры
+    console.log(continueGame);
     if (!continueGame) {
       this.model.restart();
     }

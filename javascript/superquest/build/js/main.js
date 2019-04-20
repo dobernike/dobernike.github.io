@@ -247,19 +247,22 @@
     }
 
     bind() {
-      console.log(`bind`);
-      const repeatAction = this.element.querySelector(`.repeat-action`);
-      console.log(repeatAction);
-      repeatAction.addEventListener(`click`, () => {
-        console.log(this.game);
-        if (this.game.lives) {
-          console.log(`s`);
-          this.onRepeat();
+      const repeatActions = this.element.querySelectorAll(`.repeat-action`);
+
+      repeatActions[0].addEventListener(`click`, () => {
+        if (this.canContinue) {
+          this.onRestart();
         }
+      });
+
+      repeatActions[1].addEventListener(`click`, () => {
+        this.onExit();
       });
     }
 
-    onRepeat() { }
+    onRestart() { }
+
+    onExit() { }
   }
 
   /* eslint-disable object-curly-spacing */
@@ -324,6 +327,7 @@
 
     restart(continueGame) {
       // Продолжение или сброс игры
+      console.log(continueGame);
       if (!continueGame) {
         this.model.restart();
       }
