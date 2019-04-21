@@ -5,7 +5,6 @@ export default class ScoreboardView extends AbstractView {
   constructor(model) {
     super();
     this.model = model;
-    console.log(this.model);
   }
 
   get template() {

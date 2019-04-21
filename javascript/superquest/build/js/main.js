@@ -492,7 +492,6 @@
     constructor(model) {
       super();
       this.model = model;
-      console.log(this.model);
     }
 
     get template() {
