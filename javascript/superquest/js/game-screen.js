@@ -98,7 +98,7 @@ export default class GameScreen {
     // Проигрыш игрока
     const gameOver = new GameOverView(win, canContinue);
     gameOver.onRestart = this.restart.bind(this);
-    gameOver.onExit = this.exit;
+    gameOver.onExit = this.exit.bind(this);
 
     this._changeContentView(gameOver);
     this.updateHeader();

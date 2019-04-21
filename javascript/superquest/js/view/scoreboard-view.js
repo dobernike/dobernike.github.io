@@ -5,6 +5,7 @@ export default class ScoreboardView extends AbstractView {
   constructor(model) {
     super();
     this.model = model;
+    console.log(this.model);
   }
 
   get template() {
@@ -18,8 +19,8 @@ export default class ScoreboardView extends AbstractView {
             <td>
               <small>1.</small>
             </td>
-            <td style="text-align: right;">5 сек</td>
-            <td>????💗💗</td>
+            <td style="text-align: right;">${this.model.state.time} сек</td>
+            <td>${this.model.playerName} ${`💗`.repeat(this.model.state.lives)}</td>
             <td>25.05.2018</td>
           </tr>
         </tbody>
@@ -32,7 +33,7 @@ export default class ScoreboardView extends AbstractView {
 
   bind() {
     const repeat = this.element.querySelector(`.repeat-action`);
-    
+
     repeat.addEventListener(`click`, () => {
       this.onRepeat();
     });
