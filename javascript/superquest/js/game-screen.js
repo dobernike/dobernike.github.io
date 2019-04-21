@@ -1,96 +1,112 @@
 /* eslint-disable object-curly-spacing */
-import { render, changeScreen } from './util.js';
-import renderHeader from './game/header.js';
-import footer from './game/footer.js';
+import { Result } from './data/quest.js';
+import FooterView from './view/footer-view.js';
+import HeaderView from './view/header-view.js';
 import LevelView from './game/level-view.js';
-import { INITIAL_GAME } from './data/quest.js';
-import QUEST from './data/quest-data.js';
-// import showGameOver from './game/gameover-screen.js';
+import GameOverView from './view/gameover-view.js';
+import Router from './router.js';
 
 
-// const ENTER_KEY_CODE = 13; //
+export default class GameScreen {
+  constructor(model) {
+    // Инициализация и настройка игры
+    this.model = model;
+    this.header = new HeaderView(this.model.state);
+    // console.log(this.model.state);
+    this.content = new LevelView(this.model.getCurrentLevel());
+    // console.log(this.model.getCurrentLevel);
+    this.root = document.createElement(`div`);
+    this.root.appendChild(this.header.element);
+    this.root.appendChild(this.content.element);
+    this.root.appendChild(new FooterView().element);
 
-const gameContainerElement = render(``);
-const headerElement = render(``);
-const levelElement = render(``);
+    this._timer = null;
+  }
 
-// init game content
-gameContainerElement.appendChild(headerElement);
-gameContainerElement.appendChild(levelElement);
-gameContainerElement.appendChild(footer);
+  get element() {
+    return this.root;
+  }
 
-const getLevel = (state) => QUEST[`level-${state.level}`];
+  stopGame() {
+    // Остановка игры
+    clearInterval(this._timer);
+  }
 
-// const onAnswer = (answer) => {
-//   switch (answer.result) {
-//     case Result.NEXT_LEVEL:
-//       game = changeLevel(game, game.level + 1);
-//       updateGame(game);
-//       break;
-//     case Result.DIE:
-//       game = die(game);
-//       if (!canContinue(game)) {
-//         showGameOver(game);
-//       } else {
-//         updateGame(game);
-//       }
-//       break;
-//     case Result.WIN:
-//       showGameOver(game);
-//       break;
-//     case Result.NOOP:
-//       // just do nothing
-//       break;
-//     default:
-//       throw new Error(`Unknown result:`);
-//   }
-// };
+  _tick() {
+    this.model.tick();
+    this.updateHeader();
+    this._timer = setTimeout(() => this._tick(), 1000);
+  }
 
-const updateGame = (state) => {
-  const currentLevel = getLevel(state);
-  const levelViewElement = new LevelView(currentLevel).element;
+  startGame() {
+    // Старт игры
+    this.changeLevel();
+    this._tick();
+  }
 
-  headerElement.innerHTML = renderHeader(state);
-  levelElement.innerHTML = ``;
-  levelElement.appendChild(levelViewElement);
+  answer(answer) {
+    // Обрабтка ответа пользователя
+    this.stopGame();
+    switch (answer.result) {
+      case Result.NEXT_LEVEL:
+        this.model.nextLevel();
+        this.startGame();
+        break;
+      case Result.DIE:
+        this.model.die();
+        this.endGame(false, !(this.model.isDead()));
+        break;
+      case Result.WIN:
+        this.endGame(true, false);
+        break;
+      default:
+        throw new Error(`Unknown result: ${answer.result}`);
+    }
+  }
 
-  // const answersElement = levelElement.querySelector(`.answers`);
+  restart() {
+    // Продолжение или сброс игры
+    if (this.model.isDead()) {
+      this.model.restart();
+    }
+    this.startGame();
+  }
 
-  // const answersElements = Array.from(answersElement.children);
+  exit() {
+    // Выход из игры
+    new Router().constructor.showStats(this.model);
+  }
 
-  // answersElement.addEventListener(`click`, (evt) => {
-  //   const answerIndex = answersElements.indexOf(evt.target);
-  //   const answer = currentLevel.answers[answerIndex];
-  //   if (answer) {
-  //     onAnswer(answer);
-  //   }
-  // });
+  updateHeader() {
+    // Обновление статистики игрока
+    const header = new HeaderView(this.model.state);
 
-};
+    this.root.replaceChild(header.element, this.root.firstChild);
+  }
 
-// levelElement.addEventListener(`keydown`, ({ keyCode }) => {
-//   if (keyCode === ENTER_KEY_CODE) {
-//     const current = getLevel(game);
-//     const { value = `` } = levelElement.querySelector(`input`);
-//     const userAnswer = value.toUpperCase();
+  changeLevel() {
+    // Обновление текущего уровня
+    this.updateHeader();
 
-//     for (const answer of current.answers) {
-//       if (userAnswer === answer.action.toUpperCase()) {
-//         onAnswer(answer);
-//         updateGame(game);
-//       }
-//     }
-//   }
-// });
+    const level = new LevelView(this.model.getCurrentLevel());
+    level.onAnswer = this.answer.bind(this);
+    this._changeContentView(level);
+    level.focus();
+  }
 
-let game; //
+  endGame(win, canContinue) {
+    // Проигрыш игрока
+    const gameOver = new GameOverView(win, canContinue);
+    gameOver.onRestart = this.restart.bind(this);
+    gameOver.onExit = this.exit.bind(this);
 
-const startGame = () => {
-  game = Object.assign({}, INITIAL_GAME);
+    this._changeContentView(gameOver);
+    this.updateHeader();
+  }
 
-  updateGame(game);
-  changeScreen(gameContainerElement);
-};
-
-
-export default startGame;
+  _changeContentView(view) {
+    // Вспомогательный внутренний метод
+    this.root.replaceChild(view.element, this.content.element);
+    this.content = view;
+  }
+}

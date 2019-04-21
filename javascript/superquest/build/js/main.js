@@ -1,45 +1,12 @@
 (function () {
   'use strict';
 
-  const render = (template) => {
-    const wrapper = document.createElement(`div`);
-    wrapper.innerHTML = template;
-    return wrapper;
-  };
-
-  const mainElement = document.querySelector(`#main`);
-
-  const changeScreen = (element) => {
-    mainElement.innerHTML = ``;
-    mainElement.appendChild(element);
-  };
-
-  var renderHeader = (state) => `<header class="header">
-<div>Мир: ${state.level}</div>
-<div>Жизни:
-${new Array(3 - state.lives)
-    .fill(`<span class="heart__empty">♡</span>`).join(``)}
-${new Array(state.lives)
-    .fill(`<span class="heart__full">♥</span>`).join(``)}
-</div>
-<div>Время: ${state.time}</div>
-</header>`;
-
-  /* eslint-disable object-curly-spacing */
-  const template = `<div>
-<div class="result"></div>
-<small>Для справки введите <i>help</i></small>
-</div>`;
-
-
-  var footer = render(template);
-
-  /* eslint-disable object-curly-spacing */
-  const render$1 = (html) => {
+  const render = (html) => {
     const wrapper = document.createElement(`div`);
     wrapper.innerHTML = html.trim();
     return wrapper;
   };
+
 
   class AbstractView {
     constructor() {
@@ -62,19 +29,150 @@ ${new Array(state.lives)
     }
 
     render() {
-      return render$1(this.template);
+      return render(this.template);
     }
 
-    bind(element) {
+    bind() {
       // bind handlers if required
     }
   }
 
   /* eslint-disable object-curly-spacing */
+  // import { render } from '../util.js';
+  // import GameScreen from './game-screen.js';
+  // import QuestModel from './model/quest-model.js';
 
+  class WelcomeScreen extends AbstractView {
+    constructor() {
+      super();
+    }
+
+    get template() {
+      return `<div class="end">
+    <p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
+      А?!<br>
+      Точно?!<br>
+      Уверен?!<br>
+      Стопудов?!</p>
+    <p>08 есть?</p>
+    <div class="repeat">
+      Ваше имя:<input type="text"><br>
+      <span class="repeat-action">Да</span>
+    </div>
+    </div>`;
+    }
+
+    bind() {
+      const agreeButton = this.element.querySelector(`.repeat-action`);
+      const playerName = this.element.querySelector(`input`);
+      agreeButton.addEventListener(`click`, () => {
+        // console.log(playerName.value);
+        new Router().constructor.showGame(playerName.value);
+        // const gameModel = new QuestModel(inputValue);
+        // const gameScreen = new GameScreen(gameModel);
+
+        // changeView(gameScreen.element);
+        // gameScreen.startGame();
+      });
+    }
+  }
+
+  // const template =
+
+  // const element = render(template);
+
+  // const input = element.querySelector(`input`);
+
+  // const agreeButton = element.querySelector(`.repeat-action`);
+  // agreeButton.addEventListener(`click`, () => {
+  // const inputValue = input.value();
+  // const gameModel = new QuestModel(inputValue);
+  // const gameScreen = new GameScreen(gameModel);
+  // changeView(gameScreen.element);
+  // gameScreen.startGame();
+  // });
+
+
+  // export default element;
+
+  const INITIAL_GAME = Object.freeze({
+    level: 0,
+    lives: 3,
+    time: 0
+  });
+
+  const Result = {
+    NOOP: 0,
+    DIE: 1,
+    WIN: 2,
+    NEXT_LEVEL: 3
+  };
+
+  const changeLevel = (game, level) => {
+    if (typeof level !== `number`) {
+      throw new Error(`Level should not be negative value`);
+    }
+    if (level < 0) {
+      throw new Error(`Level should not be negative value`);
+    }
+
+    const newGame = Object.assign({}, game, {
+      level
+    });
+    return newGame;
+  };
+
+  const die = (game) => {
+    game = Object.assign({}, game, {
+      lives: game.lives - 1
+    });
+    return game;
+  };
+
+  const tick = (state) => {
+    state = Object.assign({}, state, {
+      time: state.time + 1
+    });
+    return state;
+  };
+
+  class FooterView extends AbstractView {
+    constructor() {
+      super();
+    }
+
+    get template() {
+      return `<div>
+<div class="result"></div>
+<small>Для справки введите <i>help</i></small>
+</div>`;
+    }
+  }
+
+  class HeaderView extends AbstractView {
+    constructor(state) {
+      super();
+      this.state = state;
+    }
+
+    get template() {
+      return `<header class="header">
+    <div>Мир: ${this.state.level}</div>
+    <div>Жизни:
+    ${new Array(3 - this.state.lives)
+        .fill(`<span class="heart__empty">♡</span>`).join(``)}
+    ${new Array(this.state.lives)
+        .fill(`<span class="heart__full">♥</span>`).join(``)}
+    </div>
+    <div>Время: ${this.state.time}</div>
+    </header>`;
+    }
+  }
+
+  /* eslint-disable object-curly-spacing */
 
   const ENTER_KEY_CODE = 13;
-
+  const DEBUG_STYLE = `style="color:red;"`;
 
   class LevelView extends AbstractView {
     constructor(level) {
@@ -87,13 +185,11 @@ ${new Array(state.lives)
     <p class="text">${this.level.text}</p>
 
     <ul class="answers">
-    ${this.level.answers.map((it) => `<li class="answer">${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
+    ${this.level.answers.map((it) => `<li class="answer" ${it.result > Result.DIE ? DEBUG_STYLE : ``}>${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
     </ul>
     <input type="text">
   </div>`;
     }
-
-    onAnswer(answer) { }
 
     bind() {
       const answersElement = this.element.querySelector(`.answers`);
@@ -105,6 +201,7 @@ ${new Array(state.lives)
         const answer = this.level.answers[answerIndex];
         if (answer) {
           this.onAnswer(answer);
+
         }
       });
 
@@ -122,20 +219,157 @@ ${new Array(state.lives)
         }
       });
     }
+
+    onAnswer() { }
+
+    focus() {
+      this._answerInput.focus();
+    }
   }
 
-  const INITIAL_GAME = Object.freeze({
-    level: 0,
-    lives: 3,
-    time: 0
-  });
+  class GameOverView extends AbstractView {
+    constructor(win, canContinue) {
+      super();
+      this.win = win;
+      this.canContinue = canContinue;
+    }
 
-  const Result = {
-    NOOP: 0,
-    DIE: 1,
-    WIN: 2,
-    NEXT_LEVEL: 3
-  };
+    get template() {
+      return `
+<div>
+<div class="end">
+  <p>Вы погибли =(!</p>
+  <p>Продолжить с последнего уровня?</p>
+  <div class="repeat"><span class="repeat-action">Да</span>|<span class="repeat-action">Не</span></div>
+</div>
+</div>`;
+    }
+
+    bind() {
+      const repeatActions = this.element.querySelectorAll(`.repeat-action`);
+
+      repeatActions[0].addEventListener(`click`, () => {
+        if (this.canContinue) {
+          this.onRestart();
+        }
+      });
+
+      repeatActions[1].addEventListener(`click`, () => {
+        this.onExit();
+      });
+    }
+
+    onRestart() { }
+
+    onExit() { }
+  }
+
+  /* eslint-disable object-curly-spacing */
+
+
+  class GameScreen {
+    constructor(model) {
+      // Инициализация и настройка игры
+      this.model = model;
+      this.header = new HeaderView(this.model.state);
+      // console.log(this.model.state);
+      this.content = new LevelView(this.model.getCurrentLevel());
+      // console.log(this.model.getCurrentLevel);
+      this.root = document.createElement(`div`);
+      this.root.appendChild(this.header.element);
+      this.root.appendChild(this.content.element);
+      this.root.appendChild(new FooterView().element);
+
+      this._timer = null;
+    }
+
+    get element() {
+      return this.root;
+    }
+
+    stopGame() {
+      // Остановка игры
+      clearInterval(this._timer);
+    }
+
+    _tick() {
+      this.model.tick();
+      this.updateHeader();
+      this._timer = setTimeout(() => this._tick(), 1000);
+    }
+
+    startGame() {
+      // Старт игры
+      this.changeLevel();
+      this._tick();
+    }
+
+    answer(answer) {
+      // Обрабтка ответа пользователя
+      this.stopGame();
+      switch (answer.result) {
+        case Result.NEXT_LEVEL:
+          this.model.nextLevel();
+          this.startGame();
+          break;
+        case Result.DIE:
+          this.model.die();
+          this.endGame(false, !(this.model.isDead()));
+          break;
+        case Result.WIN:
+          this.endGame(true, false);
+          break;
+        default:
+          throw new Error(`Unknown result: ${answer.result}`);
+      }
+    }
+
+    restart() {
+      // Продолжение или сброс игры
+      if (this.model.isDead()) {
+        this.model.restart();
+      }
+      this.startGame();
+    }
+
+    exit() {
+      // Выход из игры
+      new Router().constructor.showStats(this.model);
+    }
+
+    updateHeader() {
+      // Обновление статистики игрока
+      const header = new HeaderView(this.model.state);
+
+      this.root.replaceChild(header.element, this.root.firstChild);
+    }
+
+    changeLevel() {
+      // Обновление текущего уровня
+      this.updateHeader();
+
+      const level = new LevelView(this.model.getCurrentLevel());
+      level.onAnswer = this.answer.bind(this);
+      this._changeContentView(level);
+      level.focus();
+    }
+
+    endGame(win, canContinue$$1) {
+      // Проигрыш игрока
+      const gameOver = new GameOverView(win, canContinue$$1);
+      gameOver.onRestart = this.restart.bind(this);
+      gameOver.onExit = this.exit.bind(this);
+
+      this._changeContentView(gameOver);
+      this.updateHeader();
+    }
+
+    _changeContentView(view) {
+      // Вспомогательный внутренний метод
+      this.root.replaceChild(view.element, this.content.element);
+      this.content = view;
+    }
+  }
 
   /* eslint-disable object-curly-spacing */
 
@@ -181,126 +415,152 @@ ${new Array(state.lives)
         },
         {
           action: `jump`,
-          title: `Вы прыгните вверх`,
+          title: `Как что, конечно же подпрыгну и со всей силы ударюсь головой о железяку!`,
+          result: Result.NEXT_LEVEL
+        }
+      ]
+    },
+
+    'level-2': {
+      text: `Вы проходите немного вперед и снова видите над головой кирпичную кладку. Вы хотите проверить свои новые силы и со всего размаху бьетесь об нее головой. На этот раз кирпичи разлетаются во все стороны. Вы начинаете радостно прыгать и разносить головой все кирпичи, но случайно ударяетесь о еще одну металлическую штуку и видите как из нее вырастает цветок. Ваши действия?`,
+      answers: [
+        {
+          action: `left`,
+          title: `Вы побежите влево`,
           result: Result.DIE
+        },
+        {
+          action: `right`,
+          title: `Вы побежите вправо`,
+          result: Result.DIE
+        },
+        {
+          action: `1`,
+          title: `Конечно же съесть его!`,
+          result: Result.WIN
         }
       ]
     }
   };
 
   /* eslint-disable object-curly-spacing */
-  // import showGameOver from './game/gameover-screen.js';
-
-
-  // const ENTER_KEY_CODE = 13; //
-
-  const gameContainerElement = render(``);
-  const headerElement = render(``);
-  const levelElement = render(``);
-
-  // init game content
-  gameContainerElement.appendChild(headerElement);
-  gameContainerElement.appendChild(levelElement);
-  gameContainerElement.appendChild(footer);
 
   const getLevel = (state) => QUEST[`level-${state.level}`];
 
-  // const onAnswer = (answer) => {
-  //   switch (answer.result) {
-  //     case Result.NEXT_LEVEL:
-  //       game = changeLevel(game, game.level + 1);
-  //       updateGame(game);
-  //       break;
-  //     case Result.DIE:
-  //       game = die(game);
-  //       if (!canContinue(game)) {
-  //         showGameOver(game);
-  //       } else {
-  //         updateGame(game);
-  //       }
-  //       break;
-  //     case Result.WIN:
-  //       showGameOver(game);
-  //       break;
-  //     case Result.NOOP:
-  //       // just do nothing
-  //       break;
-  //     default:
-  //       throw new Error(`Unknown result:`);
-  //   }
-  // };
+  class QuestModel {
+    constructor(playerName) {
+      this.playerName = playerName;
+      this.restart();
+    }
 
-  const updateGame = (state) => {
-    const currentLevel = getLevel(state);
-    const levelViewElement = new LevelView(currentLevel).element;
+    get state() {
+      return Object.freeze(this._state);
+    }
 
-    headerElement.innerHTML = renderHeader(state);
-    levelElement.innerHTML = ``;
-    levelElement.appendChild(levelViewElement);
+    hasNextLevel() {
+      return getLevel(this._state.level + 1) !== void 0;
+    }
 
-    // const answersElement = levelElement.querySelector(`.answers`);
+    nextLevel() {
+      this._state = changeLevel(this._state, this._state.level + 1);
+    }
 
-    // const answersElements = Array.from(answersElement.children);
+    die() {
+      this._state = die(this.state);
+    }
 
-    // answersElement.addEventListener(`click`, (evt) => {
-    //   const answerIndex = answersElements.indexOf(evt.target);
-    //   const answer = currentLevel.answers[answerIndex];
-    //   if (answer) {
-    //     onAnswer(answer);
-    //   }
-    // });
+    restart() {
+      this._state = INITIAL_GAME;
+    }
 
-  };
+    isDead() {
+      return this._state.lives <= 0;
+    }
 
-  // levelElement.addEventListener(`keydown`, ({ keyCode }) => {
-  //   if (keyCode === ENTER_KEY_CODE) {
-  //     const current = getLevel(game);
-  //     const { value = `` } = levelElement.querySelector(`input`);
-  //     const userAnswer = value.toUpperCase();
+    getCurrentLevel() {
+      return getLevel(this._state);
+    }
 
-  //     for (const answer of current.answers) {
-  //       if (userAnswer === answer.action.toUpperCase()) {
-  //         onAnswer(answer);
-  //         updateGame(game);
-  //       }
-  //     }
-  //   }
-  // });
+    tick() {
+      this._state = tick(this._state);
+    }
+  }
 
-  let game; //
+  /* eslint-disable object-curly-spacing */
 
-  const startGame = () => {
-    game = Object.assign({}, INITIAL_GAME);
+  class ScoreboardView extends AbstractView {
+    constructor(model) {
+      super();
+      this.model = model;
+    }
 
-    updateGame(game);
-    changeScreen(gameContainerElement);
+    get template() {
+      return `<div class="end">
+    <div class="scoreboard">
+      <h1>Мои лучшие результаты</h1>
+
+      <table class="scores">
+        <tbody>
+          <tr>
+            <td>
+              <small>1.</small>
+            </td>
+            <td style="text-align: right;">${this.model.state.time} сек</td>
+            <td>${this.model.playerName} ${`💗`.repeat(this.model.state.lives)}</td>
+            <td>25.05.2018</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+    <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
+    </div>`;
+    }
+
+    bind() {
+      const repeat = this.element.querySelector(`.repeat-action`);
+
+      repeat.addEventListener(`click`, () => {
+        this.onRepeat();
+      });
+    }
+
+    onRepeat() { }
+  }
+
+  const mainElement = document.querySelector(`#main`);
+
+  const changeScreen = (element) => {
+    mainElement.innerHTML = ``;
+    mainElement.appendChild(element);
   };
 
   /* eslint-disable object-curly-spacing */
 
 
-  const template$1 = `<div class="end">
-<p>Ghbdtn! Настало время приключений! Вы готовы сразится с неприятностями и получить принцессу прямо сейчас?!<br>
-  А?!<br>
-  Точно?!<br>
-  Уверен?!<br>
-  Стопудов?!</p>
-<p>08 есть?</p>
-<div class="repeat">
-  Ваше имя:<input type="text"><br>
-  <span class="repeat-action">Да</span>
-</div>
-</div>`;
+  class Router {
 
-  const element = render(template$1);
+    static showWelcome() {
+      const welcome = new WelcomeScreen();
+      changeScreen(welcome.element);
+    }
 
-  const agreeButton = element.querySelector(`.repeat-action`);
+    static showGame(playerName) {
+      const gameScreen = new GameScreen(new QuestModel(playerName));
+      changeScreen(gameScreen.element);
+      gameScreen.startGame();
+    }
 
-  agreeButton.addEventListener(`click`, () => {
-    startGame();
-  });
+    static showStats(model) {
+      const statistics = new ScoreboardView(model);
+      statistics.onRepeat = () => this.showWelcome();
+      changeScreen(statistics.element);
+    }
 
-  changeScreen(element);
+  }
+
+  const router = new Router();
+  router.constructor.showWelcome();
 
 }());
 

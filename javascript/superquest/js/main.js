@@ -1,5 +1,4 @@
-import {changeScreen} from './util.js';
-import welcomeScreen from './welcome-screen.js';
+import Router from './router.js';
 
-
-changeScreen(welcomeScreen);
+const router = new Router();
+router.constructor.showWelcome();
