@@ -171,9 +171,8 @@
 
   /* eslint-disable object-curly-spacing */
 
-
   const ENTER_KEY_CODE = 13;
-
+  const DEBUG_STYLE = `style="color:red;"`;
 
   class LevelView extends AbstractView {
     constructor(level) {
@@ -186,7 +185,7 @@
     <p class="text">${this.level.text}</p>
 
     <ul class="answers">
-    ${this.level.answers.map((it) => `<li class="answer">${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
+    ${this.level.answers.map((it) => `<li class="answer" ${it.result > Result.DIE ? DEBUG_STYLE : ``}>${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
     </ul>
     <input type="text">
   </div>`;
