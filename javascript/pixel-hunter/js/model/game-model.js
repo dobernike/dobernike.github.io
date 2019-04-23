@@ -1,3 +1,7 @@
+/* eslint-disable object-curly-spacing */
+import { INITIAL_GAME, tick } from '../data/data.js';
+
+
 export default class GameModel {
   constructor(playerName) {
     this.playerName = playerName;
@@ -21,7 +25,7 @@ export default class GameModel {
   // }
 
   restart() {
-    // this._state = INITIAL_GAME;
+    this._state = INITIAL_GAME;
   }
 
   // isDead() {
@@ -32,7 +36,7 @@ export default class GameModel {
   //   return getLevel(this._state);
   // }
 
-  // tick() {
-  //   this._state = tick(this._state);
-  // }
+  tick() {
+    this._state = tick(this._state);
+  }
 }

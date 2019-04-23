@@ -87,6 +87,13 @@ export const statsAnswers = Object.freeze({
   'level-9': `unknown`,
 });
 
+export const tick = (state) => {
+  state = Object.assign({}, state, {
+    time: state.time + 1
+  });
+  return state;
+};
+
 
 // export default {
 //   greeting: `Привет!`,
