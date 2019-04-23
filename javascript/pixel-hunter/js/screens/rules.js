@@ -2,8 +2,8 @@
 import RulesView from '../view/rules-view.js';
 import { changeScreen } from '../utils/util.js';
 import greeting from './greeting.js';
-import { levels, INITIAL_GAME } from '../data/data.js';
-import { gameScreen } from './game-screen.js';
+import { GameScreen } from './game-screen.js';
+import GameModel from '../model/game-model.js';
 
 
 export default () => {
@@ -11,7 +11,11 @@ export default () => {
 
   rules.onClick = () => changeScreen(greeting().element);
 
-  rules.onSubmit = () => gameScreen(levels[`double`], INITIAL_GAME);
+  const input = rules.element.querySelector(`input`);
 
+  rules.onSubmit = () => {
+    const gameScreen = new GameScreen(new GameModel(input.value));
+    changeScreen(gameScreen.element);
+  };
   return rules;
 };
