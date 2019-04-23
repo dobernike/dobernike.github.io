@@ -6,6 +6,7 @@ import { changeScreen } from '../utils/util.js';
 import { renderStats } from './stats.js';
 import greeting from './greeting.js';
 import countLives from '../data/count-lives.js';
+import timer from '../data/timer.js';
 
 
 export const backButton = () => {
@@ -41,11 +42,16 @@ export class GameScreen {
     const game = new GameView(this.level, this.copyStatsAnswers, levels, this.currentLevel, this.state);
 
     game.onClick = backButton.bind(this);
-    game.onCheck = (it) => {
-      this.level = levels[it];
-      this.state = changeLevel(this.model.state, this.currentLevel += 1);
-    };
-    this._changeContentView(game);
+
+    // this._changeContentView(game);
+  }
+
+  onCheck(it) {
+    console.log(it)
+    this.level = levels[it];
+    console.log(this.level);
+    this.state = changeLevel(this.model.state, this.currentLevel += 1);
+    this.nextLevel(this.canContinue);
   }
 
   init() {
@@ -57,6 +63,7 @@ export class GameScreen {
   startGame() {
     // Старт игры
     this.changeLevel();
+    this.answer();
     this._tick();
   }
 
@@ -82,9 +89,63 @@ export class GameScreen {
 
   nextLevel(canContinue) {
     if (canContinue) {
-      changeScreen(this.view.element);
+      console.log(`safa`)
+      changeScreen(this.content.element);
+      this.changeLevel();
     } else {
       changeScreen(renderStats(this.copyStatsAnswers).element);
+    }
+  }
+
+  answer() {
+    let gameAnswer = ``;
+    switch (this.level.type) {
+      case `double`:
+        gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`change`, () => {
+            if (this.element.querySelectorAll(`input:checked`).length > 1) {
+              let answers = this.element.querySelectorAll(`input:checked`);
+              if (answers[0].value === levels.double.question.answers.question1.answer && answers[1].value === levels.double.question.answers.question2.answer) {
+                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+              } else {
+                this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+              }
+              this.onCheck(`wide`);
+            }
+          });
+        });
+        break;
+      case `wide`:
+        gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`change`, () => {
+            let answer = this.element.querySelector(`input:checked`);
+            if (answer.value === this.levels.wide.question.answers.question1.answer) {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+            } else {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+            }
+            this.onCheck(`triple`);
+          });
+        });
+        break;
+      case `triple`:
+        gameAnswer = this.element.querySelectorAll(`.game__option`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`click`, () => {
+            if (it.classList.contains(`game__option--selected`)) {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+            } else {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+            }
+            this.onCheck(`double`);
+          });
+        });
+        break;
+      default:
+        gameAnswer = `Тип игры имеет неправильный формат`;
+        break;
     }
   }
 
@@ -94,6 +155,72 @@ export class GameScreen {
     this.content = view;
   }
 }
+
+
+/*
+let gameAnswer = ``;
+    switch (this.gamelevels.type) {
+      case `double`:
+        gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`change`, () => {
+            if (this.element.querySelectorAll(`input:checked`).length > 1) {
+              let answers = this.element.querySelectorAll(`input:checked`);
+              if (answers[0].value === this.levels.double.question.answers.question1.answer && answers[1].value === this.levels.double.question.answers.question2.answer) {
+                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+              } else {
+                this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+              }
+              this.onCheck(`wide`);
+            }
+          });
+        });
+        break;
+      case `wide`:
+        gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`change`, () => {
+            let answer = this.element.querySelector(`input:checked`);
+            if (answer.value === this.levels.wide.question.answers.question1.answer) {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+            } else {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+            }
+            this.onCheck(`triple`);
+          });
+        });
+        break;
+      case `triple`:
+        gameAnswer = this.element.querySelectorAll(`.game__option`);
+        gameAnswer.forEach((it) => {
+          it.addEventListener(`click`, () => {
+            if (it.classList.contains(`game__option--selected`)) {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+            } else {
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
+            }
+            this.onCheck(`double`);
+          });
+        });
+        break;
+      default:
+        gameAnswer = `Тип игры имеет неправильный формат`;
+        break;
+    }
+
+
+if (state.level === 10 || countLives(copyStatsAnswers) < 1) {
+    changeScreen(renderStats(copyStatsAnswers).element);
+    return;
+  }
+  gameView.onClick = () => {
+    backButton();
+  };
+
+  gameView.onCheck = (it) => {
+    gameScreen(levels[it], changeLevel(state, currentLevel += 1));
+  };
+*/
 
 
 // import GameView from '../view/game-view.js';
