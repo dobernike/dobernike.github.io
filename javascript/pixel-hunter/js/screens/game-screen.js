@@ -43,14 +43,19 @@ export class GameScreen {
 
     game.onClick = backButton.bind(this);
 
+    changeScreen(game.element);
+    this.answer();
     // this._changeContentView(game);
   }
 
   onCheck(it) {
     console.log(it)
     this.level = levels[it];
-    console.log(this.level);
-    this.state = changeLevel(this.model.state, this.currentLevel += 1);
+    console.log(this.model.state);
+    this.model.nextLevel();
+    this.state = this.model.state;
+    console.log(this.state);
+
     this.nextLevel(this.canContinue);
   }
 
@@ -99,6 +104,7 @@ export class GameScreen {
 
   answer() {
     let gameAnswer = ``;
+    console.log(this.level.type)
     switch (this.level.type) {
       case `double`:
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
@@ -118,8 +124,11 @@ export class GameScreen {
         break;
       case `wide`:
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        console.log(gameAnswer)
         gameAnswer.forEach((it) => {
+          console.log(`foreach`)
           it.addEventListener(`change`, () => {
+            console.log(`change`)
             let answer = this.element.querySelector(`input:checked`);
             if (answer.value === this.levels.wide.question.answers.question1.answer) {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
