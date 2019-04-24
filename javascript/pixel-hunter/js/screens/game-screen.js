@@ -43,9 +43,10 @@ export class GameScreen {
 
     game.onClick = backButton.bind(this);
 
-    changeScreen(game.element);
+    // changeScreen(game.element);
+    this._changeContentView(game);
     this.answer();
-    // this._changeContentView(game);
+
   }
 
   onCheck(it) {
@@ -54,9 +55,10 @@ export class GameScreen {
     console.log(this.model.state);
     this.model.nextLevel();
     this.state = this.model.state;
+    this.currentLevel += 1;
     console.log(this.state);
-
-    this.nextLevel(this.canContinue);
+    console.log(this._timer);
+    this.nextLevel(this.canContinue());
   }
 
   init() {
@@ -68,7 +70,6 @@ export class GameScreen {
   startGame() {
     // Старт игры
     this.changeLevel();
-    this.answer();
     this._tick();
   }
 
@@ -76,6 +77,7 @@ export class GameScreen {
     this.model.tick();
     // this.updateHeader();
     this._timer = setTimeout(() => this._tick(), 1000);
+    console.log(this._timer);
   }
 
   stopGame() {
@@ -95,7 +97,7 @@ export class GameScreen {
   nextLevel(canContinue) {
     if (canContinue) {
       console.log(`safa`)
-      changeScreen(this.content.element);
+      // changeScreen(this.content.element);
       this.changeLevel();
     } else {
       changeScreen(renderStats(this.copyStatsAnswers).element);
@@ -123,14 +125,13 @@ export class GameScreen {
         });
         break;
       case `wide`:
+        console.log(this.element);
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
         console.log(gameAnswer)
         gameAnswer.forEach((it) => {
-          console.log(`foreach`)
           it.addEventListener(`change`, () => {
-            console.log(`change`)
             let answer = this.element.querySelector(`input:checked`);
-            if (answer.value === this.levels.wide.question.answers.question1.answer) {
+            if (answer.value === levels.wide.question.answers.question1.answer) {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
             } else {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
