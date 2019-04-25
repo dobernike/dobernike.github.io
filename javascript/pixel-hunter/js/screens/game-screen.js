@@ -2,7 +2,7 @@
 import GameView from '../view/game-view.js';
 import { levels, statsAnswers } from '../data/data.js';
 import { changeScreen } from '../utils/util.js';
-import StatsScreen from './stats.js';
+import StatsScreen from './stats-screen.js';
 import GreetingScreen from './greeting-screen.js';
 import countLives from '../data/count-lives.js';
 import timer from '../data/timer.js';
