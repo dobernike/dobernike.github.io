@@ -2,19 +2,13 @@
 import GameView from '../view/game-view.js';
 import { levels, statsAnswers } from '../data/data.js';
 import { changeScreen } from '../utils/util.js';
-import StatsScreen from './stats-screen.js';
 import GreetingScreen from './greeting-screen.js';
 import countLives from '../data/count-lives.js';
 import timer from '../data/timer.js';
+import Application from '../application.js';
 
 
-export const backButton = () => {
-  GameScreen.currentLevel = 0;
-  GameScreen.copyStatsAnswers = Object.assign({}, statsAnswers);
-  changeScreen(new GreetingScreen().element);
-};
-
-export class GameScreen {
+export default class GameScreen {
   constructor(model) {
     this.model = model;
     this.state = model.state;
@@ -27,7 +21,6 @@ export class GameScreen {
     this.root.appendChild(this.content.element);
 
     this._timer = null;
-    this.startGame();
   }
 
   get element() {
@@ -36,12 +29,13 @@ export class GameScreen {
 
   changeLevel() {
     // Обновление текущего уровня
-
     const game = new GameView(this.level, this.copyStatsAnswers, levels, this.currentLevel, this.state);
 
-    game.onClick = backButton.bind(this);
+    game.onClick = () => {
+      this.init();
+      changeScreen(new GreetingScreen().element);
+    };
 
-    // changeScreen(game.element);
     this._changeContentView(game);
     this.answer();
 
@@ -68,8 +62,6 @@ export class GameScreen {
   }
 
   _tick() {
-    // this.model.tick();
-    // this.updateHeader();
     this._time = 0;
     this._timer = setInterval(() => {
       this._time += 1;
@@ -95,7 +87,7 @@ export class GameScreen {
     if (canContinue) {
       this.startGame();
     } else {
-      changeScreen(new StatsScreen(this.copyStatsAnswers).element);
+      new Application().constructor.showStats(this.copyStatsAnswers);
     }
   }
 

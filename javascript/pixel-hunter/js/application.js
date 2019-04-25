@@ -24,5 +24,5 @@ export default class Application {
     const statistics = new StatsScreen(stats);
     changeScreen(statistics.element);
   }
-  
+
 }

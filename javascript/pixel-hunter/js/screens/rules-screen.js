@@ -2,8 +2,7 @@
 import RulesView from '../view/rules-view.js';
 import { changeScreen } from '../utils/util.js';
 import GreetingScreen from './greeting-screen.js';
-import { GameScreen } from './game-screen.js';
-import GameModel from '../model/game-model.js';
+import Application from '../application.js';
 
 
 export default class RulesScreen {
@@ -24,8 +23,7 @@ export default class RulesScreen {
 
   onSubmit() {
     this.root.onSubmit = () => {
-      const gameScreen = new GameScreen(new GameModel(this.input.value));
-      changeScreen(gameScreen.element);
+      new Application().constructor.showGame(this.input.value);
     };
   }
 }

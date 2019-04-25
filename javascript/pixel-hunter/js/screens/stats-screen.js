@@ -1,7 +1,6 @@
 /* eslint-disable object-curly-spacing */
 import StatsView from '../view/stats-view.js';
-import { backButton } from './game-screen.js';
-
+import Application from '../application.js';
 
 export default class StatsScreen {
   constructor(stats) {
@@ -14,8 +13,6 @@ export default class StatsScreen {
   }
 
   onClick() {
-    this.root.onClick = () => {
-      backButton();
-    };
+    this.root.onClick = () => new Application().constructor.showWelcome();
   }
 }
