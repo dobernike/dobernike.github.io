@@ -12,9 +12,7 @@ export default class GameScreen {
     // Инициализация и настройка игры
     this.model = model;
     this.header = new HeaderView(this.model.state);
-    // console.log(this.model.state);
     this.content = new LevelView(this.model.getCurrentLevel());
-    // console.log(this.model.getCurrentLevel);
     this.root = document.createElement(`div`);
     this.root.appendChild(this.header.element);
     this.root.appendChild(this.content.element);

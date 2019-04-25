@@ -19,7 +19,7 @@ export const calcCorrect = (answers) => {
   let correct = 0;
 
   for (let index in answers) {
-    if (answers[index] === `correct`) {
+    if (answers[index] !== `wrong`) {
       correct += 1;
     }
   }

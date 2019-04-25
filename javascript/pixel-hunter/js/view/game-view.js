@@ -2,9 +2,8 @@
 import AbstractView from './abstract-view.js';
 
 import HeaderView from '../view/header-view.js';
-import { statistic } from '../screens/stats.js';
+import { statistic } from '../data/data.js';
 import getOption from '../data/get-option.js';
-import timer from '../data/timer.js';
 
 
 const header = new HeaderView();
@@ -39,55 +38,6 @@ export default class GameView extends AbstractView {
     // Вызывает метод bind класса HeaderView, который по нажатию на кнопку back вызывает метод onClick() этого класса
     header.bind(this);
 
-    let gameAnswer = ``;
-    switch (this.gamelevels.type) {
-      case `double`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`change`, () => {
-            if (this.element.querySelectorAll(`input:checked`).length > 1) {
-              let answers = this.element.querySelectorAll(`input:checked`);
-              if (answers[0].value === this.levels.double.question.answers.question1.answer && answers[1].value === this.levels.double.question.answers.question2.answer) {
-                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-              } else {
-                this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-              }
-              this.onCheck(`wide`);
-            }
-          });
-        });
-        break;
-      case `wide`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`change`, () => {
-            let answer = this.element.querySelector(`input:checked`);
-            if (answer.value === this.levels.wide.question.answers.question1.answer) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-            } else {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-            }
-            this.onCheck(`triple`);
-          });
-        });
-        break;
-      case `triple`:
-        gameAnswer = this.element.querySelectorAll(`.game__option`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`click`, () => {
-            if (it.classList.contains(`game__option--selected`)) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-            } else {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-            }
-            this.onCheck(`double`);
-          });
-        });
-        break;
-      default:
-        gameAnswer = `Тип игры имеет неправильный формат`;
-        break;
-    }
   }
 
   onClick() { }
