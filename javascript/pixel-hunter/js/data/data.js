@@ -74,6 +74,20 @@ export const levels = {
   }
 };
 
+export const statistic = (answers) => `
+<ul class="stats">
+          <li class="stats__result stats__result--${answers[`level-0`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-1`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-2`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-3`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-4`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-5`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-6`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-7`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-8`]}"></li>
+          <li class="stats__result stats__result--${answers[`level-9`]}"></li>
+        </ul>`;
+
 export const statsAnswers = Object.freeze({
   'level-0': `unknown`,
   'level-1': `unknown`,
@@ -93,13 +107,3 @@ export const tick = (state) => {
   });
   return state;
 };
-
-
-// export default {
-//   greeting: `Привет!`,
-//   content: {
-//     title: `Приготовься!`,
-//     text: `Тебе предстоит сразится с тремя соперниками!`
-//   },
-//   creationDate: `2016 — 2017`
-// };

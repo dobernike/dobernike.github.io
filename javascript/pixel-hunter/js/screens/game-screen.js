@@ -2,8 +2,8 @@
 import GameView from '../view/game-view.js';
 import { levels, statsAnswers } from '../data/data.js';
 import { changeScreen } from '../utils/util.js';
-import { renderStats } from './stats.js';
-import greeting from './greeting-screen.js';
+import StatsScreen from './stats.js';
+import GreetingScreen from './greeting-screen.js';
 import countLives from '../data/count-lives.js';
 import timer from '../data/timer.js';
 
@@ -11,7 +11,7 @@ import timer from '../data/timer.js';
 export const backButton = () => {
   GameScreen.currentLevel = 0;
   GameScreen.copyStatsAnswers = Object.assign({}, statsAnswers);
-  changeScreen(greeting().element);
+  changeScreen(new GreetingScreen().element);
 };
 
 export class GameScreen {
@@ -95,7 +95,7 @@ export class GameScreen {
     if (canContinue) {
       this.startGame();
     } else {
-      changeScreen(renderStats(this.copyStatsAnswers).element);
+      changeScreen(new StatsScreen(this.copyStatsAnswers).element);
     }
   }
 
@@ -157,94 +157,3 @@ export class GameScreen {
     this.content = view;
   }
 }
-
-
-/*
-let gameAnswer = ``;
-    switch (this.gamelevels.type) {
-      case `double`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`change`, () => {
-            if (this.element.querySelectorAll(`input:checked`).length > 1) {
-              let answers = this.element.querySelectorAll(`input:checked`);
-              if (answers[0].value === this.levels.double.question.answers.question1.answer && answers[1].value === this.levels.double.question.answers.question2.answer) {
-                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-              } else {
-                this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-              }
-              this.onCheck(`wide`);
-            }
-          });
-        });
-        break;
-      case `wide`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`change`, () => {
-            let answer = this.element.querySelector(`input:checked`);
-            if (answer.value === this.levels.wide.question.answers.question1.answer) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-            } else {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-            }
-            this.onCheck(`triple`);
-          });
-        });
-        break;
-      case `triple`:
-        gameAnswer = this.element.querySelectorAll(`.game__option`);
-        gameAnswer.forEach((it) => {
-          it.addEventListener(`click`, () => {
-            if (it.classList.contains(`game__option--selected`)) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
-            } else {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
-            }
-            this.onCheck(`double`);
-          });
-        });
-        break;
-      default:
-        gameAnswer = `Тип игры имеет неправильный формат`;
-        break;
-    }
-
-
-if (state.level === 10 || countLives(copyStatsAnswers) < 1) {
-    changeScreen(renderStats(copyStatsAnswers).element);
-    return;
-  }
-  gameView.onClick = () => {
-    backButton();
-  };
-
-  gameView.onCheck = (it) => {
-    gameScreen(levels[it], changeLevel(state, currentLevel += 1));
-  };
-*/
-
-
-// import GameView from '../view/game-view.js';
-
-// export let currentLevel = 0;
-// export let copyStatsAnswers = Object.assign({}, statsAnswers);
-
-// export const gameScreen = (gamelevels, state) => {
-
-// const gameView = new GameView(gamelevels, copyStatsAnswers, levels, currentLevel, state);
-
-// if (state.level === 10 || countLives(copyStatsAnswers) < 1) {
-//   changeScreen(renderStats(copyStatsAnswers).element);
-//   return;
-// }
-// gameView.onClick = () => {
-//   backButton();
-// };
-
-// gameView.onCheck = (it) => {
-//   gameScreen(levels[it], changeLevel(state, currentLevel += 1));
-// };
-
-// changeScreen(gameView.element);
-// };

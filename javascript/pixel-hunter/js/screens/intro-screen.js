@@ -3,6 +3,7 @@ import IntroView from '../view/intro-view.js';
 import { changeScreen } from '../utils/util.js';
 import GreetingScreen from './greeting-screen.js';
 
+
 export default class IntroScreen {
   constructor() {
     this.root = new IntroView();
@@ -16,12 +17,4 @@ export default class IntroScreen {
   onClick() {
     this.root.onClick = () => changeScreen(new GreetingScreen().element);
   }
-
 }
-
-// export default () => {
-//   const intro = new IntroView();
-//   intro.onClick = () => changeScreen(greeting().element);
-
-//   return intro;
-// };

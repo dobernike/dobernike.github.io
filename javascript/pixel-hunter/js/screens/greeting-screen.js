@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-spacing */
 import GreetingView from '../view/greeting-view.js';
 import { changeScreen } from '../utils/util.js';
-import rules from './rules.js';
+import RulesScreen from './rules-screen.js';
 import IntroScreen from './intro-screen.js';
 
 
@@ -21,17 +21,6 @@ export default class GreetingScreen {
   }
 
   onContiueClick() {
-    this.root.onContiueClick = () => changeScreen(rules().element);
+    this.root.onContiueClick = () => changeScreen(new RulesScreen().element);
   }
 }
-
-
-// export default () => {
-//   const greeting = new GreetingView();
-
-//   greeting.onAsteriskClick = () => changeScreen(new IntroScreen().element);
-
-//   greeting.onContiueClick = () => changeScreen(rules().element);
-
-//   return greeting;
-// };

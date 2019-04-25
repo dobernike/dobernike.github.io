@@ -2,9 +2,8 @@
 import AbstractView from './abstract-view.js';
 
 import HeaderView from '../view/header-view.js';
-import { statistic } from '../screens/stats.js';
+import { statistic } from '../data/data.js';
 import getOption from '../data/get-option.js';
-import timer from '../data/timer.js';
 
 
 const header = new HeaderView();

@@ -3,7 +3,7 @@ import AbstractView from './abstract-view.js';
 
 import HeaderView from '../view/header-view.js';
 import countLives from '../data/count-lives.js';
-import { statistic } from '../screens/stats.js';
+import { statistic } from '../data/data.js';
 import { calcSummaryScores, calcCorrect, calcFast, calcSlow } from '../data/calc-scores.js';
 
 
@@ -81,10 +81,6 @@ export default class StatsView extends AbstractView {
     </section>
     `;
   }
-
-  // set lives(arrayStats) {
-  //   this.lives = countLives(arrayStats);
-  // }
 
   bind() {
     // Вызывает метод bind класса HeaderView, который по нажатию на кнопку back вызывает метод onClick() этого класса
