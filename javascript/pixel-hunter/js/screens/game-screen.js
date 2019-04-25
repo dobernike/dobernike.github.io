@@ -1,7 +1,6 @@
 /* eslint-disable object-curly-spacing */
 import GameView from '../view/game-view.js';
 import { levels, statsAnswers } from '../data/data.js';
-import changeLevel from '../data/change-level.js';
 import { changeScreen } from '../utils/util.js';
 import { renderStats } from './stats.js';
 import greeting from './greeting.js';
@@ -28,7 +27,6 @@ export class GameScreen {
     this.root.appendChild(this.content.element);
 
     this._timer = null;
-
     this.startGame();
   }
 
@@ -50,14 +48,10 @@ export class GameScreen {
   }
 
   onCheck(it) {
-    console.log(it)
     this.level = levels[it];
-    console.log(this.model.state);
     this.model.nextLevel();
     this.state = this.model.state;
     this.currentLevel += 1;
-    console.log(this.state);
-    console.log(this._timer);
     this.nextLevel(this.canContinue());
   }
 
@@ -74,10 +68,12 @@ export class GameScreen {
   }
 
   _tick() {
-    this.model.tick();
+    // this.model.tick();
     // this.updateHeader();
-    this._timer = setTimeout(() => this._tick(), 1000);
-    console.log(this._timer);
+    this._time = 0;
+    this._timer = setInterval(() => {
+      this._time += 1;
+    }, 1000);
   }
 
   stopGame() {
@@ -95,10 +91,9 @@ export class GameScreen {
   }
 
   nextLevel(canContinue) {
+    this.stopGame();
     if (canContinue) {
-      console.log(`safa`)
-      // changeScreen(this.content.element);
-      this.changeLevel();
+      this.startGame();
     } else {
       changeScreen(renderStats(this.copyStatsAnswers).element);
     }
@@ -106,7 +101,6 @@ export class GameScreen {
 
   answer() {
     let gameAnswer = ``;
-    console.log(this.level.type)
     switch (this.level.type) {
       case `double`:
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
@@ -115,7 +109,7 @@ export class GameScreen {
             if (this.element.querySelectorAll(`input:checked`).length > 1) {
               let answers = this.element.querySelectorAll(`input:checked`);
               if (answers[0].value === levels.double.question.answers.question1.answer && answers[1].value === levels.double.question.answers.question2.answer) {
-                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+                this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
               } else {
                 this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
               }
@@ -125,14 +119,12 @@ export class GameScreen {
         });
         break;
       case `wide`:
-        console.log(this.element);
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        console.log(gameAnswer)
         gameAnswer.forEach((it) => {
           it.addEventListener(`change`, () => {
             let answer = this.element.querySelector(`input:checked`);
             if (answer.value === levels.wide.question.answers.question1.answer) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
             } else {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
             }
@@ -145,7 +137,7 @@ export class GameScreen {
         gameAnswer.forEach((it) => {
           it.addEventListener(`click`, () => {
             if (it.classList.contains(`game__option--selected`)) {
-              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer();
+              this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
             } else {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
             }

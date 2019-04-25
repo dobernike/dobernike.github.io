@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-spacing */
-import { INITIAL_GAME, tick } from '../data/data.js';
+import { INITIAL_GAME } from '../data/data.js';
 import changeLevel from '../data/change-level.js';
 
 
@@ -37,7 +37,7 @@ export default class GameModel {
   //   return getLevel(this._state);
   // }
 
-  tick() {
-    this._state = tick(this._state);
-  }
+  // tick() {
+  //   this._state = tick(this._state);
+  // }
 }
