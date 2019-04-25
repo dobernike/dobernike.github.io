@@ -3,7 +3,7 @@ import GameView from '../view/game-view.js';
 import { levels, statsAnswers } from '../data/data.js';
 import { changeScreen } from '../utils/util.js';
 import { renderStats } from './stats.js';
-import greeting from './greeting.js';
+import greeting from './greeting-screen.js';
 import countLives from '../data/count-lives.js';
 import timer from '../data/timer.js';
 

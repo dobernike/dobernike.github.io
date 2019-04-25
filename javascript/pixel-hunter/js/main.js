@@ -1,9 +1,9 @@
 /* eslint-disable object-curly-spacing */
 import { changeScreen } from './utils/util.js';
-import intro from './screens/intro.js';
+import IntroScreen from './screens/intro-screen.js';
 
 // changeScreen(intro);
-changeScreen(intro().element);
+changeScreen(new IntroScreen().element);
 
 
 // const KEY_CODE = {

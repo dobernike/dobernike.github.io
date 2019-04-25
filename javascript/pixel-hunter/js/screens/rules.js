@@ -1,7 +1,7 @@
 /* eslint-disable object-curly-spacing */
 import RulesView from '../view/rules-view.js';
 import { changeScreen } from '../utils/util.js';
-import greeting from './greeting.js';
+import greeting from './greeting-screen.js';
 import { GameScreen } from './game-screen.js';
 import GameModel from '../model/game-model.js';
 
