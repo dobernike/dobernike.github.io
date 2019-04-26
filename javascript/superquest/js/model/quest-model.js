@@ -1,12 +1,10 @@
 /* eslint-disable object-curly-spacing */
 import { INITIAL_GAME, changeLevel, die, tick } from '../data/quest.js';
 
-import QUEST from '../data/quest-data.js';
-
-const getLevel = (state) => QUEST[`level-${state.level}`];
 
 export default class QuestModel {
-  constructor(playerName) {
+  constructor(data, playerName) {
+    this.data = data;
     this.playerName = playerName;
     this.restart();
   }
@@ -16,7 +14,7 @@ export default class QuestModel {
   }
 
   hasNextLevel() {
-    return getLevel(this._state.level + 1) !== void 0;
+    return this.getLevel(this._state.level + 1) !== void 0;
   }
 
   nextLevel() {
@@ -35,8 +33,12 @@ export default class QuestModel {
     return this._state.lives <= 0;
   }
 
+  getLevel(state) {
+    return this.data[`level-${state.level}`];
+  }
+
   getCurrentLevel() {
-    return getLevel(this._state);
+    return this.getLevel(this._state);
   }
 
   tick() {

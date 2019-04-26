@@ -2,6 +2,22 @@
 import { Result } from "./quest";
 
 
+// const whenTextQuestLoaded = fetch(`https://es.dump.academy/text-quest/quest`);
+
+
+//  whenTextQuestLoaded.
+//   then((response) => {
+//     if (response.ok) {
+//       return response.json();
+//     } else if (response.status === 404) {
+//       return [];
+//     }
+//     throw new Error(`Неизвестный статус: ${response.status} ${response.statusText}`);
+//   }).
+//   then((data) => console.log(data)).
+//   catch((err) => console.log(err));
+
+
 export default {
   'level-0': {
     text: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу

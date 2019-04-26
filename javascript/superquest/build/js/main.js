@@ -172,7 +172,6 @@
   /* eslint-disable object-curly-spacing */
 
   const ENTER_KEY_CODE = 13;
-  const DEBUG_STYLE = `style="color:red;"`;
 
   class LevelView extends AbstractView {
     constructor(level) {
@@ -185,7 +184,7 @@
     <p class="text">${this.level.text}</p>
 
     <ul class="answers">
-    ${this.level.answers.map((it) => `<li class="answer" ${it.result > Result.DIE ? DEBUG_STYLE : ``}>${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
+    ${this.level.answers.map((it) => `<li class="answer" ${``}>${it.action.toUpperCase()}. ${it.title}</li>`).join(``)}
     </ul>
     <input type="text">
   </div>`;
@@ -372,81 +371,9 @@
   /* eslint-disable object-curly-spacing */
 
 
-  var QUEST = {
-    'level-0': {
-      text: `Вас зовут Луиджи Марио, вы водопроводчик, но сейчас перед вами стоит очень важная миссия — спасти принцессу
-  Грибного Королевства Тоадстул Пич. Её похитил злой повелитель черепах Боузер и вы отправились в Грибное Королевство,
-  чтобы победить Боузера и освободить принцессу. Вы отправляетесь в первый замок, но, чтобы в него попасть нужно
-  преодолеть несколько препятствий. Вы стоите посреди на одной из равнин Грибного Королевства и видите как на вас
-  стремительно несется хмурый гриб вашего роста. Нужно срочно что-то предпринять`,
-      answers: [
-        {
-          action: `left`,
-          title: `Вы побежите влево, от гриба`,
-          result: Result.DIE
-        },
-        {
-          action: `right`,
-          title: `Вы побежите вправо, прямо на гриб`,
-          result: Result.DIE
-        },
-        {
-          action: `jump`,
-          title: `Вы прыгните вверх`,
-          result: Result.NEXT_LEVEL
-        }
-      ]
-    },
-
-    'level-1': {
-      text: `Теперь, когда угроза быть убитым грибом миновала, вы можете спокойно оглядеться по сторонам. Вы видите что над вами прямо в двумерном небе висят кирпичные блоки, которые перемещаются с непонятными металлическими конструкциями. Что вы предпримете?`,
-      answers: [
-        {
-          action: `left`,
-          title: `Вы побежите влево`,
-          result: Result.DIE
-        },
-        {
-          action: `right`,
-          title: `Вы побежите вправо`,
-          result: Result.DIE
-        },
-        {
-          action: `jump`,
-          title: `Как что, конечно же подпрыгну и со всей силы ударюсь головой о железяку!`,
-          result: Result.NEXT_LEVEL
-        }
-      ]
-    },
-
-    'level-2': {
-      text: `Вы проходите немного вперед и снова видите над головой кирпичную кладку. Вы хотите проверить свои новые силы и со всего размаху бьетесь об нее головой. На этот раз кирпичи разлетаются во все стороны. Вы начинаете радостно прыгать и разносить головой все кирпичи, но случайно ударяетесь о еще одну металлическую штуку и видите как из нее вырастает цветок. Ваши действия?`,
-      answers: [
-        {
-          action: `left`,
-          title: `Вы побежите влево`,
-          result: Result.DIE
-        },
-        {
-          action: `right`,
-          title: `Вы побежите вправо`,
-          result: Result.DIE
-        },
-        {
-          action: `1`,
-          title: `Конечно же съесть его!`,
-          result: Result.WIN
-        }
-      ]
-    }
-  };
-
-  /* eslint-disable object-curly-spacing */
-
-  const getLevel = (state) => QUEST[`level-${state.level}`];
-
   class QuestModel {
-    constructor(playerName) {
+    constructor(data, playerName) {
+      this.data = data;
       this.playerName = playerName;
       this.restart();
     }
@@ -456,7 +383,7 @@
     }
 
     hasNextLevel() {
-      return getLevel(this._state.level + 1) !== void 0;
+      return this.getLevel(this._state.level + 1) !== void 0;
     }
 
     nextLevel() {
@@ -475,8 +402,12 @@
       return this._state.lives <= 0;
     }
 
+    getLevel(state) {
+      return this.data[`level-${state.level}`];
+    }
+
     getCurrentLevel() {
-      return getLevel(this._state);
+      return this.getLevel(this._state);
     }
 
     tick() {
@@ -486,44 +417,32 @@
 
   /* eslint-disable object-curly-spacing */
 
-  class ScoreboardView extends AbstractView {
+  class ScoreBoardView extends AbstractView {
     constructor(model) {
       super();
-      this.model = model;
+      this.playerName = model.playerName;
+      this.stats = model.state;
     }
 
     get template() {
       return `<div class="end">
-    <div class="scoreboard">
-      <h1>Мои лучшие результаты</h1>
-
-      <table class="scores">
-        <tbody>
-          <tr>
-            <td>
-              <small>1.</small>
-            </td>
-            <td style="text-align: right;">${this.model.state.time} сек</td>
-            <td>${this.model.playerName} ${`💗`.repeat(this.model.state.lives)}</td>
-            <td>25.05.2018</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <br>
-    <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
+    <p>Ну что ж, ${this.playerName}?! Вот и закончились твои приключения =(<br>
+      А вот немного статистики о тебе: <br>
+      Прошел за: ${this.stats.time}<br>
+      Осталось жизней: ${this.stats.lives}<br>
+      Дошел до уровня: ${this.stats.level}<br>
+      <p>Начнем по новой?</p>
+      <div class="repeat"><span class="repeat-action">Да</span></div>
     </div>`;
     }
 
     bind() {
-      const repeat = this.element.querySelector(`.repeat-action`);
+      this.element.querySelector(`.repeat-action`).onclick = (evt) => {
+        evt.preventDefault();
 
-      repeat.addEventListener(`click`, () => {
-        this.onRepeat();
-      });
+        Router.showGame();
+      };
     }
-
-    onRepeat() { }
   }
 
   const mainElement = document.querySelector(`#main`);
@@ -533,10 +452,93 @@
     mainElement.appendChild(element);
   };
 
-  /* eslint-disable object-curly-spacing */
+  class SplashScreen extends AbstractView {
+    constructor() {
+      super();
+      this.cursor = 0;
+      this.symbolsSeq = `/-\\|`;
+    }
+
+    get template() {
+      return `<div></div>`;
+    }
+
+    start() {
+      this.cursor = ++this.cursor >= this.symbolsSeq.length ? 0 : this.cursor;
+      this.element.textContent = this.symbolsSeq[this.cursor];
+      this.timeout = setTimeout(() => this.start(), 50);
+    }
+
+    stop() {
+      clearTimeout(this.timeout);
+    }
+  }
+
+  class ErrorScreen extends AbstractView {
+
+    constructor(error) {
+      super();
+      this.error = error;
+    }
+
+    get template() {
+      return `<div class="end">
+<p>Произошла ошибка: ${this.error.message}</p>
+</div>`;
+    }
+
+  }
+
+  /* eslint-disable quote-props */
+
+  const Server2ResultMapper = {
+    'die': Result.DIE,
+    'win': Result.WIN,
+    'next': Result.NEXT_LEVEL
+  };
+
+  const preprocessAnswers = (answers) => answers.map((answer) => {
+    const [action, title] = answer.action.split(`.`);
+    return {
+      action: action.toLowerCase(),
+      title: title.trim(),
+      'result': Server2ResultMapper[answer.result]
+    };
+  });
+
+  const adaptServerData = (data) => {
+    for (const level of Object.values(data)) {
+      level.answers = preprocessAnswers(level.answers);
+    }
+    return data;
+  };
+
+  /* eslint-disable no-return-assign */
 
 
+  const checkStatus = (response) => {
+    if (response.status >= 200 && response.status < 300) {
+      return response;
+    } else {
+      throw new Error(`${response.status}: ${response.statusText}`);
+    }
+  };
+
+  let questData;
   class Router {
+
+    static start() {
+      const splash = new SplashScreen();
+      changeScreen(splash.element);
+      splash.start();
+      window.fetch(`https://es.dump.academy/text-quest/quest`).
+        then(checkStatus).
+        then((response) => response.json()).
+        then((data) => questData = adaptServerData(data)).
+        then((response) => Router.showStats(new QuestModel(questData), `test`)).
+        catch(Router.showError).
+        then(() => splash.stop());
+    }
 
     static showWelcome() {
       const welcome = new WelcomeScreen();
@@ -544,21 +546,26 @@
     }
 
     static showGame(playerName) {
-      const gameScreen = new GameScreen(new QuestModel(playerName));
+      const gameScreen = new GameScreen(new QuestModel(questData, playerName));
       changeScreen(gameScreen.element);
       gameScreen.startGame();
     }
 
     static showStats(model) {
-      const statistics = new ScoreboardView(model);
-      statistics.onRepeat = () => this.showWelcome();
+      const statistics = new ScoreBoardView(model);
       changeScreen(statistics.element);
+    }
+
+    static showError(error) {
+      const errorScreen = new ErrorScreen(error);
+      changeScreen(errorScreen.element);
     }
 
   }
 
   const router = new Router();
-  router.constructor.showWelcome();
+  // router.constructor.showWelcome();
+  router.constructor.start();
 
 }());
 
