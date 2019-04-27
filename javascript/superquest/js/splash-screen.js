@@ -1,5 +1,6 @@
 import AbstractView from './view/abstract-view.js';
 
+
 export default class SplashScreen extends AbstractView {
   constructor() {
     super();

@@ -1,5 +1,6 @@
 import AbstractView from './view/abstract-view.js';
 
+
 export default class ErrorScreen extends AbstractView {
 
   constructor(error) {
