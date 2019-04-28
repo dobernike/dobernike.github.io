@@ -1,10 +1,17 @@
-// eslint-disable-next-line object-curly-spacing
-import { render } from './util.js';
+import AbstractView from './view/abstract-view.js';
 
 
-const template = `<div class="end">
-<p>Ой-ой-ой! Произошла ошибка =(</p>
+export default class ErrorScreen extends AbstractView {
+
+  constructor(error) {
+    super();
+    this.error = error;
+  }
+
+  get template() {
+    return `<div class="end">
+<p>Произошла ошибка: ${this.error.message}</p>
 </div>`;
+  }
 
-
-export default render(template);
+}
