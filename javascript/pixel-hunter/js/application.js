@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 /* eslint-disable object-curly-spacing */
 import IntroScreen from './screens/intro-screen.js';
 import { changeScreen } from './utils/util.js';
@@ -28,7 +29,6 @@ export default class Application {
 
   static showWelcome(data) {
     gameData = data;
-    console.log(gameData);
     const welcome = new IntroScreen();
     changeScreen(welcome.element);
   }
