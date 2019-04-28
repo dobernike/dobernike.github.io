@@ -5,10 +5,30 @@ import GameModel from './model/game-model.js';
 import GameScreen from './screens/game-screen.js';
 import StatsScreen from './screens/stats-screen.js';
 
+const checkStatus = (response) => {
+  if (response.ok) {
+    return response;
+  } else {
+    throw new Error(`${response.status}: ${response.statusText}`);
+  }
+};
 
+const toJSON = (res) => res.json();
+
+let gameData;
 export default class Application {
 
-  static showWelcome() {
+  static start() {
+    window.fetch(`https://es.dump.academy/pixel-hunter/questions`).
+      then(checkStatus).then(toJSON).
+      then((data) => gameData = data).
+      then(() => Application.showWelcome(gameData)).
+      catch(Application.showError);
+  }
+
+  static showWelcome(data) {
+    gameData = data;
+    console.log(gameData);
     const welcome = new IntroScreen();
     changeScreen(welcome.element);
   }
