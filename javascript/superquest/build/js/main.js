@@ -38,9 +38,7 @@
   }
 
   /* eslint-disable object-curly-spacing */
-  // import { render } from '../util.js';
-  // import GameScreen from './game-screen.js';
-  // import QuestModel from './model/quest-model.js';
+
 
   class WelcomeScreen extends AbstractView {
     constructor() {
@@ -66,34 +64,10 @@
       const agreeButton = this.element.querySelector(`.repeat-action`);
       const playerName = this.element.querySelector(`input`);
       agreeButton.addEventListener(`click`, () => {
-        // console.log(playerName.value);
         new Router().constructor.showGame(playerName.value);
-        // const gameModel = new QuestModel(inputValue);
-        // const gameScreen = new GameScreen(gameModel);
-
-        // changeView(gameScreen.element);
-        // gameScreen.startGame();
       });
     }
   }
-
-  // const template =
-
-  // const element = render(template);
-
-  // const input = element.querySelector(`input`);
-
-  // const agreeButton = element.querySelector(`.repeat-action`);
-  // agreeButton.addEventListener(`click`, () => {
-  // const inputValue = input.value();
-  // const gameModel = new QuestModel(inputValue);
-  // const gameScreen = new GameScreen(gameModel);
-  // changeView(gameScreen.element);
-  // gameScreen.startGame();
-  // });
-
-
-  // export default element;
 
   const INITIAL_GAME = Object.freeze({
     level: 0,
@@ -418,30 +392,43 @@
   /* eslint-disable object-curly-spacing */
 
   class ScoreBoardView extends AbstractView {
-    constructor(model) {
+    constructor(username) {
       super();
-      this.playerName = model.playerName;
-      this.stats = model.state;
+      this.username = username;
     }
 
     get template() {
       return `<div class="end">
-    <p>Ну что ж, ${this.playerName}?! Вот и закончились твои приключения =(<br>
-      А вот немного статистики о тебе: <br>
-      Прошел за: ${this.stats.time}<br>
-      Осталось жизней: ${this.stats.lives}<br>
-      Дошел до уровня: ${this.stats.level}<br>
-      <p>Начнем по новой?</p>
-      <div class="repeat"><span class="repeat-action">Да</span></div>
+   <div class="scoreboard">Scoreboard is loading...</div>
+   <br>
+   <div class="repeat"><span class="repeat-action">Сыграть заново</span>&nbsp;|&nbsp;<a class="repeat-action" href="https://google.com">Выйти</a>????</div>
     </div>`;
     }
 
     bind() {
-      this.element.querySelector(`.repeat-action`).onclick = (evt) => {
+      this.element.querySelector(`span.repeat-action`).onclick = (evt) => {
         evt.preventDefault();
-
-        Router.showGame();
+        this.onRepeat();
       };
+
+      this._scoreBoardContainer = this.element.querySelector(`div.scoreboard`);
+    }
+
+    showScores(scores, username) {
+      this._scoreBoardContainer.innerHTML = `<h1>Лучшие результаты игрока: ${username}</h1>
+
+    <table class="scores">
+      ${scores.map((it, i) => `<tr>
+      <td><small>${i + 1}.</small></td>
+      <td style="text-align: right;">${it.time} сек</td>
+      <td>${new Array(3 - it.lives).fill(`♡`).concat(new Array(it.lives).fill(`♥`)).join(``)}</td>
+      <td>${new Intl.DateTimeFormat(`ru-RU`).format(new Date(it.date))}</td>
+      </tr>`).join(``)}
+    </table> `;
+    }
+
+    onRepeat() {
+      Router.start();
     }
   }
 
@@ -513,16 +500,46 @@
     return data;
   };
 
-  /* eslint-disable no-return-assign */
+  /* eslint-disable object-curly-spacing */
 
+  const SERVER_URL = `https://es.dump.academy/text-quest`;
+
+  const DEFAULT_NAME = `o0`;
+  const APP_ID = 19870714;
 
   const checkStatus = (response) => {
-    if (response.status >= 200 && response.status < 300) {
+    if (response.ok) {
       return response;
     } else {
       throw new Error(`${response.status}: ${response.statusText}`);
     }
   };
+
+  const toJSON = (res) => res.json();
+
+  class Loader {
+    static loadData() {
+      return fetch(`${SERVER_URL}/quest`).then(checkStatus).then(toJSON).then(adaptServerData);
+    }
+
+    static loadResults(name = DEFAULT_NAME) {
+      return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON);
+    }
+
+    static saveResults(data, name = DEFAULT_NAME) {
+      data = Object.assign({ name }, data);
+      const requestSettings = {
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': `application/json`
+        },
+        method: `POST`
+      };
+      return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`, requestSettings).then(checkStatus);
+    }
+  }
+
+  /* eslint-disable no-return-assign */
 
   let questData;
   class Router {
@@ -531,16 +548,16 @@
       const splash = new SplashScreen();
       changeScreen(splash.element);
       splash.start();
-      window.fetch(`https://es.dump.academy/text-quest/quest`).
-        then(checkStatus).
-        then((response) => response.json()).
-        then((data) => questData = adaptServerData(data)).
-        then((response) => Router.showStats(new QuestModel(questData), `test`)).
+      Loader.loadData().
+        then((data) => questData = data).
+        then(() => Router.showWelcome(questData)).
         catch(Router.showError).
         then(() => splash.stop());
     }
 
-    static showWelcome() {
+    // Router.showStats(new QuestModel(questData, `tester`))
+    static showWelcome(data) {
+      questData = data;
       const welcome = new WelcomeScreen();
       changeScreen(welcome.element);
     }
@@ -552,8 +569,12 @@
     }
 
     static showStats(model) {
-      const statistics = new ScoreBoardView(model);
-      changeScreen(statistics.element);
+      const playerName = model.playerName;
+      const scoreBoard = new ScoreBoardView(playerName);
+      changeScreen(scoreBoard.element);
+      Loader.saveResults(model.state, playerName).
+        then(() => Loader.loadResults(playerName)).then((data) => scoreBoard.showScores(data, playerName)).
+        catch(Router.showError);
     }
 
     static showError(error) {
@@ -563,9 +584,7 @@
 
   }
 
-  const router = new Router();
-  // router.constructor.showWelcome();
-  router.constructor.start();
+  Router.start();
 
 }());
 

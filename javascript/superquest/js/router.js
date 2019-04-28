@@ -7,16 +7,7 @@ import ScoreboardView from './view/scoreboard-view.js';
 import { changeScreen } from './util.js';
 import SplashScreen from './splash-screen.js';
 import ErrorScreen from './error-screen.js';
-import { adaptServerData } from './data/data-adapter.js';
-
-
-const checkStatus = (response) => {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  } else {
-    throw new Error(`${response.status}: ${response.statusText}`);
-  }
-};
+import Loader from './loader.js';
 
 let questData;
 export default class Router {
@@ -25,16 +16,16 @@ export default class Router {
     const splash = new SplashScreen();
     changeScreen(splash.element);
     splash.start();
-    window.fetch(`https://es.dump.academy/text-quest/quest`).
-      then(checkStatus).
-      then((response) => response.json()).
-      then((data) => questData = adaptServerData(data)).
-      then((response) => Router.showStats(new QuestModel(questData), `test`)).
+    Loader.loadData().
+      then((data) => questData = data).
+      then(() => Router.showWelcome(questData)).
       catch(Router.showError).
       then(() => splash.stop());
   }
 
-  static showWelcome() {
+  // Router.showStats(new QuestModel(questData, `tester`))
+  static showWelcome(data) {
+    questData = data;
     const welcome = new WelcomeScreen();
     changeScreen(welcome.element);
   }
@@ -46,8 +37,12 @@ export default class Router {
   }
 
   static showStats(model) {
-    const statistics = new ScoreboardView(model);
-    changeScreen(statistics.element);
+    const playerName = model.playerName;
+    const scoreBoard = new ScoreboardView(playerName);
+    changeScreen(scoreBoard.element);
+    Loader.saveResults(model.state, playerName).
+      then(() => Loader.loadResults(playerName)).then((data) => scoreBoard.showScores(data, playerName)).
+      catch(Router.showError);
   }
 
   static showError(error) {

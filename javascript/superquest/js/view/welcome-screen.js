@@ -1,9 +1,7 @@
 /* eslint-disable object-curly-spacing */
 import AbstractView from './abstract-view.js';
 import Router from '../router.js';
-// import { render } from '../util.js';
-// import GameScreen from './game-screen.js';
-// import QuestModel from './model/quest-model.js';
+
 
 export default class WelcomeScreen extends AbstractView {
   constructor() {
@@ -29,31 +27,7 @@ export default class WelcomeScreen extends AbstractView {
     const agreeButton = this.element.querySelector(`.repeat-action`);
     const playerName = this.element.querySelector(`input`);
     agreeButton.addEventListener(`click`, () => {
-      // console.log(playerName.value);
       new Router().constructor.showGame(playerName.value);
-      // const gameModel = new QuestModel(inputValue);
-      // const gameScreen = new GameScreen(gameModel);
-
-      // changeView(gameScreen.element);
-      // gameScreen.startGame();
     });
   }
 }
-
-// const template =
-
-// const element = render(template);
-
-// const input = element.querySelector(`input`);
-
-// const agreeButton = element.querySelector(`.repeat-action`);
-// agreeButton.addEventListener(`click`, () => {
-// const inputValue = input.value();
-// const gameModel = new QuestModel(inputValue);
-// const gameScreen = new GameScreen(gameModel);
-// changeView(gameScreen.element);
-// gameScreen.startGame();
-// });
-
-
-// export default element;
