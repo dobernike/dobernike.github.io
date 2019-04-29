@@ -20,6 +20,26 @@ const EXPPECTED = {
 };
 
 
+const getSize = function () {
+  const width = this.width;
+  const height = this.height;
+  console.log(width + ` ` + height);
+  return {
+    width: this.width,
+    height: this.height
+  };
+};
+
+// const getSize = (img) => {
+//   const width = img.width;
+//   const height = img.height;
+//   console.log(width + ` ` + height);
+//   return {
+//     width: img.width,
+//     height: img.height
+//   };
+// };
+
 export default (data) => {
   let option = ``;
   const typeOfGame = data.type;
@@ -32,13 +52,10 @@ export default (data) => {
   };
 
   const srcSizeDoubleImg1 = new Image();
-  srcSizeDoubleImg1.onload = function () {
-    let width = this.width;
-    let height = this.height;
-    console.log(width + ` ` + height);
-  };
-  srcSizeDoubleImg1.src = data.answers[0].image.src;
+  srcSizeDoubleImg1.src = data.answers[0].image.url;
+  srcSizeDoubleImg1.onload = getSize;
 
+  console.log(data);
   console.log(srcSizeDoubleImg1)
   const resizeDoubleImg1 = resize(expectedSizeDouble, data.answers[0].image.url);
 
