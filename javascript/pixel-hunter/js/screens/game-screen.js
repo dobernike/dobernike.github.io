@@ -1,6 +1,6 @@
 /* eslint-disable object-curly-spacing */
 import GameView from '../view/game-view.js';
-import { levels, statsAnswers } from '../data/data.js';
+import { statsAnswers } from '../data/data.js';
 import { changeScreen } from '../utils/util.js';
 import GreetingScreen from './greeting-screen.js';
 import countLives from '../data/count-lives.js';
@@ -12,10 +12,11 @@ export default class GameScreen {
   constructor(model) {
     this.model = model;
     this.state = model.state;
+    this.data = model.data;
     this.init();
 
 
-    this.content = new GameView(this.level, this.copyStatsAnswers, levels, this.currentLevel, this.state);
+    this.content = new GameView(this.level, this.copyStatsAnswers, this.data, this.currentLevel, this.state);
 
     this.root = document.createElement(`div`);
     this.root.appendChild(this.content.element);
@@ -29,7 +30,7 @@ export default class GameScreen {
 
   changeLevel() {
     // Обновление текущего уровня
-    const game = new GameView(this.level, this.copyStatsAnswers, levels, this.currentLevel, this.state);
+    const game = new GameView(this.level, this.copyStatsAnswers, this.data, this.currentLevel, this.state);
 
     game.onClick = () => {
       this.init();
@@ -41,18 +42,20 @@ export default class GameScreen {
 
   }
 
-  onCheck(it) {
-    this.level = levels[it];
-    this.model.nextLevel();
-    this.state = this.model.state;
+  onCheck() {
     this.currentLevel += 1;
+    this.level = this.data[this.currentLevel];
+
+    this.model.nextLevel();
+
+    this.state = this.model.state;
     this.nextLevel(this.canContinue());
   }
 
   init() {
     this.currentLevel = 0;
     this.copyStatsAnswers = Object.assign({}, statsAnswers);
-    this.level = levels[`double`];
+    this.level = this.data[this.currentLevel];
   }
 
   startGame() {
@@ -94,37 +97,37 @@ export default class GameScreen {
   answer() {
     let gameAnswer = ``;
     switch (this.level.type) {
-      case `double`:
+      case `two-of-two`:
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
         gameAnswer.forEach((it) => {
           it.addEventListener(`change`, () => {
             if (this.element.querySelectorAll(`input:checked`).length > 1) {
               let answers = this.element.querySelectorAll(`input:checked`);
-              if (answers[0].value === levels.double.question.answers.question1.answer && answers[1].value === levels.double.question.answers.question2.answer) {
+              if (this.data[this.currentLevel].answers[0].type.includes(answers[0].value) && this.data[this.currentLevel].answers[1].type.includes(answers[1].value)) {
                 this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
               } else {
                 this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
               }
-              this.onCheck(`wide`);
+              this.onCheck();
             }
           });
         });
         break;
-      case `wide`:
+      case `tinder-like`:
         gameAnswer = this.element.querySelectorAll(`.game__answer`);
         gameAnswer.forEach((it) => {
           it.addEventListener(`change`, () => {
             let answer = this.element.querySelector(`input:checked`);
-            if (answer.value === levels.wide.question.answers.question1.answer) {
+            if (this.data[this.currentLevel].answers[0].type.includes(answer.value)) {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
             } else {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
             }
-            this.onCheck(`triple`);
+            this.onCheck();
           });
         });
         break;
-      case `triple`:
+      case `one-of-three`:
         gameAnswer = this.element.querySelectorAll(`.game__option`);
         gameAnswer.forEach((it) => {
           it.addEventListener(`click`, () => {
@@ -133,7 +136,7 @@ export default class GameScreen {
             } else {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = `wrong`;
             }
-            this.onCheck(`double`);
+            this.onCheck();
           });
         });
         break;

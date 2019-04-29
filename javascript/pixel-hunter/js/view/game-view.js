@@ -10,9 +10,9 @@ const header = new HeaderView();
 
 
 export default class GameView extends AbstractView {
-  constructor(gamelevels, copyStatsAnswers, levels, currentLevel, state) {
+  constructor(option, copyStatsAnswers, levels, currentLevel, state) {
     super();
-    this.gamelevels = gamelevels;
+    this.option = option;
     this.copyStatsAnswers = copyStatsAnswers;
     this.levels = levels;
     this.currentLevel = currentLevel;
@@ -24,10 +24,10 @@ export default class GameView extends AbstractView {
       ${header.template}
       <section class="game">
         <p class="game__task">
-          ${this.gamelevels.question.text}
+          ${this.option.question}
         </p>
-        <form class="game__content  game__content--${this.gamelevels.type}">
-          ${getOption(this.gamelevels.type)}
+        <form class="game__content  game__content--${this.option.type}">
+          ${getOption(this.option)}
         </form>
         ${statistic(this.copyStatsAnswers)}
       </section>

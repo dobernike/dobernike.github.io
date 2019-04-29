@@ -23,7 +23,7 @@ export default class Application {
     window.fetch(`https://es.dump.academy/pixel-hunter/questions`).
       then(checkStatus).then(toJSON).
       then((data) => gameData = data).
-      then(() => Application.showWelcome(gameData)).
+      then(() => Application.showGame(`user`)).
       catch(Application.showError);
   }
 
@@ -34,7 +34,7 @@ export default class Application {
   }
 
   static showGame(userName) {
-    const model = new GameModel(userName);
+    const model = new GameModel(gameData, userName);
     const gameScreen = new GameScreen(model);
     changeScreen(gameScreen.element);
     gameScreen.startGame();
