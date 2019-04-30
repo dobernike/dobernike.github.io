@@ -20,6 +20,7 @@ const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
 const babel = require(`rollup-plugin-babel`);
 const resolve = require(`rollup-plugin-node-resove`);
+const uglify = require(`gulp-uglify`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -71,6 +72,7 @@ gulp.task(`scripts`, () => {
         })
       ]
     }, `iife`))
+    .pipe(uglify())
     .pipe(sourcemaps.write(``))
     .pipe(gulp.dest(`build/js`));
 });
