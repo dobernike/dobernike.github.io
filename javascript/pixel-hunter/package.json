@@ -29,6 +29,7 @@
     "gulp-sass": "4.0.1",
     "gulp-sourcemaps": "2.6.5",
     "gulp-svgstore": "6.1.1",
+    "rollup-plugin-babel": "4.3.2",
     "rollup-plugin-commonjs": "9.2.1",
     "stylelint": "9.4.x",
     "stylelint-config-htmlacademy": "0.1.x"
