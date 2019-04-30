@@ -1,94 +1,38 @@
 /* eslint-disable object-curly-spacing */
-import { levels } from '../data/data.js';
-import { paintings, photos } from '../data/mock.js';
-import { resize } from '../data/resize.js';
+// import { resize } from '../data/resize.js';
 
 
-const EXPPECTED = {
-  TWO_OF_TWO: {
-    width: 468,
-    height: 458
-  },
-  TINDER_LIKE: {
-    width: 450,
-    height: 510
-  },
-  ONE_OF_THREE: {
-    width: 450,
-    height: 510
-  }
-};
-
-
-const getSize = function () {
-  const width = this.width;
-  const height = this.height;
-  console.log(width + ` ` + height);
-  return {
-    width: this.width,
-    height: this.height
-  };
-};
-
-// const getSize = (img) => {
-//   const width = img.width;
-//   const height = img.height;
-//   console.log(width + ` ` + height);
+// const getSize = function () {
+//   console.log(this.width + ` ` + this.height);
 //   return {
-//     width: img.width,
-//     height: img.height
+//     width: this.width,
+//     height: this.height
 //   };
 // };
+
 
 export default (data) => {
   let option = ``;
   const typeOfGame = data.type;
-  // const img = data.answers[0].image.url;
-  console.log(data.answers[0].image);
-  // for double
-  const expectedSizeDouble = {
-    width: data.answers[0].image.width,
-    height: data.answers[0].image.height
-  };
-
-  const srcSizeDoubleImg1 = new Image();
-  srcSizeDoubleImg1.src = data.answers[0].image.url;
-  srcSizeDoubleImg1.onload = getSize;
-
-  console.log(data);
-  console.log(srcSizeDoubleImg1)
-  const resizeDoubleImg1 = resize(expectedSizeDouble, data.answers[0].image.url);
-
-  const srcSizeDoubleImg2 = paintings.img1.size;
-
-  const resizeDoubleImg2 = resize(expectedSizeDouble, srcSizeDoubleImg2);
-
-  // for wide
-  const expectedSizeWide = {
-    width: data.answers[0].image.width,
-    height: data.answers[0].image.height
-  };
-
-  const srcSizeWideImg1 = paintings.img2.size;
-  const resizeWideImg1 = resize(expectedSizeWide, srcSizeWideImg1);
-
-  // for triple
-  const expectedSizeTriple = {
-    width: data.answers[0].image.width,
-    height: data.answers[0].image.height
-  };
-
-  const srcSizeTripleImg1 = photos.img2.size;
-  const resizeTripleImg1 = resize(expectedSizeTriple, srcSizeTripleImg1);
-
-  const srcSizeTripleImg2 = paintings.img3.size;
-  const resizeTripleImg2 = resize(expectedSizeTriple, srcSizeTripleImg2);
-
-  const srcSizeTripleImg3 = photos.img3.size;
-  const resizeTripleImg3 = resize(expectedSizeTriple, srcSizeTripleImg3);
 
   switch (typeOfGame) {
     case `two-of-two`:
+      // for double
+      // const expectedSizeDouble = {
+      //   width: data.answers[0].image.width,
+      //   height: data.answers[0].image.height
+      // };
+
+      // const srcSizeDoubleImg1 = new Image();
+      // srcSizeDoubleImg1.src = data.answers[0].image.url;
+
+      // const resizeDoubleImg1 = resize(expectedSizeDouble, srcSizeDoubleImg1.onload = getSize);
+
+      // const srcSizeDoubleImg2 = new Image();
+      // srcSizeDoubleImg2.src = data.answers[1].image.url;
+
+      // const resizeDoubleImg2 = resize(expectedSizeDouble, srcSizeDoubleImg2.onload = getSize);
+
       option = `<div class="game__option" style="width: auto;">
     <img src="${data.answers[0].image.url}" alt="Option 1" width="${data.answers[0].image.width}" height="${data.answers[0].image.height}">
     <label class="game__answer game__answer--photo">
@@ -114,6 +58,15 @@ export default (data) => {
   </div>`;
       break;
     case `tinder-like`:
+      // for wide
+      // const expectedSizeWide = {
+      //   width: data.answers[0].image.width,
+      //   height: data.answers[0].image.height
+      // };
+
+      // const srcSizeWideImg1 = paintings.img2.size;
+      // const resizeWideImg1 = resize(expectedSizeWide, srcSizeWideImg1);
+
       option = `<div class="game__option" style="width: auto;">
     <img src="${data.answers[0].image.url}" alt="Option 1" width="${data.answers[0].image.width}" height="${data.answers[0].image.height}">
     <label class="game__answer  game__answer--photo">
@@ -127,6 +80,21 @@ export default (data) => {
   </div>`;
       break;
     case `one-of-three`:
+      // for triple
+      // const expectedSizeTriple = {
+      //   width: data.answers[0].image.width,
+      //   height: data.answers[0].image.height
+      // };
+
+      // const srcSizeTripleImg1 = photos.img2.size;
+      // const resizeTripleImg1 = resize(expectedSizeTriple, srcSizeTripleImg1);
+
+      // const srcSizeTripleImg2 = paintings.img3.size;
+      // const resizeTripleImg2 = resize(expectedSizeTriple, srcSizeTripleImg2);
+
+      // const srcSizeTripleImg3 = photos.img3.size;
+      // const resizeTripleImg3 = resize(expectedSizeTriple, srcSizeTripleImg3);
+
       option = `<div class="game__option" style="width: auto;">
     <img src="${data.answers[0].image.url}" alt="Option 1" width="${data.answers[0].image.width}" height="${data.answers[0].image.height}">
   </div>
