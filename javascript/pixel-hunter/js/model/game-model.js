@@ -6,7 +6,6 @@ import changeLevel from '../data/change-level.js';
 export default class GameModel {
   constructor(gameData, playerName) {
     this.data = gameData;
-    console.log(gameData);
     this.playerName = playerName;
     this.restart();
   }
