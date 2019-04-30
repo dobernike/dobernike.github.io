@@ -16,8 +16,6 @@ export default class Router {
     Router.load().catch(Router.showError);
   }
 
-  // Router.showStats(new QuestModel(questData, `tester`))
-
   static async load() {
     const splash = new SplashScreen();
     changeScreen(splash.element);
