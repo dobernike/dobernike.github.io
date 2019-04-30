@@ -19,6 +19,7 @@ const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
 const babel = require(`rollup-plugin-babel`);
+const resolve = require(`rollup-plugin-node-resove`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -58,6 +59,11 @@ gulp.task(`scripts`, () => {
     .pipe(sourcemaps.init())
     .pipe(rollup({
       plugins: [
+        // resolve node_modules
+        resolve({ browser: true }),
+        // resolve commonjs imports
+        commonjs(),
+        // use babel to transplite into ES5
         babel({
           babelrc: false,
           exclude: `node_modules/**`,
