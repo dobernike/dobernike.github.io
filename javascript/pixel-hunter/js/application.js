@@ -13,16 +13,21 @@ let gameData;
 export default class Application {
 
   static start() {
+    Application.load();
+  }
+
+  static async load() {
     const splash = new SplashScreen();
     changeScreen(splash.element);
     splash.start();
-    Loader.loadData().
-      then((data) => gameData = data).
-      then(() => Application.showWelcome(gameData)).
-      catch((error) => {
-        throw new Error(error.statusText);
-      }).
-      then(() => splash.stop());
+    try {
+      gameData = await Loader.loadData();
+      Application.showWelcome(gameData);
+    } catch (error) {
+      throw new Error(error.statusText);
+    } finally {
+      splash.stop();
+    }
   }
 
   static showWelcome(data) {
@@ -38,14 +43,15 @@ export default class Application {
     gameScreen.startGame();
   }
 
-  static showStats(stats) {
+  static async showStats(stats) {
     const statistics = new StatsScreen(stats);
     changeScreen(statistics.element);
-    Loader.saveResults(stats).
-      then(() => Loader.loadResults()).then((data) => statistics.showScores(data)).
-      catch((error) => {
-        throw new Error(error.statusText);
-      });
+    // try {
+    //   await Loader.saveResults(stats);
+    //   statistics.showScores(await Loader.loadResults());
+    // } catch (error) {
+    //   throw new Error(error.statusText);
+    // }
   }
 
 }

@@ -19,7 +19,7 @@ const sourcemaps = require(`gulp-sourcemaps`);
 const mocha = require(`gulp-mocha`);
 const commonjs = require(`rollup-plugin-commonjs`);
 const babel = require(`rollup-plugin-babel`);
-const resolve = require(`rollup-plugin-node-resove`);
+const resolve = require(`rollup-plugin-node-resolve`);
 const uglify = require(`gulp-uglify`);
 
 gulp.task(`style`, () => {
