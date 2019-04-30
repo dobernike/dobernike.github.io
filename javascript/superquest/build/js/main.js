@@ -545,19 +545,24 @@
   class Router {
 
     static start() {
-      const splash = new SplashScreen();
-      changeScreen(splash.element);
-      splash.start();
-      Loader.loadData().
-        then((data) => questData = data).
-        then(() => Router.showWelcome(questData)).
-        catch(Router.showError).
-        then(() => splash.stop());
+      Router.load().catch(Router.showError);
     }
 
     // Router.showStats(new QuestModel(questData, `tester`))
-    static showWelcome(data) {
-      questData = data;
+
+    static async load() {
+      const splash = new SplashScreen();
+      changeScreen(splash.element);
+      splash.start();
+      try {
+        questData = await Loader.loadData();
+        Router.showWelcome();
+      } finally {
+        splash.stop();
+      }
+    }
+
+    static showWelcome() {
       const welcome = new WelcomeScreen();
       changeScreen(welcome.element);
     }
@@ -568,13 +573,16 @@
       gameScreen.startGame();
     }
 
-    static showStats(model) {
+    static async showStats(model) {
       const playerName = model.playerName;
       const scoreBoard = new ScoreBoardView(playerName);
       changeScreen(scoreBoard.element);
-      Loader.saveResults(model.state, playerName).
-        then(() => Loader.loadResults(playerName)).then((data) => scoreBoard.showScores(data, playerName)).
-        catch(Router.showError);
+      try {
+        await Loader.saveResults(model.state, playerName);
+        scoreBoard.showScores(await Loader.loadResults(playerName), playerName);
+      } catch (e) {
+        Router.showError(e);
+      }
     }
 
     static showError(error) {
