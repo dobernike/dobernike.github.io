@@ -55,39 +55,3 @@ export default class Application {
   }
 
 }
-
-
-// static start() {
-//   const splash = new SplashScreen();
-//   changeScreen(splash.element);
-//   splash.start();
-//   Loader.loadData().
-//     then((data) => questData = data).
-//     then(() => Router.showWelcome(questData)).
-//     catch(Router.showError).
-//     then(() => splash.stop());
-// }
-
-// // Router.showStats(new QuestModel(questData, `tester`))
-// static showWelcome(data) {
-//   questData = data;
-//   const welcome = new WelcomeScreen();
-//   changeScreen(welcome.element);
-// }
-
-// static showGame(playerName) {
-//   const gameScreen = new GameScreen(new QuestModel(questData, playerName));
-//   changeScreen(gameScreen.element);
-//   gameScreen.startGame();
-// }
-
-// static showStats(model) {
-//   const playerName = model.playerName;
-//   const scoreBoard = new ScoreboardView(playerName);
-//   changeScreen(scoreBoard.element);
-//   Loader.saveResults(model.state, playerName).
-//     then(() => Loader.loadResults(playerName)).then((data) => scoreBoard.showScores(data, playerName)).
-//     catch(Router.showError);
-// }
-
-
