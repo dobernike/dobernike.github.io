@@ -17,6 +17,7 @@ const rollup = require(`gulp-better-rollup`);
 const sourcemaps = require(`gulp-sourcemaps`);
 const babel = require(`rollup-plugin-babel`);
 const resolve = require(`rollup-plugin-node-resolve`);
+const uglify = require(`gulp-uglify`);
 
 gulp.task(`style`, () => {
   return gulp.src(`sass/style.scss`).
@@ -68,6 +69,7 @@ gulp.task(`scripts`, () => {
         })
       ]
     }, `iife`))
+    .pipe(uglify())
     .pipe(sourcemaps.write(``))
     .pipe(gulp.dest(`build/js`));
 });
