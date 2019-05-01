@@ -1,5 +1,5 @@
-import AbstractView from './abstract-view.js';
-import HeaderView from './header-view.js';
+import AbstractView from './abstract-view';
+import HeaderView from './header-view';
 
 
 const header = new HeaderView();
@@ -34,8 +34,8 @@ export default class RulesView extends AbstractView {
     // Вызывает метод bind класса HeaderView, который по нажатию на кнопку back вызывает метод onClick() этого класса
     header.bind(this);
 
-    const rulesInput = this.element.querySelector(`.rules__input`);
-    const rulesButton = this.element.querySelector(`.rules__button`);
+    const rulesInput: any = this.element.querySelector(`.rules__input`);
+    const rulesButton: any = this.element.querySelector(`.rules__button`);
     rulesInput.addEventListener(`input`, () => {
       if (rulesInput.value !== ``) {
         rulesButton.disabled = false;
@@ -44,7 +44,7 @@ export default class RulesView extends AbstractView {
       }
     });
 
-    const rulesForm = this.element.querySelector(`.rules__form`);
+    const rulesForm: any = this.element.querySelector(`.rules__form`);
     rulesForm.addEventListener(`submit`, (evt) => {
       evt.preventDefault();
       this.onSubmit();

@@ -1,6 +1,6 @@
 const maxLives = 3;
 
-export default (answer) => {
+export default (answer: { [x: string]: string; }) => {
   let lives = maxLives;
 
   for (let index in answer) {

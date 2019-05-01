@@ -1,12 +1,13 @@
 /* eslint-disable object-curly-spacing */
-import IntroView from '../view/intro-view.js';
-import { changeScreen } from '../utils/util.js';
-import GreetingScreen from './greeting-screen.js';
+import IntroView from '../view/intro-view';
+import { changeScreen } from '../utils/util';
+import GreetingScreen from './greeting-screen';
 
 
 export default class IntroScreen {
+  root: any = new IntroView();
+
   constructor() {
-    this.root = new IntroView();
     this.onClick();
   }
 

@@ -1,10 +1,10 @@
 /* eslint-disable object-curly-spacing */
-import AbstractView from './abstract-view.js';
+import AbstractView from './abstract-view';
 
-import HeaderView from '../view/header-view.js';
-import countLives from '../data/count-lives.js';
-import { statistic } from '../data/data.js';
-import { calcSummaryScores, calcCorrect, calcFast, calcSlow } from '../data/calc-scores.js';
+import HeaderView from './header-view';
+import countLives from '../data/count-lives';
+import { statistic } from '../data/data';
+import { calcSummaryScores, calcCorrect, calcFast, calcSlow } from '../data/calc-scores';
 
 
 const header = new HeaderView();
@@ -16,12 +16,16 @@ const BONUS = {
 };
 
 export default class StatsView extends AbstractView {
+  copyStatsAnswers: any
+  lives: any
+  victoryTitle: string = ``;
+  victoryOrFail: string = ``;
+
   constructor(copyStatsAnswers) {
     super();
     this.copyStatsAnswers = copyStatsAnswers;
     this.lives = countLives(copyStatsAnswers);
-    this.victoryTitle = ``;
-    this.victoryOrFail = ``;
+
   }
 
   get template() {

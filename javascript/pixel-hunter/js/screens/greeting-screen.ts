@@ -1,13 +1,14 @@
 /* eslint-disable object-curly-spacing */
-import GreetingView from '../view/greeting-view.js';
-import { changeScreen } from '../utils/util.js';
-import RulesScreen from './rules-screen.js';
-import IntroScreen from './intro-screen.js';
+import GreetingView from '../view/greeting-view';
+import { changeScreen } from '../utils/util';
+import RulesScreen from './rules-screen';
+import IntroScreen from './intro-screen';
 
 
 export default class GreetingScreen {
+  root: any = new GreetingView();
+
   constructor() {
-    this.root = new GreetingView();
     this.onAsteriskClick();
     this.onContiueClick();
   }

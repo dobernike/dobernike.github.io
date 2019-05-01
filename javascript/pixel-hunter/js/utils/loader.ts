@@ -4,7 +4,7 @@ const SERVER_URL = `https://es.dump.academy/pixel-hunter`;
 const DEFAULT_NAME = `o0`;
 const APP_ID = 22101985;
 
-const checkStatus = (response) => {
+const checkStatus = (response: { ok: any; status: any; statusText: any; }) => {
   if (response.ok) {
     return response;
   } else {
@@ -12,7 +12,7 @@ const checkStatus = (response) => {
   }
 };
 
-const toJSON = (res) => res.json();
+const toJSON: any = (res: { json: () => void; }) => res.json();
 
 export default class Loader {
   static loadData() {
@@ -23,7 +23,7 @@ export default class Loader {
     return fetch(`${SERVER_URL}/stats/${APP_ID}-${name}`).then(checkStatus).then(toJSON);
   }
 
-  static saveResults(data, name = DEFAULT_NAME) {
+  static saveResults(data: any, name = DEFAULT_NAME) {
     data = Object.assign({ name }, data);
     const requestSettings = {
       body: JSON.stringify(data),

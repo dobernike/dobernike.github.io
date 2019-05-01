@@ -1,27 +1,34 @@
 /* eslint-disable object-curly-spacing */
-import GameView from '../view/game-view.js';
-import { statsAnswers } from '../data/data.js';
-import { changeScreen } from '../utils/util.js';
-import GreetingScreen from './greeting-screen.js';
-import countLives from '../data/count-lives.js';
-import timer from '../data/timer.js';
-import Application from '../application.js';
+import GameView from '../view/game-view';
+import { statsAnswers } from '../data/data';
+import { changeScreen } from '../utils/util';
+import GreetingScreen from './greeting-screen';
+import countLives from '../data/count-lives';
+import timer from '../data/timer';
+import Application from '../application';
 
 
 export default class GameScreen {
+  model: any
+  state: any
+  data: any
+  currentLevel: number = 0;
+  copyStatsAnswers: any
+  level: any
+  content: any
+  root: any
+  private _timer: any = null;
+  private _time: number
+  gameAnswer: any = ``;
+
   constructor(model) {
     this.model = model;
     this.state = model.state;
     this.data = model.data;
     this.init();
-
-
     this.content = new GameView(this.level, this.copyStatsAnswers, this.data, this.currentLevel, this.state);
-
     this.root = document.createElement(`div`);
     this.root.appendChild(this.content.element);
-
-    this._timer = null;
   }
 
   get element() {
@@ -90,16 +97,15 @@ export default class GameScreen {
     if (canContinue) {
       this.startGame();
     } else {
-      new Application().constructor.showStats(this.copyStatsAnswers);
+      Application.showStats(this.copyStatsAnswers);
     }
   }
 
   answer() {
-    let gameAnswer = ``;
     switch (this.level.type) {
       case `two-of-two`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
+        this.gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        this.gameAnswer.forEach((it) => {
           it.addEventListener(`change`, () => {
             if (this.element.querySelectorAll(`input:checked`).length > 1) {
               let answers = this.element.querySelectorAll(`input:checked`);
@@ -114,8 +120,8 @@ export default class GameScreen {
         });
         break;
       case `tinder-like`:
-        gameAnswer = this.element.querySelectorAll(`.game__answer`);
-        gameAnswer.forEach((it) => {
+        this.gameAnswer = this.element.querySelectorAll(`.game__answer`);
+        this.gameAnswer.forEach((it) => {
           it.addEventListener(`change`, () => {
             let answer = this.element.querySelector(`input:checked`);
             if (this.data[this.currentLevel].answers[0].type.includes(answer.value)) {
@@ -128,8 +134,8 @@ export default class GameScreen {
         });
         break;
       case `one-of-three`:
-        gameAnswer = this.element.querySelectorAll(`.game__option`);
-        gameAnswer.forEach((it) => {
+        this.gameAnswer = this.element.querySelectorAll(`.game__option`);
+        this.gameAnswer.forEach((it) => {
           it.addEventListener(`click`, () => {
             if (it.classList.contains(`game__option--selected`)) {
               this.copyStatsAnswers[`level-${this.currentLevel}`] = timer(this._time);
@@ -141,7 +147,7 @@ export default class GameScreen {
         });
         break;
       default:
-        gameAnswer = `Тип игры имеет неправильный формат`;
+        this.gameAnswer = `Тип игры имеет неправильный формат`;
         break;
     }
   }
