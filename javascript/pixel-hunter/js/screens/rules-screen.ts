@@ -1,14 +1,15 @@
 /* eslint-disable object-curly-spacing */
-import RulesView from '../view/rules-view.js';
-import { changeScreen } from '../utils/util.js';
-import GreetingScreen from './greeting-screen.js';
-import Application from '../application.js';
+import RulesView from '../view/rules-view';
+import { changeScreen } from '../utils/util';
+import GreetingScreen from './greeting-screen';
+import Application from '../application';
 
 
 export default class RulesScreen {
+  root: any = new RulesView();
+  input: any = this.root.element.querySelector(`input`);
+
   constructor() {
-    this.root = new RulesView();
-    this.input = this.root.element.querySelector(`input`);
     this.onClick();
     this.onSubmit();
   }
@@ -23,7 +24,7 @@ export default class RulesScreen {
 
   onSubmit() {
     this.root.onSubmit = () => {
-      new Application().constructor.showGame(this.input.value);
+      Application.showGame(this.input.value);
     };
   }
 }

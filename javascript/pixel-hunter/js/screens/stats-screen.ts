@@ -1,8 +1,10 @@
 /* eslint-disable object-curly-spacing */
-import StatsView from '../view/stats-view.js';
-import Application from '../application.js';
+import StatsView from '../view/stats-view';
+import Application from '../application';
 
 export default class StatsScreen {
+  root: any
+
   constructor(stats) {
     this.root = new StatsView(stats);
     this.onClick();
@@ -13,7 +15,7 @@ export default class StatsScreen {
   }
 
   onClick() {
-    this.root.onClick = () => new Application().constructor.showWelcome();
+    this.root.onClick = () => Application.showWelcome();
   }
 
   showScores(scores, username = `o0`) {

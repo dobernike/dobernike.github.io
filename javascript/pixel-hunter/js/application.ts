@@ -1,12 +1,12 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable object-curly-spacing */
-import IntroScreen from './screens/intro-screen.js';
-import { changeScreen } from './utils/util.js';
-import GameModel from './model/game-model.js';
-import GameScreen from './screens/game-screen.js';
-import StatsScreen from './screens/stats-screen.js';
-import SplashScreen from './screens/splash-screen.js';
-import Loader from './utils/loader.js';
+import IntroScreen from './screens/intro-screen';
+import { changeScreen } from './utils/util';
+import GameModel from './model/game-model';
+import GameScreen from './screens/game-screen';
+import StatsScreen from './screens/stats-screen';
+import SplashScreen from './screens/splash-screen';
+import Loader from './utils/loader';
 
 
 let gameData;
@@ -22,7 +22,7 @@ export default class Application {
     splash.start();
     try {
       gameData = await Loader.loadData();
-      Application.showWelcome(gameData);
+      Application.showWelcome();
     } catch (error) {
       throw new Error(error.statusText);
     } finally {
@@ -30,13 +30,12 @@ export default class Application {
     }
   }
 
-  static showWelcome(data) {
-    gameData = data;
+  static showWelcome() {
     const welcome = new IntroScreen();
     changeScreen(welcome.element);
   }
 
-  static showGame(userName) {
+  static showGame(userName: any) {
     const model = new GameModel(gameData, userName);
     const gameScreen = new GameScreen(model);
     changeScreen(gameScreen.element);

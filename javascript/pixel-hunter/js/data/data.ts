@@ -1,5 +1,5 @@
 /* eslint-disable object-curly-spacing */
-import { paintings, photos } from './mock.js';
+import { paintings, photos } from './mock';
 
 
 export const INITIAL_GAME = Object.freeze({

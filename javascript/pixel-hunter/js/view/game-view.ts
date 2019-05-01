@@ -1,15 +1,21 @@
 /* eslint-disable object-curly-spacing */
-import AbstractView from './abstract-view.js';
+import AbstractView from './abstract-view';
 
-import HeaderView from '../view/header-view.js';
-import { statistic } from '../data/data.js';
-import getOption from '../data/get-option.js';
+import HeaderView from '../view/header-view';
+import { statistic } from '../data/data';
+import getOption from '../data/get-option';
 
 
 const header = new HeaderView();
 
 
 export default class GameView extends AbstractView {
+  option: any
+  copyStatsAnswers: any
+  levels: any
+  currentLevel: any
+  state: any
+
   constructor(option, copyStatsAnswers, levels, currentLevel, state) {
     super();
     this.option = option;

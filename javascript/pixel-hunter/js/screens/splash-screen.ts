@@ -1,11 +1,15 @@
-import AbstractView from '../view/abstract-view.js';
+import AbstractView from '../view/abstract-view';
 
 
 export default class SplashScreen extends AbstractView {
+  cursor: number = 0;
+  symbolsSeq: string = `/-\\|`;
+  timeout: any;
+
   constructor() {
     super();
-    this.cursor = 0;
-    this.symbolsSeq = `/-\\|`;
+    // this.cursor = 0;
+    // this.symbolsSeq = `/-\\|`;
   }
 
   get template() {

@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import AbstractView from './abstract-view';
 
 
 export default class Intro extends AbstractView {
@@ -14,7 +14,7 @@ export default class Intro extends AbstractView {
   }
 
   bind() {
-    const introAsterisk = this.element.querySelector(`.intro__asterisk`);
+    const introAsterisk: any = this.element.querySelector(`.intro__asterisk`);
     introAsterisk.addEventListener(`click`, (evt) => {
       evt.preventDefault();
       this.onClick();
