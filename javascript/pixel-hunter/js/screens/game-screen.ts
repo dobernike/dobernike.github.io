@@ -60,7 +60,9 @@ export default class GameScreen {
   }
 
   init() {
-    this.currentLevel = 0;
+    if (this.currentLevel !== 0) {
+      this.currentLevel = 0;
+    }
     this.copyStatsAnswers = Object.assign({}, statsAnswers);
     this.level = this.data[this.currentLevel];
   }
