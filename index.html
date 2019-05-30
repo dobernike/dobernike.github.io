@@ -2,14 +2,32 @@
 <html lang="ru">
 
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="normalize.css" />
+  <link rel="stylesheet" href="index.css" />
   <title>Портфолио</title>
 </head>
 
 <body>
   <header class="main-header">
-    <a class="github-link" href="https://github.com/dobernike">Мой гитхаб</a>
+    <div class="container">
+      <span class="pseudo">πφ</span>
+      <nav class="links">
+        <a class="link github-link" href="https://github.com/dobernike">
+          <img src="./GitHub_Logo_White.png" width="100">
+          <span class="visually-hidden">гитхаб</span></a>
+        <a class="link linkedin-link" href="https://www.linkedin.com/in/dobernike/">
+          <img src="./linkedin-logo.svg" width="35">
+          <span class="visually-hidden">Моё резюме</span></a>
+      </nav>
+      <a class="link email-link" href="mailto:vlad@htmlbook.ru">
+        <img src="./mail.png" width="20">
+        <span class="visually-hidden">email</span>
+      </a>
+    </div>
   </header>
+
   <main class="container">
     <h1 class="visually-hidden">Портфолио</h1>
     <section class="works">
@@ -17,19 +35,34 @@
 
       <h3>Javascript</h3>
       <ul class="react">
-        <li class="react-item"><a href="/javascript/re-store/">ReStore</a> react + Redux</li>
-        <li class="react-item"><a href="/javascript/star-db/">Star Wars database</a> react</li>
-        <li class="react-item"><a href="/javascript/todo/">Todo список</a> react</li>
+        <li class="react-item">
+          <a href="/javascript/re-store/">ReStore</a> react + Redux
+        </li>
+        <li class="react-item">
+          <a href="/javascript/star-db/">Star Wars database</a> react
+        </li>
+        <li class="react-item">
+          <a href="/javascript/todo/">Todo список</a> react
+        </li>
       </ul>
       <ul class="js(es6)-learn">
         <!-- <li class="js(es6)-item"><del><a href="#">Guess the melody!</a></del> javaScript (es6) | Не закончен</li> -->
-        <li class="js(es6)-item"><a href="/javascript/pixel-hunter/build/">Pixel hunter</a> ES6+ | TypeScript</li>
-        <li class="js(es6)-item"><a href="/javascript/superquest/build/">Super Quest</a> ES6+</li>
+        <li class="js(es6)-item">
+          <a href="/javascript/pixel-hunter/build/">Pixel hunter</a> ES6+ |
+          TypeScript
+        </li>
+        <li class="js(es6)-item">
+          <a href="/javascript/superquest/build/">Super Quest</a> ES6+
+        </li>
       </ul>
       <ul class="js(es5)-learn">
         <!-- <li class="js(es5)-item"><del><a href="#">Keksobooking</a></del> javaScript (es5) | Не закончен</li> -->
-        <li class="js(es5)-item"><a href="javascript/Кекстаграм/">Keksogram</a> ES5</li>
-        <li class="js(es5)-item"><a href="/javascript/Код и магия/">Code and magick</a> ES5</li>
+        <li class="js(es5)-item">
+          <a href="javascript/Кекстаграм/">Keksogram</a> ES5
+        </li>
+        <li class="js(es5)-item">
+          <a href="/javascript/Код и магия/">Code and magick</a> ES5
+        </li>
       </ul>
 
       <h3>Адаптивная/Отзывчивая верстка</h3>
@@ -38,7 +71,10 @@
         <!-- <li class="adaptive-item"><del><a href="#">mishka</a></del> adaptive | Не закончен</li> -->
         <!-- <li class="adaptive-item"><del><a href="#">sedona</a></del> adaptive | Не закончен</li> -->
         <!-- <li class="adaptive-item"><a href="/adaptive/pink/build/">pink</a> adaptive | Не закончен</li> -->
-        <li class="adaptive-item"><a href="/adaptive/barbershop-adaptive/build/">Барбершоп Бородинский</a> adaptive/responsive? | Не закончен</li>
+        <li class="adaptive-item">
+          <a href="/adaptive/barbershop-adaptive/build/">Барбершоп Бородинский</a>
+          adaptive/responsive? | Не закончен
+        </li>
       </ul>
       <h3>Фиксированная/Резиновая верстка</h3>
       <ul class="static-learn">
@@ -46,18 +82,28 @@
         <!-- <li class="static-item"><del><a href="#">gllacy</a></del> static | Не закончен</li> -->
         <!-- <li class="static-item"><del><a href="#">technomart</a></del> static | Не закончен</li> -->
         <!-- <li class="static-item"><del><a href="#">sedona</a></del> static/fluid? | Не закончен</li> -->
-        <li class="static-item"><a href="/static/nerds/">nerd`s</a> static</li>
-        <li class="static-item"><a href="/static/barbershop/">Барбершоп</a> static</li>
+        <li class="static-item">
+          <a href="/static/nerds/">nerd`s</a> static
+        </li>
+        <li class="static-item">
+          <a href="/static/barbershop/">Барбершоп</a> static
+        </li>
       </ul>
 
       <h3>Верстка и JS (рабочие проекты)</h3>
       <ul class="work-list">
-        <li class="work-item"><a href="/work/call-center/">call-center</a></li>
-        <li class="work-item"><a href="https://www.satnet-spb.ru/akczii/selfie-magnit.html">Десктопная версия
-            сайта для создания магнитов (доступно только с десктоп устройсва)</a></li>
-        <li class="work-item"><a href="https://www.satnet-spb.ru/self">Мобильная версия сайта для создания магнитов (доступно только с мобильного устройсва)</a></li>
+        <li class="work-item">
+          <a href="/work/call-center/">call-center</a>
+        </li>
+        <li class="work-item">
+          <a href="https://www.satnet-spb.ru/akczii/selfie-magnit.html">Десктопная версия сайта для создания магнитов (доступно только с
+            десктоп устройсва)</a>
+        </li>
+        <li class="work-item">
+          <a href="https://www.satnet-spb.ru/self">Мобильная версия сайта для создания магнитов (доступно только с
+            мобильного устройсва)</a>
+        </li>
       </ul>
-
 
       <!-- <h3>nodeJS</h3>
       <ul class="nodeJs-learn">
@@ -98,8 +144,12 @@
       <h3>HTML + CSS</h3>
       <!-- 1,2 уровень проф верстки -->
       <ul class="skills-proff__list">
-        <li class="skill-proff__item">Фундаментальные знания разметки и стилизации</li>
-        <li class="skill-proff__item">Адаптивные сетки и адаптивная графика</li>
+        <li class="skill-proff__item">
+          Фундаментальные знания разметки и стилизации
+        </li>
+        <li class="skill-proff__item">
+          Адаптивные сетки и адаптивная графика
+        </li>
         <li class="skill-proff__item">Препроцессоры</li>
         <li class="skill-proff__item">Автоматизация</li>
         <li class="skill-proff__item">Методологии</li>
