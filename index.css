@@ -201,13 +201,22 @@ input[type="radio"].visually-hidden {
   background-position: center;
 }
 
-.item-hover--redux::before {
-  top: -8px;
-  right: 0;
+.item-hover--redux::after {
+  content: "";
 
-  margin-top: 0;
-  
-  background-image: url(./React___Redux.png);
+  position: absolute;
+  top: 50%;
+  left: -8px;
+
+  margin-top: -25px;
+
+  min-width: 80px;
+  min-height: 50px;
+  /* background-color: #000000; */
+  background-image: url(./redux.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
 }
 
 .item-hover h4 {
