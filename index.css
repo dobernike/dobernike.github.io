@@ -246,7 +246,7 @@ input[type="radio"].visually-hidden {
   font-size: 1.5rem;
   text-align: center;
 
-  background-color: #ED6B5D;
+  background-color: #ed6b5d;
 }
 
 .static-logo {
@@ -256,7 +256,7 @@ input[type="radio"].visually-hidden {
   font-size: 1.5rem;
   text-align: center;
 
-  background-color: #8BEAD8;
+  background-color: #8bead8;
 }
 
 .old-other {
@@ -266,9 +266,25 @@ input[type="radio"].visually-hidden {
   font-size: 1.5rem;
   text-align: center;
 
-  background-color: #207DDD;
+  background-color: #207ddd;
 }
 
 .skills h2 {
   text-align: center;
+}
+
+.skills-proff__list {
+  margin: 0 auto;
+  padding: 0;
+  max-width: 320px;
+}
+
+.html-css-logo {
+  margin: 0;
+  padding: 0.5rem;
+
+  font-size: 1.5rem;
+  text-align: center;
+
+  background: linear-gradient(to right, #E44B26 51.5%, #039AE3 50%)
 }
