@@ -154,7 +154,7 @@ input[type="radio"].visually-hidden {
   max-width: 320px;
 }
 
-.react-item {
+.works li {
   position: relative;
 }
 
@@ -183,41 +183,48 @@ input[type="radio"].visually-hidden {
   z-index: 1;
 }
 
+.item-hover::before,
+.item-hover::after {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+
+  margin-top: -25px;
+
+  min-width: 80px;
+  min-height: 50px;
+
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
 .item-hover::before {
-  content: "";
-
-  position: absolute;
-  top: 50%;
   right: -8px;
-
-  margin-top: -25px;
-
-  min-width: 80px;
-  min-height: 50px;
-  /* background-color: #000000; */
-  background-image: url(./react.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
 }
 
-.item-hover--redux::after {
-  content: "";
-
-  position: absolute;
-  top: 50%;
+.item-hover::after {
   left: -8px;
-
-  margin-top: -25px;
-
-  min-width: 80px;
-  min-height: 50px;
-  /* background-color: #000000; */
-  background-image: url(./redux.svg);
-  background-repeat: no-repeat;
-  background-size: contain;
-  background-position: center;
 }
+
+.react-item .item-hover::before {
+  background-image: url(./react.svg);
+}
+
+.react-item .item-hover--redux::after {
+  background-image: url(./redux.svg);
+}
+
+.es6-item .item-hover::before {
+  background-image: url(./es6.png);
+}
+
+.es6-item .item-hover--typescript::after {
+  background-image: url(./typescript.svg);
+}
+
+
 
 .item-hover h4 {
   margin: 0;
