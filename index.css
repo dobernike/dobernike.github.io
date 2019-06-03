@@ -44,6 +44,43 @@ input[type="radio"].visually-hidden {
   overflow: hidden;
 }
 
+.button {
+  display: inline-block;
+
+  padding: 5px;
+
+  font: inherit;
+  font-size: 1rem;
+  line-height: 18px;
+
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  border: none;
+  border-radius: 3px;
+
+  cursor: pointer;
+}
+
+.button-red {
+  background-color: #fb565a;
+}
+
+.button-red:hover,
+.button-red:focus {
+  background-color: #e74246;
+}
+
+.button-red:active {
+  color: rgba(255, 255, 255, 0.3);
+
+  background-color: #d7373b;
+  box-shadow: 0 3px rgba(0, 0, 0, 0.1) inset;
+}
+
 .main-header {
   /* margin-bottom: 75px; */
   /* position: fixed; */
@@ -111,11 +148,79 @@ input[type="radio"].visually-hidden {
 
 .works ul {
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
+
+  max-width: 320px;
+}
+
+.react-item {
+  position: relative;
+}
+
+.item-image {
+  opacity: 0.1;
+}
+
+.item-hover {
+  box-sizing: border-box;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-top: -50px;
+  margin-left: -40%;
+
+  /* width: 200px; */
+  width: 80%;
+  height: 100px;
+
+  text-align: center;
+
+  background-color: #3131311c;
+
+  z-index: 1;
+}
+
+.item-hover::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  right: -8px;
+
+  margin-top: -25px;
+
+  min-width: 80px;
+  min-height: 50px;
+  /* background-color: #000000; */
+  background-image: url(./react.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.item-hover--redux::before {
+  top: -8px;
+  right: 0;
+
+  margin-top: 0;
+  
+  background-image: url(./React___Redux.png);
+}
+
+.item-hover h4 {
+  margin: 0;
+  padding-top: 0.4rem;
+}
+
+.item-hover p {
+  margin: 0;
+
+  font-size: 0.6rem;
 }
 
 .skills h2 {
   text-align: center;
 }
-
