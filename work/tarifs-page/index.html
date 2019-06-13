@@ -5,13 +5,15 @@
   <meta charset="UTF-8">
   <title>Сатнет страница новых тарифов</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <link rel="preload" href="./fonts/mark_simonson_-_proxima_nova_condensed_regular-webfont.woff2" as="font">
-  <link rel="preload" href="./fonts/mark_simonson_-_proxima_nova_condensed_semibold-webfont.woff2" as="font">
-  <link rel="preload" href="./fonts/proximanovacond-bold-webfont.woff2" as="font">
   <link rel="stylesheet" href="./css/style.min.css">
 </head>
 
 <body>
+  <!-- <header class="page-header">
+    <div class="page-header__wrapper">
+      
+    </div>
+  </header> -->
   <main class="page-main">
 
     <h1 class="visually-hidden">Страница тарифов</h1>
@@ -20,7 +22,7 @@
       <h2>Тарифы «Все в одном»</h2>
       <p class="all-in-one__slogan">Экономь на услугах.</p>
 
-      <div class="all-in-one__primary-block">
+      <div class="all-in-one__tarifs-wrapper">
         <article class="all-in-one__block block block--premium">
           <div class="block__general-wrapper">
             <div class="block__wrapper">
@@ -150,9 +152,6 @@
                 </div>
               </div>
               <div class="block__icon__wrapper">
-                <p class="block__icon__benefit">
-                  <!-- <button class="link block__icon__benefit">Выгода - <span>40%</span></button> -->
-                </p>
               </div>
             </div>
             <div class="block__total__wrapper">
@@ -325,7 +324,7 @@
             </tbody>
           </table>
         </aside>
-        <div style="overflow-x:auto;">
+        <div class="longer-cheaper__wrapper-table">
           <table class="longer-cheaper__tarifs">
             <thead>
               <tr>
@@ -336,7 +335,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="longer-cheaper__tarifs__100mb">
+              <tr class="longer-cheaper__tarifs-descript longer-cheaper__tarifs__100mb">
                 <td>
                   <p class="longer-cheaper__tarifs__price">
                     <span>500</span> р
@@ -370,7 +369,7 @@
                   </p>
                 </td>
               </tr>
-              <tr class="longer-cheaper__tarifs__300mb">
+              <tr class="longer-cheaper__tarifs-descript longer-cheaper__tarifs__300mb">
                 <td>
                   <p class="longer-cheaper__tarifs__price">
                     <span>500</span> р
@@ -404,7 +403,7 @@
                   </p>
                 </td>
               </tr>
-              <tr class="longer-cheaper__tarifs__500mb">
+              <tr class="longer-cheaper__tarifs-descript longer-cheaper__tarifs__500mb">
                 <td>
                   <p class="longer-cheaper__tarifs__price">
                     <span>500</span> р
@@ -438,7 +437,7 @@
                   </p>
                 </td>
               </tr>
-              <tr class="longer-cheaper__tarifs__1000mb">
+              <tr class="longer-cheaper__tarifs-descript longer-cheaper__tarifs__1000mb">
                 <td>
                   <p class="longer-cheaper__tarifs__price">
                     <span>500</span> р
@@ -506,8 +505,8 @@
             </div>
           </div>
           <div class="block__total__wrapper">
-            <p class="block__total"><span>1400</span> р/мес</p>
-            <button class="link block__points">+<span>50</span> баллов</button>
+            <p class="block__total"><span>90</span> р/мес</p>
+            <button class="link block__points"><span>+50</span> баллов</button>
           </div>
         </article>
 
@@ -536,8 +535,8 @@
             </div>
           </div>
           <div class="block__total__wrapper">
-            <p class="block__total"><span>1400</span> р/мес</p>
-            <button class="link block__points">+<span>50</span> баллов</button>
+            <p class="block__total"><span>150</span> р/мес</p>
+            <button class="link block__points"><span>+50</span> баллов</button>
           </div>
         </article>
       </div>
@@ -637,7 +636,7 @@
     <button class="modal-tarif__close" type="button"><span class="visually-hidden">Закрыть</span></button>
   </article>
   <div class="modal-tarif-overlay"></div>
-  <script src="./js/scripts.js"></script>
+  <script src="js/scripts.js"></script>
 </body>
 
 </html>
