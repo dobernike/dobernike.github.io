@@ -7,7 +7,44 @@
 </head>
 
 <body>
+  <h1>Крестики-нолики</h1>
 
+  <div class="setting">
+    <form class="setting__form">
+
+      <label for="game-size">Необходимое число столбцов?
+        <br />
+        <input type="number" id="game-size" name="game-size" value="3" min="3" max="9" />
+      </label>
+
+      <p>
+        <button type="submit" class="button button--red">Играть</button>
+      </p>
+    </form>
+  </div>
+
+  <div class="game hidden">
+    <p class="turn">Текущий ход: <span class="player-turn">O</span></p>
+    <p class="score">
+      О: <span class="playerO-score">0</span>
+      |
+      X: <span class="playerX-score">0</span>
+    </p>
+
+    <div class="table">
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+      <div class="table__cell"></div>
+    </div>
+
+    <button type="button" class="repeat button button--red">заново</button>
+  </div>
   <script src="./js/index.js"></script>
 </body>
 
