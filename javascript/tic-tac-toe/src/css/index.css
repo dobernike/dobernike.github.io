@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  padding: 0;
+
+  background: rgb(210,235,249,.2)
+}
+
+.button {
+  display: inline-block;
+
+  padding: 10px;
+
+  font-size: 16px;
+  line-height: 18px;
+
+  color: #ffffff;
+  text-align: center;
+  text-transform: uppercase;
+  
+  border: none;
+  border-radius: 3px;
+
+  cursor: pointer;
+}
+
+.button--red {
+    background-color: #fb565a;
+}
+
+.button--red:hover,
+.button--red:focus {
+    background-color: #e74246;
+}
+
+.button--red:active {
+  color: rgba(255, 255, 255, 0.3);
+
+  background-color: #d7373b;
+  box-shadow: 0 3px rgba(0, 0, 0, 0.1) inset;
+}
+
+body > h1 {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.setting {
+  text-align: center;
+}
+
+.setting > input {
+  width: 30px;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.turn {
+  margin-bottom: 0;
+  
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: grey;
+}
+
+.player-turn {
+  width: 30px;
+  color: green;
+}
+
+.table {
+  margin-bottom: 20px;
+
+  display: grid; 
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.table__cell {
+  width: 50px;
+  height: 50px;
+
+  font-size: 40px;
+  text-align: center;
+
+  border: 1px solid grey;
+
+  cursor: pointer;
+}
+
+.repeat {
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none;
+}
