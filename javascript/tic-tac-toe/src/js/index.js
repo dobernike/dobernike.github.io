@@ -6,6 +6,8 @@ const gameTable = game.querySelector('.table');
 
 const tableCell = '<div class="table__cell"></div>';
 
+const winPositions = [];
+
 const viewScoreO = game.querySelector('.playerO-score');
 const viewScoreX = game.querySelector('.playerX-score');
 
@@ -31,7 +33,9 @@ let count = 1;
 function updateGame(cell) {
   cell.removeEventListener('click', cellClickHandler);
 
-  currentPlayer === PLAYERS['O'] ? currentPlayer = PLAYERS['X'] : currentPlayer = PLAYERS['O'];
+  currentPlayer === PLAYERS['O']
+    ? currentPlayer = PLAYERS['X']
+    : currentPlayer = PLAYERS['O'];
 
   turn.innerText = currentPlayer.name;
   count += 1;
@@ -60,12 +64,25 @@ function cellClickHandler() {
   }
 }
 
+function createWinPositions(size, maxSize) {
+  const tempArray = new Array(Number(size));
+  for (let i = 0; i < size; i++) {
+    tempArray[i] = new Array(Number(size));
+  }
+
+  winPositions.push(tempArray);
+  console.log(winPositions);
+}
+
 function createGameTable(size) {
   viewScoreO.innerHTML = PLAYERS['O'].score;
   viewScoreX.innerHTML = PLAYERS['X'].score;
 
+  const maxSize = size ** 2;
+  createWinPositions(size, maxSize);
+
   gameTable.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  gameTable.innerHTML = tableCell.repeat(size ** 2);
+  gameTable.innerHTML = tableCell.repeat(maxSize);
 
   const cells = gameTable.querySelectorAll('.table__cell');
 
