@@ -1,12 +1,9 @@
 const form = document.querySelector('.setting__form');
-const gameSize = form.querySelector('#game-size').value;
 const setting = document.querySelector('.setting');
 const game = document.querySelector('.game');
 const gameTable = game.querySelector('.table');
 
-const tableCell = '<div class="table__cell"></div>';
-
-const winPositions = [];
+// const winPositions = [];
 
 const viewScoreO = game.querySelector('.playerO-score');
 const viewScoreX = game.querySelector('.playerX-score');
@@ -29,6 +26,7 @@ let currentPlayer = PLAYERS['O'];
 const turn = game.querySelector('.player-turn');
 
 let count = 1;
+let gameSize;
 
 function updateGame(cell) {
   cell.removeEventListener('click', cellClickHandler);
@@ -41,10 +39,46 @@ function updateGame(cell) {
   count += 1;
 }
 
-function canContinue() {
-  if (count !== gameSize ** 2) {
-    return true;
+function didPlayerWin(currentX, currentY) {
+  console.log(currentY, currentX, currentPlayer);
+  const trs = gameTable.querySelectorAll('.table__tr');
+  for (const tr of trs) {
+    const posY = tr.dataset.positiony;
+    // console.log(tr.children);
+
+    for (const td of tr.children) {
+      // console.log(td);
+    }
+
+    if (currentY === posY) {
+      console.log('success');
+    }
+
+
+    // if ()
+
+    // const cells = tr.querySelectorAll('.table__cell');
+    // for (const cell of cells) {
+    // const position = cell.dataset.position;
+    // if (currentPosition !== position) {
+
+    // }
+    // }
   }
+
+
+
+
+  return false;
+}
+
+function canContinue(currentX, currentY) {
+  if (!didPlayerWin(currentX, currentY)) {
+    if (count !== gameSize ** 2) {
+      return true;
+    }
+  }
+
   return false;
 }
 
@@ -57,32 +91,50 @@ function startNextGame(winner) {
 function cellClickHandler() {
   this.innerText = currentPlayer.name;
 
-  if (canContinue()) {
+  currentX = this.dataset.positionx;
+  currentY = this.parentElement.dataset.positiony;
+
+  if (canContinue(currentX, currentY)) {
     updateGame(this);
   } else {
     startNextGame(currentPlayer);
   }
 }
 
-function createWinPositions(size, maxSize) {
-  const tempArray = new Array(Number(size));
-  for (let i = 0; i < size; i++) {
-    tempArray[i] = new Array(Number(size));
-  }
+// function createWinPositions(size, maxSize) {
+//   const tempArray = new Array(Number(size));
+//   for (let i = 0; i < size; i++) {
+//     tempArray[i] = new Array(Number(size));
+//   }
 
-  winPositions.push(tempArray);
-  console.log(winPositions);
-}
+//   winPositions.push(tempArray);
+//   console.log(winPositions);
+// }
 
 function createGameTable(size) {
   viewScoreO.innerHTML = PLAYERS['O'].score;
   viewScoreX.innerHTML = PLAYERS['X'].score;
 
-  const maxSize = size ** 2;
-  createWinPositions(size, maxSize);
+  turn.innerText = currentPlayer.name;
+  // const maxSize = size ** 2;
+  // createWinPositions(size, maxSize);
+  // let dataId = 1;
 
-  gameTable.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  gameTable.innerHTML = tableCell.repeat(maxSize);
+
+
+  let gameTd = '';
+  for (let j = 0; j < size; j++) {
+    gameTd += `<td class="table__cell" data-positionx="${j}"></td>`;
+  }
+
+  let gameTr = '';
+  for (let i = 0; i < size; i++) {
+    gameTr += `<tr class="table__tr" data-positiony="${i}">${gameTd}</tr>`
+  }
+  // const gameTd = '<td class="table__cell"></td>'.repeat(size);
+  // const gameTr = `<tr class="table__tr">${gameTd}</tr>`.repeat(size);
+
+  gameTable.innerHTML = gameTr;
 
   const cells = gameTable.querySelectorAll('.table__cell');
 
@@ -91,16 +143,20 @@ function createGameTable(size) {
   }
 }
 
+
 form.addEventListener('submit', e => {
   e.preventDefault();
+
+  gameSize = form.querySelector('#game-size').value;
   createGameTable(gameSize);
+
   setting.classList.add('hidden');
   game.classList.remove('hidden');
 });
 
+
 const repeat = game.querySelector('.repeat');
 repeat.addEventListener('click', () => {
-
   count = 1;
 
   PLAYERS['O'] = {
