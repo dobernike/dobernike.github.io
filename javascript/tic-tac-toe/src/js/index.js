@@ -43,68 +43,96 @@ function didPlayerWin(currentX, currentY) {
   console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
   const positionArr = [];
   const trs = gameTable.querySelectorAll('.table__tr');
-  for (const tr of trs) {
-    const posY = tr.dataset.positiony;
+  // for (const tr of trs) {
 
-    positionArr.push(tr);
-    // console.log(tr.children);
-    for (const td in tr.children) {
-      // const posX = td.dataset.positionx;
-      console.log("obj." + td + " = " + Array.from(tr.children)[td]);
+  // const posY = tr.dataset.positiony;
 
-      console.log(positionArr);
+  // positionArr.push(tr);
+  // console.log(tr);
 
+  for (let j = 0; j < trs.length; j++) {
+    const tr = trs[j];
+    positionArr.push([]);
 
-      // if (currentY === 0) {
-      //   for (let i = 1; i < gameSize; i++) {
-      //     // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
-      //     if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
-      //       return true;
-      //     }
-      //     if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
-      //     } else {
-      //       break;
-      //     }
-
-      //   }
-      // }
-
-      // if (currentY === gameSize - 1) {
-
-      // for (let i = gameSize; i < 0; i--) {
-      // console.log(i);
-
-      // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
-      // if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
-      //   if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
-      //     return true;
-      //   }
-      // }
-
-      // if (posX == i && posY == currentY && td.innerHTML == currentPlayer.name) {
-      //   if (posX == (gameSize - 1) && posY == currentX && td.innerHTML == currentPlayer.name) {
-      //     return true;
-      //   }
-      // }
-      // }
-      // }
-
-      // if (currentY !== 0 && currentY !== gameSize) {
-
-      // }
-
-
-      // if (currentY + 1 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
-      //   if (currentY + 2 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
-      //     console.log(`ss`);
-      //   }
-      //   console.log(`s`);
-      // }
-
+    let tds = tr.children;
+    for (let i = 0; i < tds.length; i++) {
+      const td = tds[i];
+      positionArr[j].push(td);
     }
   }
-
   console.log(positionArr);
+
+  for (let k = 0; k < gameSize; k++) {
+    console.log(positionArr);
+    for (let l = 0; l < gameSize; l++) {
+      if (positionArr[k][k]) {
+
+      }
+    }
+
+
+  }
+
+
+
+
+
+  // const posX = td.dataset.positionx;
+  // console.log("obj." + td + " = " + Array.from(tr.children)[td]);
+
+  // console.log(positionArr);
+
+
+  // if (currentY === 0) {
+  //   for (let i = 1; i < gameSize; i++) {
+  //     // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
+  //     if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
+  //       return true;
+  //     }
+  //     if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
+  //     } else {
+  //       break;
+  //     }
+
+  //   }
+  // }
+
+  // if (currentY === gameSize - 1) {
+
+  // for (let i = gameSize; i < 0; i--) {
+  // console.log(i);
+
+  // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
+  // if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
+  //   if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
+  //     return true;
+  //   }
+  // }
+
+  // if (posX == i && posY == currentY && td.innerHTML == currentPlayer.name) {
+  //   if (posX == (gameSize - 1) && posY == currentX && td.innerHTML == currentPlayer.name) {
+  //     return true;
+  //   }
+  // }
+  // }
+  // }
+
+  // if (currentY !== 0 && currentY !== gameSize) {
+
+  // }
+
+
+  // if (currentY + 1 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
+  //   if (currentY + 2 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
+  //     console.log(`ss`);
+  //   }
+  //   console.log(`s`);
+  // }
+
+  // }
+  // }
+
+
 
   return false;
 }
