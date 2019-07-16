@@ -40,40 +40,77 @@ function updateGame(cell) {
 }
 
 function didPlayerWin(currentX, currentY) {
-  console.log(currentY, currentX, currentPlayer);
+  console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
+  const positionArr = [];
   const trs = gameTable.querySelectorAll('.table__tr');
   for (const tr of trs) {
     const posY = tr.dataset.positiony;
+
+    positionArr.push(tr);
     // console.log(tr.children);
+    for (const td in tr.children) {
+      // const posX = td.dataset.positionx;
+      console.log("obj." + td + " = " + Array.from(tr.children)[td]);
 
-    for (const td of tr.children) {
-      // console.log(td);
+      console.log(positionArr);
+
+
+      // if (currentY === 0) {
+      //   for (let i = 1; i < gameSize; i++) {
+      //     // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
+      //     if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
+      //       return true;
+      //     }
+      //     if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
+      //     } else {
+      //       break;
+      //     }
+
+      //   }
+      // }
+
+      // if (currentY === gameSize - 1) {
+
+      // for (let i = gameSize; i < 0; i--) {
+      // console.log(i);
+
+      // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
+      // if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
+      //   if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
+      //     return true;
+      //   }
+      // }
+
+      // if (posX == i && posY == currentY && td.innerHTML == currentPlayer.name) {
+      //   if (posX == (gameSize - 1) && posY == currentX && td.innerHTML == currentPlayer.name) {
+      //     return true;
+      //   }
+      // }
+      // }
+      // }
+
+      // if (currentY !== 0 && currentY !== gameSize) {
+
+      // }
+
+
+      // if (currentY + 1 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
+      //   if (currentY + 2 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
+      //     console.log(`ss`);
+      //   }
+      //   console.log(`s`);
+      // }
+
     }
-
-    if (currentY === posY) {
-      console.log('success');
-    }
-
-
-    // if ()
-
-    // const cells = tr.querySelectorAll('.table__cell');
-    // for (const cell of cells) {
-    // const position = cell.dataset.position;
-    // if (currentPosition !== position) {
-
-    // }
-    // }
   }
 
-
-
+  console.log(positionArr);
 
   return false;
 }
 
 function canContinue(currentX, currentY) {
-  if (!didPlayerWin(currentX, currentY)) {
+  if (!didPlayerWin(Number(currentX), Number(currentY))) {
     if (count !== gameSize ** 2) {
       return true;
     }
