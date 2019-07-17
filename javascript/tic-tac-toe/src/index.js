@@ -127,14 +127,16 @@ function startNextGame(winner) {
   createGameTable(gameSize);
 }
 
-function cellClickHandler() {
-  this.innerText = currentPlayer.name;
+function cellClickHandler(e) {
+  const target = e.target;
 
-  currentX = this.dataset.positionx;
-  currentY = this.parentElement.dataset.positiony;
+  target.innerText = currentPlayer.name;
+
+  currentX = target.dataset.positionx;
+  currentY = target.parentElement.dataset.positiony;
 
   if (canContinue(currentX, currentY)) {
-    updateGame(this);
+    updateGame(target);
   } else {
     startNextGame(currentPlayer);
   }
@@ -155,16 +157,10 @@ function createGameTable(size) {
   for (let i = 0; i < size; i++) {
     gameTr += `<tr class="table__tr" data-positiony="${i}">${gameTd}</tr>`
   }
-  // const gameTd = '<td class="table__cell"></td>'.repeat(size);
-  // const gameTr = `<tr class="table__tr">${gameTd}</tr>`.repeat(size);
 
   gameTable.innerHTML = gameTr;
 
-  const cells = gameTable.querySelectorAll('.table__cell');
-
-  for (const cell of cells) {
-    cell.addEventListener('click', cellClickHandler)
-  }
+  gameTable.addEventListener('click', cellClickHandler);
 }
 
 
