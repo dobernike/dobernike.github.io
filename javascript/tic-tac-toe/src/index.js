@@ -124,6 +124,7 @@ function startNextGame(winner) {
   winner.score += 1;
   count = 1;
   currentPlayer = PLAYERS['O'];
+  gameTable.removeEventListener('click', cellClickHandler);
   createGameTable(gameSize);
 }
 
