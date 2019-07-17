@@ -1,13 +1,20 @@
-
+// register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('./sw.js', { scope: './' }).then(function (reg) {
-    // регистрация сработала
-    console.log('Registration succeeded. Scope is ' + reg.scope);
+  navigator.serviceWorker.register('/javascript/tic-tac-toe/src/js/sw.js', { scope: '/javascript/tic-tac-toe/src/' }).then(function (reg) {
+
+    if (reg.installing) {
+      console.log('Service worker installing');
+    } else if (reg.waiting) {
+      console.log('Service worker installed');
+    } else if (reg.active) {
+      console.log('Service worker active');
+    }
+
   }).catch(function (error) {
-    // регистрация прошла неудачно
+    // registration failed
     console.log('Registration failed with ' + error);
   });
-};
+}
 
 const form = document.querySelector('.setting__form');
 const setting = document.querySelector('.setting');
