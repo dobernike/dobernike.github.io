@@ -2,8 +2,10 @@ const form = document.querySelector('.setting__form');
 const setting = document.querySelector('.setting');
 const game = document.querySelector('.game');
 const gameTable = game.querySelector('.table');
-const viewScoreO = game.querySelector('.playerO-score');
-const viewScoreX = game.querySelector('.playerX-score');
+const viewScore = {
+  'O': game.querySelector('.playerO-score'),
+  'X': game.querySelector('.playerX-score')
+}
 
 const PLAYERS = {
   'O': {
@@ -109,7 +111,7 @@ function canContinue(currentX, currentY) {
 }
 
 function startNextGame(winner) {
-  winner.score += 1;
+  winner.score = Number(winner.score) + 1;
   count = 1;
   currentPlayer = PLAYERS['O'];
   gameTable.removeEventListener('click', cellClickHandler);
@@ -133,8 +135,15 @@ function cellClickHandler(e) {
 }
 
 function createGameTable(size) {
-  viewScoreO.innerHTML = PLAYERS['O'].score;
-  viewScoreX.innerHTML = PLAYERS['X'].score;
+  for (const player in PLAYERS) {
+    if (localStorage[`score${player}`] !== undefined &&
+      localStorage[`score${player}`] >= PLAYERS[player].score) {
+      PLAYERS[player].score = localStorage.getItem(`score${player}`);
+    } else {
+      localStorage.setItem(`score${player}`, PLAYERS[player].score);
+    }
+    viewScore[player].innerHTML = PLAYERS[player].score;
+  }
 
   turn.innerText = currentPlayer.name;
 
@@ -193,6 +202,8 @@ repeat.addEventListener('click', () => {
   }
 
   currentPlayer = PLAYERS['O'];
+
+  localStorage.clear();
 
   game.classList.add('hidden');
   setting.classList.remove('hidden');
