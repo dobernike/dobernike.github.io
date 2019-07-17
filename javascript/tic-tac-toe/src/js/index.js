@@ -1,5 +1,11 @@
+// Проверка того, что наш браузер поддерживает Service Worker API.
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+  // Весь код регистрации у нас асинхронный.
+  navigator.serviceWorker.register('./service-worker.js')
+    .then(() => navigator.serviceWorker.ready.then((worker) => {
+      worker.sync.register('syncdata');
+    }))
+    .catch((err) => console.log(err));
 }
 
 const form = document.querySelector('.setting__form');
