@@ -40,7 +40,7 @@ function updateGame(cell) {
 }
 
 function didPlayerWin(currentX, currentY) {
-  console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
+  // console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
   const positionArr = [];
   const trs = gameTable.querySelectorAll('.table__tr');
   // for (const tr of trs) {
@@ -60,14 +60,82 @@ function didPlayerWin(currentX, currentY) {
       positionArr[j].push(td);
     }
   }
-  console.log(positionArr);
+  // console.log(positionArr, gameSize);
+  let winX = 0;
+  let winY = 0;
+  let winXY = 0;
+  let winYX = 0;
 
   for (let k = 0; k < gameSize; k++) {
-    console.log(positionArr);
-    for (let l = 0; l < gameSize; l++) {
-      if (positionArr[k][k]) {
+    // console.log(positionArr);
 
+    if (positionArr[currentY][k].innerHTML == currentPlayer.name) {
+      winX += 1;
+      if (winX == gameSize) {
+        return true;
       }
+    }
+
+    if (positionArr[k][currentX].innerHTML == currentPlayer.name) {
+      winY += 1;
+      if (winY == gameSize) {
+        return true;
+      }
+    }
+
+    // console.log(positionArr[currentY][currentX]);
+    if (k > 0) {
+      try {
+        if (positionArr[currentY - k][currentX - k].innerHTML == currentPlayer.name) {
+          console.log(positionArr[currentY - k][currentX - k]);
+          winXY += 1;
+          if (winXY == gameSize - 1) {
+            return true;
+          }
+        }
+      } catch { }
+
+      try {
+        if (positionArr[currentY + k][currentX + k].innerHTML == currentPlayer.name) {
+          console.log(positionArr[currentY + k][currentX + k]);
+          winXY += 1;
+          if (winXY == gameSize - 1) {
+            return true;
+          }
+        }
+      } catch { }
+
+      try {
+        if (positionArr[currentY + k][currentX - k].innerHTML == currentPlayer.name) {
+          console.log(positionArr[currentY + k][currentX - k]);
+          winYX += 1;
+          if (winYX == gameSize - 1) {
+            return true;
+          }
+        }
+      } catch { }
+
+      try {
+        if (positionArr[currentY - k][currentX + k].innerHTML == currentPlayer.name) {
+          console.log(positionArr[currentY - k][currentX + k]);
+          winYX += 1;
+          if (winYX == gameSize - 1) {
+            return true;
+          }
+        }
+      } catch { }
+    }
+
+
+    for (let l = 0; l < gameSize; l++) {
+
+
+      // if (positionArr[k][currentX].innerHTML == currentPlayer.name) {
+      //   winY += 1;
+      //   if (winY == gameSize) {
+      //     return true;
+      //   }
+      // }
     }
 
 
@@ -150,6 +218,7 @@ function canContinue(currentX, currentY) {
 function startNextGame(winner) {
   winner.score += 1;
   count = 1;
+  currentPlayer = PLAYERS['O'];
   createGameTable(gameSize);
 }
 
@@ -227,13 +296,13 @@ repeat.addEventListener('click', () => {
   PLAYERS['O'] = {
     name: 'O',
     score: 0,
-    positions: []
+    // positions: []
   }
 
   PLAYERS['X'] = {
     name: 'X',
     score: 0,
-    positions: []
+    // positions: []
   }
 
   currentPlayer = PLAYERS['O'];
