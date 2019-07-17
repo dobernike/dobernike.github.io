@@ -36,22 +36,24 @@ function updateGame(cell) {
 }
 
 function didPlayerWin(currentX, currentY) {
-  let winX = 0;
-  let winY = 0;
-  let winXY = 0;
-  let winYX = 0;
+  const WIN = {
+    X: 0,
+    Y: 0,
+    XY: 0,
+    YX: 0
+  }
 
   for (let k = 0; k < gameSize; k++) {
     if (positionArr[currentY][k].innerHTML == currentPlayer.name) {
-      winX += 1;
-      if (winX == gameSize) {
+      WIN.X += 1;
+      if (WIN.X == gameSize) {
         return true;
       }
     }
 
     if (positionArr[k][currentX].innerHTML == currentPlayer.name) {
-      winY += 1;
-      if (winY == gameSize) {
+      WIN.Y += 1;
+      if (WIN.Y == gameSize) {
         return true;
       }
     }
@@ -59,8 +61,8 @@ function didPlayerWin(currentX, currentY) {
     if (k > 0) {
       try {
         if (positionArr[currentY - k][currentX - k].innerHTML == currentPlayer.name) {
-          winXY += 1;
-          if (winXY == gameSize - 1) {
+          WIN.XY += 1;
+          if (WIN.XY == gameSize - 1) {
             return true;
           }
         }
@@ -68,8 +70,8 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX + k].innerHTML == currentPlayer.name) {
-          winXY += 1;
-          if (winXY == gameSize - 1) {
+          WIN.XY += 1;
+          if (WIN.XY == gameSize - 1) {
             return true;
           }
         }
@@ -77,8 +79,8 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX - k].innerHTML == currentPlayer.name) {
-          winYX += 1;
-          if (winYX == gameSize - 1) {
+          WIN.YX += 1;
+          if (WIN.YX == gameSize - 1) {
             return true;
           }
         }
@@ -86,8 +88,8 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY - k][currentX + k].innerHTML == currentPlayer.name) {
-          winYX += 1;
-          if (winYX == gameSize - 1) {
+          WIN.YX += 1;
+          if (WIN.YX == gameSize - 1) {
             return true;
           }
         }
@@ -103,7 +105,6 @@ function canContinue(currentX, currentY) {
       return true;
     }
   }
-
   return false;
 }
 
@@ -118,6 +119,7 @@ function startNextGame(winner) {
 function cellClickHandler(e) {
   const target = e.target;
 
+  if (target.innerHTML !== '' || target.tagName !== 'TD') { return }
   target.innerText = currentPlayer.name;
 
   currentX = target.dataset.positionx;
