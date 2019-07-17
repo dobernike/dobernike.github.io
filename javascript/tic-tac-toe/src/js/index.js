@@ -12,12 +12,12 @@ const PLAYERS = {
   'O': {
     name: 'O',
     score: 0,
-    positions: []
+    // positions: []
   },
   'X': {
     name: 'X',
     score: 0,
-    positions: []
+    // positions: []
   }
 }
 
@@ -43,11 +43,6 @@ function didPlayerWin(currentX, currentY) {
   // console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
   const positionArr = [];
   const trs = gameTable.querySelectorAll('.table__tr');
-  // for (const tr of trs) {
-
-  // const posY = tr.dataset.positiony;
-
-  // positionArr.push(tr);
   // console.log(tr);
 
   for (let j = 0; j < trs.length; j++) {
@@ -87,7 +82,7 @@ function didPlayerWin(currentX, currentY) {
     if (k > 0) {
       try {
         if (positionArr[currentY - k][currentX - k].innerHTML == currentPlayer.name) {
-          console.log(positionArr[currentY - k][currentX - k]);
+          // console.log(positionArr[currentY - k][currentX - k]);
           winXY += 1;
           if (winXY == gameSize - 1) {
             return true;
@@ -97,7 +92,7 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX + k].innerHTML == currentPlayer.name) {
-          console.log(positionArr[currentY + k][currentX + k]);
+          // console.log(positionArr[currentY + k][currentX + k]);
           winXY += 1;
           if (winXY == gameSize - 1) {
             return true;
@@ -107,7 +102,7 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX - k].innerHTML == currentPlayer.name) {
-          console.log(positionArr[currentY + k][currentX - k]);
+          // console.log(positionArr[currentY + k][currentX - k]);
           winYX += 1;
           if (winYX == gameSize - 1) {
             return true;
@@ -117,7 +112,7 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY - k][currentX + k].innerHTML == currentPlayer.name) {
-          console.log(positionArr[currentY - k][currentX + k]);
+          // console.log(positionArr[currentY - k][currentX + k]);
           winYX += 1;
           if (winYX == gameSize - 1) {
             return true;
@@ -125,83 +120,7 @@ function didPlayerWin(currentX, currentY) {
         }
       } catch { }
     }
-
-
-    for (let l = 0; l < gameSize; l++) {
-
-
-      // if (positionArr[k][currentX].innerHTML == currentPlayer.name) {
-      //   winY += 1;
-      //   if (winY == gameSize) {
-      //     return true;
-      //   }
-      // }
-    }
-
-
   }
-
-
-
-
-
-  // const posX = td.dataset.positionx;
-  // console.log("obj." + td + " = " + Array.from(tr.children)[td]);
-
-  // console.log(positionArr);
-
-
-  // if (currentY === 0) {
-  //   for (let i = 1; i < gameSize; i++) {
-  //     // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
-  //     if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
-  //       return true;
-  //     }
-  //     if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
-  //     } else {
-  //       break;
-  //     }
-
-  //   }
-  // }
-
-  // if (currentY === gameSize - 1) {
-
-  // for (let i = gameSize; i < 0; i--) {
-  // console.log(i);
-
-  // console.log(posY, i, posX, currentX, td.innerHTML, currentPlayer.name);
-  // if (posY == i && posX == currentX && td.innerHTML == currentPlayer.name) {
-  //   if (posY == (gameSize - 1) && posX == currentX && td.innerHTML == currentPlayer.name) {
-  //     return true;
-  //   }
-  // }
-
-  // if (posX == i && posY == currentY && td.innerHTML == currentPlayer.name) {
-  //   if (posX == (gameSize - 1) && posY == currentX && td.innerHTML == currentPlayer.name) {
-  //     return true;
-  //   }
-  // }
-  // }
-  // }
-
-  // if (currentY !== 0 && currentY !== gameSize) {
-
-  // }
-
-
-  // if (currentY + 1 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
-  //   if (currentY + 2 == posY && currentX == posX && td.innerHTML == currentPlayer.name) {
-  //     console.log(`ss`);
-  //   }
-  //   console.log(`s`);
-  // }
-
-  // }
-  // }
-
-
-
   return false;
 }
 
@@ -250,11 +169,6 @@ function createGameTable(size) {
   viewScoreX.innerHTML = PLAYERS['X'].score;
 
   turn.innerText = currentPlayer.name;
-  // const maxSize = size ** 2;
-  // createWinPositions(size, maxSize);
-  // let dataId = 1;
-
-
 
   let gameTd = '';
   for (let j = 0; j < size; j++) {
