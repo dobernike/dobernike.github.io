@@ -1,6 +1,6 @@
 // register service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/javascript/tic-tac-toe/src/js/sw.js', { scope: '/javascript/tic-tac-toe/src/' }).then(function (reg) {
+  navigator.serviceWorker.register('/javascript/tic-tac-toe/src/js/sw.js', { scope: '/javascript/tic-tac-toe/src/js/' }).then(function (reg) {
 
     if (reg.installing) {
       console.log('Service worker installing');
