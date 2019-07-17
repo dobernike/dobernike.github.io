@@ -1,33 +1,18 @@
-// Проверка того, что наш браузер поддерживает Service Worker API.
-if ('serviceWorker' in navigator) {
-  // Весь код регистрации у нас асинхронный.
-  navigator.serviceWorker.register('sw.js')
-    .then(() => navigator.serviceWorker.ready.then((worker) => {
-      worker.sync.register('syncdata');
-    }))
-    .catch((err) => console.log(err));
-}
-
 const form = document.querySelector('.setting__form');
 const setting = document.querySelector('.setting');
 const game = document.querySelector('.game');
 const gameTable = game.querySelector('.table');
-
-// const winPositions = [];
-
 const viewScoreO = game.querySelector('.playerO-score');
 const viewScoreX = game.querySelector('.playerX-score');
 
 const PLAYERS = {
   'O': {
     name: 'O',
-    score: 0,
-    // positions: []
+    score: 0
   },
   'X': {
     name: 'X',
-    score: 0,
-    // positions: []
+    score: 0
   }
 }
 
@@ -50,10 +35,8 @@ function updateGame(cell) {
 }
 
 function didPlayerWin(currentX, currentY) {
-  // console.log('currentY', currentY, 'currentX', currentX, 'name', currentPlayer.name);
   const positionArr = [];
   const trs = gameTable.querySelectorAll('.table__tr');
-  // console.log(tr);
 
   for (let j = 0; j < trs.length; j++) {
     const tr = trs[j];
@@ -65,15 +48,13 @@ function didPlayerWin(currentX, currentY) {
       positionArr[j].push(td);
     }
   }
-  // console.log(positionArr, gameSize);
+
   let winX = 0;
   let winY = 0;
   let winXY = 0;
   let winYX = 0;
 
   for (let k = 0; k < gameSize; k++) {
-    // console.log(positionArr);
-
     if (positionArr[currentY][k].innerHTML == currentPlayer.name) {
       winX += 1;
       if (winX == gameSize) {
@@ -88,11 +69,9 @@ function didPlayerWin(currentX, currentY) {
       }
     }
 
-    // console.log(positionArr[currentY][currentX]);
     if (k > 0) {
       try {
         if (positionArr[currentY - k][currentX - k].innerHTML == currentPlayer.name) {
-          // console.log(positionArr[currentY - k][currentX - k]);
           winXY += 1;
           if (winXY == gameSize - 1) {
             return true;
@@ -102,7 +81,6 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX + k].innerHTML == currentPlayer.name) {
-          // console.log(positionArr[currentY + k][currentX + k]);
           winXY += 1;
           if (winXY == gameSize - 1) {
             return true;
@@ -112,7 +90,6 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY + k][currentX - k].innerHTML == currentPlayer.name) {
-          // console.log(positionArr[currentY + k][currentX - k]);
           winYX += 1;
           if (winYX == gameSize - 1) {
             return true;
@@ -122,7 +99,6 @@ function didPlayerWin(currentX, currentY) {
 
       try {
         if (positionArr[currentY - k][currentX + k].innerHTML == currentPlayer.name) {
-          // console.log(positionArr[currentY - k][currentX + k]);
           winYX += 1;
           if (winYX == gameSize - 1) {
             return true;
@@ -163,16 +139,6 @@ function cellClickHandler() {
     startNextGame(currentPlayer);
   }
 }
-
-// function createWinPositions(size, maxSize) {
-//   const tempArray = new Array(Number(size));
-//   for (let i = 0; i < size; i++) {
-//     tempArray[i] = new Array(Number(size));
-//   }
-
-//   winPositions.push(tempArray);
-//   console.log(winPositions);
-// }
 
 function createGameTable(size) {
   viewScoreO.innerHTML = PLAYERS['O'].score;
@@ -219,14 +185,12 @@ repeat.addEventListener('click', () => {
 
   PLAYERS['O'] = {
     name: 'O',
-    score: 0,
-    // positions: []
+    score: 0
   }
 
   PLAYERS['X'] = {
     name: 'X',
-    score: 0,
-    // positions: []
+    score: 0
   }
 
   currentPlayer = PLAYERS['O'];
