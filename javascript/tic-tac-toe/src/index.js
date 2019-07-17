@@ -20,6 +20,7 @@ let currentPlayer = PLAYERS['O'];
 
 const turn = game.querySelector('.player-turn');
 
+let positionArr = [];
 let count = 1;
 let gameSize;
 
@@ -35,20 +36,6 @@ function updateGame(cell) {
 }
 
 function didPlayerWin(currentX, currentY) {
-  const positionArr = [];
-  const trs = gameTable.querySelectorAll('.table__tr');
-
-  for (let j = 0; j < trs.length; j++) {
-    const tr = trs[j];
-    positionArr.push([]);
-
-    let tds = tr.children;
-    for (let i = 0; i < tds.length; i++) {
-      const td = tds[i];
-      positionArr[j].push(td);
-    }
-  }
-
   let winX = 0;
   let winY = 0;
   let winXY = 0;
@@ -162,8 +149,21 @@ function createGameTable(size) {
   gameTable.innerHTML = gameTr;
 
   gameTable.addEventListener('click', cellClickHandler);
-}
 
+  positionArr = [];
+  const trs = gameTable.querySelectorAll('.table__tr');
+
+  for (let j = 0; j < trs.length; j++) {
+    const tr = trs[j];
+    positionArr.push([]);
+
+    let tds = tr.children;
+    for (let i = 0; i < tds.length; i++) {
+      const td = tds[i];
+      positionArr[j].push(td);
+    }
+  }
+}
 
 form.addEventListener('submit', e => {
   e.preventDefault();
@@ -175,10 +175,10 @@ form.addEventListener('submit', e => {
   game.classList.remove('hidden');
 });
 
-
 const repeat = game.querySelector('.repeat');
 repeat.addEventListener('click', () => {
   count = 1;
+  positionArr = [];
 
   PLAYERS['O'] = {
     name: 'O',
