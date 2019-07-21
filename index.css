@@ -105,8 +105,9 @@ input[type="radio"].visually-hidden {
 }
 
 .pseudo {
+  color: white;
   cursor: default;
-  /* user-select: none; */
+  user-select: none;
 }
 
 .links {
@@ -286,5 +287,5 @@ input[type="radio"].visually-hidden {
   font-size: 1.5rem;
   text-align: center;
 
-  background: linear-gradient(to right, #E44B26 51.5%, #039AE3 50%)
+  background: linear-gradient(to right, #e44b26 51.5%, #039ae3 50%);
 }
