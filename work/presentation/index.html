@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Shower Presentation Engine</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="shower/themes/ribbon/styles/styles.css" />
+    <style>
+      .shower {
+        --slide-ratio: calc(16 / 9);
+      }
+    </style>
+  </head>
+  <body class="shower list">
+    <header class="caption">
+      <h1>Shower Presentation Engine</h1>
+      <p>Yours Truly, Famous Inc.</p>
+    </header>
+
+    <section class="slide" id="cover">
+      <h2>Excel-like grid</h2>
+      <figure>
+        <img class="cover" src="pictures/logo-connector-excel.png" alt="" />
+      </figure>
+      <style>
+        #cover h2 {
+          margin-top: -40px;
+          color: black;
+          text-align: center;
+          font-size: 70px;
+        }
+      </style>
+    </section>
+
+    <section class="slide">
+      <h2>Цели рефакторинга форм JAVA/VAADIN:</h2>
+      <ol>
+        <li class="next">Использовать новые технологии (React)</li>
+        <li class="next">Поддержка целевого браузера (IE11)</li>
+        <li class="next">Увеличение скорости работы форм</li>
+        <li class="next">Увеличение кастомизации форм</li>
+      </ol>
+    </section>
+
+    <section class="slide">
+      <h2>Сравнение браузеров</h2>
+      <table>
+        <tr>
+          <th scope="col"></th>
+          <th>IE11</th>
+          <th><span style="background-color: lightblue;">Chrome *</span></th>
+          <th>Firefox</th>
+        </tr>
+        <tr>
+          <th scope="row">Скорость отображения страницы</th>
+          <td>11.9 s</td>
+          <td><span style="background-color: lightblue;">6.2 s</span></td>
+          <td>4.8 s</td>
+        </tr>
+        <tr>
+          <th scope="row">Быстрая скорость обработки событий</th>
+          <td><b>-</b></td>
+          <td><span style="background-color: lightblue;">+</span></td>
+          <td>+</td>
+        </tr>
+        <tr>
+          <th scope="row">
+            Поддержка современного кода
+          </th>
+          <td><b>-</b></td>
+          <td><span style="background-color: lightblue;">+</span></td>
+          <td>+</td>
+        </tr>
+        <tr>
+          <th scope="row">Увеличение скорости разработки</th>
+          <td><b>-</b></td>
+          <td><span style="background-color: lightblue;">+</span></td>
+          <td>+</td>
+        </tr>
+      </table>
+
+      <i
+        >* все браузеры, которые сделаны на движке chromium: yandex.browser, new
+        edge, opera, chrome etc.</i
+      >
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img
+          class="cover"
+          src="pictures/ie10.JPG"
+          alt="Hands on the orange typewriter in a park"
+        />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img class="cover" src="pictures/ie11.JPG" alt="" />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img class="cover" src="pictures/windows10end.png" alt="" />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img
+          class="cover"
+          src="pictures/1200px-Microsoft_Edge_logo_(2019).svg.png"
+          alt=""
+        />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img class="cover" src="pictures/activex_support.jpg" alt="" />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img class="cover" src="pictures/ie-mode-image.png" alt="" />
+      </figure>
+    </section>
+
+    <section class="slide" id="cover">
+      <figure>
+        <img class="cover" src="pictures/edgeie11modesupport.JPG" alt="" />
+      </figure>
+    </section>
+
+    <section class="slide">
+      <h2 class="shout shrink">Демо</h2>
+    </section>
+
+    <section class="slide">
+      <h2>Цели рефакторинга форм JAVA/VAADIN:</h2>
+      <ol>
+        <li>Использовать новые технологии (React)</li>
+        <li><del>Поддержка целевого браузера (IE11)</del></li>
+        <li>Увеличение скорости работы форм</li>
+        <li>Увеличение кастомизации форм</li>
+      </ol>
+    </section>
+
+    <section class="slide" id="picture">
+      <h2>Вопросы?</h2>
+      <figure>
+        <img
+          class="cover"
+          src="pictures/picture.jpg"
+          alt="Orange typewriter on a wooden table close-up"
+        />
+        <figcaption class="copyright right white">
+          <a href="https://github.com/dobernike">© Paul Fedushin</a>
+        </figcaption>
+      </figure>
+      <style>
+        #picture h2 {
+          color: white;
+        }
+      </style>
+    </section>
+
+    <div class="progress"></div>
+
+    <script src="shower/shower.min.js"></script>
+    <!-- Copyright © 3000 Yours Truly, Famous Inc. -->
+  </body>
+</html>
