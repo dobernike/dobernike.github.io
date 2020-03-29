@@ -441,3 +441,917 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 ## ReactNext 2019: A Deep Dive into React-Redux
 
 [https://www.youtube.com/watch?v=yOZ4Ml9LlWE&feature=youtu.be](https://www.youtube.com/watch?v=yOZ4Ml9LlWE&feature=youtu.be)
+
+redux hooks
+useDispatch()
+useSelector()
+
+useContext
+zombie-child (update child, but not parrent)
+
+## Advanced
+
+[https://redux.js.org/advanced/advanced-tutorial](https://redux.js.org/advanced/advanced-tutorial)
+
+### Async Actions
+
+#### Actions
+
+You may use a dedicated status field in your actions:
+
+```js
+{ type: 'FETCH_POSTS' }
+{ type: 'FETCH_POSTS', status: 'error', error: 'Oops' }
+{ type: 'FETCH_POSTS', status: 'success', response: { ... } }
+```
+
+Or you can define separate types for them:
+
+```js
+{ type: 'FETCH_POSTS_REQUEST' }
+{ type: 'FETCH_POSTS_FAILURE', error: 'Oops' }
+{ type: 'FETCH_POSTS_SUCCESS', response: { ... } }
+```
+
+#### Synchronous Action Creators
+
+actions.js (Synchronous)
+
+```js
+export const SELECT_SUBREDDIT = "SELECT_SUBREDDIT";
+
+export function selectSubreddit(subreddit) {
+  return {
+    type: SELECT_SUBREDDIT,
+    subreddit
+  };
+}
+```
+
+They can also press a “refresh” button to update it:
+
+```js
+export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
+
+export function invalidateSubreddit(subreddit) {
+  return {
+    type: INVALIDATE_SUBREDDIT,
+    subreddit
+  };
+}
+```
+
+When it's time to fetch the posts for some subreddit, we will dispatch a REQUEST_POSTS action:
+
+```js
+export const REQUEST_POSTS = "REQUEST_POSTS";
+
+function requestPosts(subreddit) {
+  return {
+    type: REQUEST_POSTS,
+    subreddit
+  };
+}
+```
+
+Finally, when the network request comes through, we will dispatch RECEIVE_POSTS:
+
+```js
+export const RECEIVE_POSTS = "RECEIVE_POSTS";
+
+function receivePosts(subreddit, json) {
+  return {
+    type: RECEIVE_POSTS,
+    subreddit,
+    posts: json.data.children.map(child => child.data),
+    receivedAt: Date.now()
+  };
+}
+```
+
+#### Designing the State Shape
+
+Here's what the state shape for our “Reddit headlines” app might look like:
+
+```js
+{
+  selectedSubreddit: 'frontend',
+  postsBySubreddit: {
+    frontend: {
+      isFetching: true,
+      didInvalidate: false,
+      items: []
+    },
+    reactjs: {
+      isFetching: false,
+      didInvalidate: false,
+      lastUpdated: 1439478405547,
+      items: [
+        {
+          id: 42,
+          title: 'Confusion about Flux and Relay'
+        },
+        {
+          id: 500,
+          title: 'Creating a Simple Application Using React JS and Flux Architecture'
+        }
+      ]
+    }
+  }
+}
+```
+
+or
+
+```js
+{
+  selectedSubreddit: 'frontend',
+  entities: {
+    users: {
+      2: {
+        id: 2,
+        name: 'Andrew'
+      }
+    },
+    posts: {
+      42: {
+        id: 42,
+        title: 'Confusion about Flux and Relay',
+        author: 2
+      },
+      100: {
+        id: 100,
+        title: 'Creating a Simple Application Using React JS and Flux Architecture',
+        author: 2
+      }
+    }
+  },
+  postsBySubreddit: {
+    frontend: {
+      isFetching: true,
+      didInvalidate: false,
+      items: []
+    },
+    reactjs: {
+      isFetching: false,
+      didInvalidate: false,
+      lastUpdated: 1439478405547,
+      items: [ 42, 100 ]
+    }
+  }
+}
+```
+
+#### Handling Actions
+
+reducers.js
+
+```js
+import { combineReducers } from "redux";
+import {
+  SELECT_SUBREDDIT,
+  INVALIDATE_SUBREDDIT,
+  REQUEST_POSTS,
+  RECEIVE_POSTS
+} from "../actions";
+
+function selectedSubreddit(state = "reactjs", action) {
+  switch (action.type) {
+    case SELECT_SUBREDDIT:
+      return action.subreddit;
+    default:
+      return state;
+  }
+}
+
+function posts(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      });
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.posts,
+        lastUpdated: action.receivedAt
+      });
+    default:
+      return state;
+  }
+}
+
+function postsBySubreddit(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.subreddit]: posts(state[action.subreddit], action)
+      });
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  postsBySubreddit,
+  selectedSubreddit
+});
+
+export default rootReducer;
+```
+
+We use ES6 computed property syntax so we can update state[action.subreddit] with Object.assign() in a concise way. This:
+
+```js
+return Object.assign({}, state, {
+  [action.subreddit]: posts(state[action.subreddit], action)
+});
+```
+
+is equivalent to this:
+
+```js
+let nextState = {};
+nextState[action.subreddit] = posts(state[action.subreddit], action);
+return Object.assign({}, state, nextState);
+```
+
+#### Async Action Creators
+
+```js
+import fetch from "cross-fetch";
+
+export const REQUEST_POSTS = "REQUEST_POSTS";
+function requestPosts(subreddit) {
+  return {
+    type: REQUEST_POSTS,
+    subreddit
+  };
+}
+
+export const RECEIVE_POSTS = "RECEIVE_POSTS";
+function receivePosts(subreddit, json) {
+  return {
+    type: RECEIVE_POSTS,
+    subreddit,
+    posts: json.data.children.map(child => child.data),
+    receivedAt: Date.now()
+  };
+}
+
+export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
+export function invalidateSubreddit(subreddit) {
+  return {
+    type: INVALIDATE_SUBREDDIT,
+    subreddit
+  };
+}
+
+// Meet our first thunk action creator!
+// Though its insides are different, you would use it just like any other action creator:
+// store.dispatch(fetchPosts('reactjs'))
+
+export function fetchPosts(subreddit) {
+  // Thunk middleware knows how to handle functions.
+  // It passes the dispatch method as an argument to the function,
+  // thus making it able to dispatch actions itself.
+
+  return function(dispatch) {
+    // First dispatch: the app state is updated to inform
+    // that the API call is starting.
+
+    dispatch(requestPosts(subreddit));
+
+    // The function called by the thunk middleware can return a value,
+    // that is passed on as the return value of the dispatch method.
+
+    // In this case, we return a promise to wait for.
+    // This is not required by thunk middleware, but it is convenient for us.
+
+    return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+      .then(
+        response => response.json(),
+        // Do not use catch, because that will also catch
+        // any errors in the dispatch and resulting render,
+        // causing a loop of 'Unexpected batch number' errors.
+        // https://github.com/facebook/react/issues/6895
+        error => console.log("An error occurred.", error)
+      )
+      .then(json =>
+        // We can dispatch many times!
+        // Here, we update the app state with the results of the API call.
+
+        dispatch(receivePosts(subreddit, json))
+      );
+  };
+}
+```
+
+```js
+import thunkMiddleware from "redux-thunk";
+import { createLogger } from "redux-logger";
+import { createStore, applyMiddleware } from "redux";
+import { selectSubreddit, fetchPosts } from "./actions";
+import rootReducer from "./reducers";
+
+const loggerMiddleware = createLogger();
+
+const store = createStore(
+  rootReducer,
+  applyMiddleware(
+    thunkMiddleware, // lets us dispatch() functions
+    loggerMiddleware // neat middleware that logs actions
+  )
+);
+
+store.dispatch(selectSubreddit("reactjs"));
+store.dispatch(fetchPosts("reactjs")).then(() => console.log(store.getState()));
+```
+
+```js
+import fetch from "cross-fetch";
+
+export const REQUEST_POSTS = "REQUEST_POSTS";
+function requestPosts(subreddit) {
+  return {
+    type: REQUEST_POSTS,
+    subreddit
+  };
+}
+
+export const RECEIVE_POSTS = "RECEIVE_POSTS";
+function receivePosts(subreddit, json) {
+  return {
+    type: RECEIVE_POSTS,
+    subreddit,
+    posts: json.data.children.map(child => child.data),
+    receivedAt: Date.now()
+  };
+}
+
+export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
+export function invalidateSubreddit(subreddit) {
+  return {
+    type: INVALIDATE_SUBREDDIT,
+    subreddit
+  };
+}
+
+function fetchPosts(subreddit) {
+  return dispatch => {
+    dispatch(requestPosts(subreddit));
+    return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+      .then(response => response.json())
+      .then(json => dispatch(receivePosts(subreddit, json)));
+  };
+}
+
+function shouldFetchPosts(state, subreddit) {
+  const posts = state.postsBySubreddit[subreddit];
+  if (!posts) {
+    return true;
+  } else if (posts.isFetching) {
+    return false;
+  } else {
+    return posts.didInvalidate;
+  }
+}
+
+export function fetchPostsIfNeeded(subreddit) {
+  // Note that the function also receives getState()
+  // which lets you choose what to dispatch next.
+
+  // This is useful for avoiding a network request if
+  // a cached value is already available.
+
+  return (dispatch, getState) => {
+    if (shouldFetchPosts(getState(), subreddit)) {
+      // Dispatch a thunk from thunk!
+      return dispatch(fetchPosts(subreddit));
+    } else {
+      // Let the calling code know there's nothing to wait for.
+      return Promise.resolve();
+    }
+  };
+}
+```
+
+```js
+store
+  .dispatch(fetchPostsIfNeeded("reactjs"))
+  .then(() => console.log(store.getState()));
+```
+
+### Usage with React Router
+
+Configuring Express
+If you are serving your index.html from Express:
+
+```js
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+```
+
+Configuring WebpackDevServer
+If you are serving your index.html from WebpackDevServer: You can add to your webpack.config.dev.js:
+
+```js
+devServer: {
+  historyApiFallback: true;
+}
+```
+
+Connecting React Router with Redux App
+
+First we will need to import <Router /> and <Route /> from React Router. Here's how to do it:
+
+#components/Root.js
+
+```js
+import React from "react";
+import PropTypes from "prop-types";
+import { Provider } from "react-redux";
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import App from "./App";
+
+const Root = ({ store }) => (
+  <Provider store={store}>
+    <Router>
+      <Route path="/:filter?" component={App} />
+    </Router>
+  </Provider>
+);
+
+Root.propTypes = {
+  store: PropTypes.object.isRequired
+};
+
+export default Root;
+```
+
+Navigating with React Router
+
+containers/FilterLink.js
+
+```js
+import React from "react";
+import { NavLink } from "react-router-dom";
+
+const FilterLink = ({ filter, children }) => (
+  <NavLink
+    exact
+    to={filter === "SHOW_ALL" ? "/" : `/${filter}`}
+    activeStyle={{
+      textDecoration: "none",
+      color: "black"
+    }}
+  >
+    {children}
+  </NavLink>
+);
+
+export default FilterLink;
+```
+
+components/Footer.js
+
+```js
+import React from "react";
+import FilterLink from "../containers/FilterLink";
+import { VisibilityFilters } from "../actions";
+
+const Footer = () => (
+  <p>
+    Show: <FilterLink filter={VisibilityFilters.SHOW_ALL}>All</FilterLink>
+    {", "}
+    <FilterLink filter={VisibilityFilters.SHOW_ACTIVE}>Active</FilterLink>
+    {", "}
+    <FilterLink filter={VisibilityFilters.SHOW_COMPLETED}>Completed</FilterLink>
+  </p>
+);
+
+export default Footer;
+```
+
+Reading From the URL
+
+containers/VisibleTodoList.js
+
+```js
+const mapStateToProps = (state, ownProps) => {
+  return {
+    todos: getVisibleTodos(state.todos, ownProps.filter) // previously was getVisibleTodos(state.todos, state.visibilityFilter)
+  };
+};
+```
+
+components/App.js
+
+```js
+const App = ({ match: { params } }) => {
+  return (
+    <div>
+      <AddTodo />
+      <VisibleTodoList filter={params.filter || "SHOW_ALL"} />
+      <Footer />
+    </div>
+  );
+};
+```
+
+#### EXAMPLE
+
+Entry Point
+index.js
+
+```js
+import "babel-polyfill";
+
+import React from "react";
+import { render } from "react-dom";
+import Root from "./containers/Root";
+
+render(<Root />, document.getElementById("root"));
+```
+
+Action Creators and Constants
+#actions.js
+
+```js
+import fetch from "cross-fetch";
+
+export const REQUEST_POSTS = "REQUEST_POSTS";
+export const RECEIVE_POSTS = "RECEIVE_POSTS";
+export const SELECT_SUBREDDIT = "SELECT_SUBREDDIT";
+export const INVALIDATE_SUBREDDIT = "INVALIDATE_SUBREDDIT";
+
+export function selectSubreddit(subreddit) {
+  return {
+    type: SELECT_SUBREDDIT,
+    subreddit
+  };
+}
+
+export function invalidateSubreddit(subreddit) {
+  return {
+    type: INVALIDATE_SUBREDDIT,
+    subreddit
+  };
+}
+
+function requestPosts(subreddit) {
+  return {
+    type: REQUEST_POSTS,
+    subreddit
+  };
+}
+
+function receivePosts(subreddit, json) {
+  return {
+    type: RECEIVE_POSTS,
+    subreddit,
+    posts: json.data.children.map(child => child.data),
+    receivedAt: Date.now()
+  };
+}
+
+function fetchPosts(subreddit) {
+  return dispatch => {
+    dispatch(requestPosts(subreddit));
+    return fetch(`https://www.reddit.com/r/${subreddit}.json`)
+      .then(response => response.json())
+      .then(json => dispatch(receivePosts(subreddit, json)));
+  };
+}
+
+function shouldFetchPosts(state, subreddit) {
+  const posts = state.postsBySubreddit[subreddit];
+  if (!posts) {
+    return true;
+  } else if (posts.isFetching) {
+    return false;
+  } else {
+    return posts.didInvalidate;
+  }
+}
+
+export function fetchPostsIfNeeded(subreddit) {
+  return (dispatch, getState) => {
+    if (shouldFetchPosts(getState(), subreddit)) {
+      return dispatch(fetchPosts(subreddit));
+    }
+  };
+}
+```
+
+Reducers
+reducers.js
+
+```js
+import { combineReducers } from "redux";
+import {
+  SELECT_SUBREDDIT,
+  INVALIDATE_SUBREDDIT,
+  REQUEST_POSTS,
+  RECEIVE_POSTS
+} from "./actions";
+
+function selectedSubreddit(state = "reactjs", action) {
+  switch (action.type) {
+    case SELECT_SUBREDDIT:
+      return action.subreddit;
+    default:
+      return state;
+  }
+}
+
+function posts(
+  state = {
+    isFetching: false,
+    didInvalidate: false,
+    items: []
+  },
+  action
+) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+      return Object.assign({}, state, {
+        didInvalidate: true
+      });
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      });
+    case RECEIVE_POSTS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        didInvalidate: false,
+        items: action.posts,
+        lastUpdated: action.receivedAt
+      });
+    default:
+      return state;
+  }
+}
+
+function postsBySubreddit(state = {}, action) {
+  switch (action.type) {
+    case INVALIDATE_SUBREDDIT:
+    case RECEIVE_POSTS:
+    case REQUEST_POSTS:
+      return Object.assign({}, state, {
+        [action.subreddit]: posts(state[action.subreddit], action)
+      });
+    default:
+      return state;
+  }
+}
+
+const rootReducer = combineReducers({
+  postsBySubreddit,
+  selectedSubreddit
+});
+
+export default rootReducer;
+```
+
+Store
+configureStore.js
+
+```js
+import { createStore, applyMiddleware } from "redux";
+import thunkMiddleware from "redux-thunk";
+import { createLogger } from "redux-logger";
+import rootReducer from "./reducers";
+
+const loggerMiddleware = createLogger();
+
+export default function configureStore(preloadedState) {
+  return createStore(
+    rootReducer,
+    preloadedState,
+    applyMiddleware(thunkMiddleware, loggerMiddleware)
+  );
+}
+```
+
+Container Components
+containers/Root.js
+
+```js
+import React, { Component } from "react";
+import { Provider } from "react-redux";
+import configureStore from "../configureStore";
+import AsyncApp from "./AsyncApp";
+
+const store = configureStore();
+
+export default class Root extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <AsyncApp />
+      </Provider>
+    );
+  }
+}
+```
+
+containers/AsyncApp.js
+
+```js
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import {
+  selectSubreddit,
+  fetchPostsIfNeeded,
+  invalidateSubreddit
+} from "../actions";
+import Picker from "../components/Picker";
+import Posts from "../components/Posts";
+
+class AsyncApp extends Component {
+  constructor(props) {
+    super(props);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleRefreshClick = this.handleRefreshClick.bind(this);
+  }
+
+  componentDidMount() {
+    const { dispatch, selectedSubreddit } = this.props;
+    dispatch(fetchPostsIfNeeded(selectedSubreddit));
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
+      const { dispatch, selectedSubreddit } = this.props;
+      dispatch(fetchPostsIfNeeded(selectedSubreddit));
+    }
+  }
+
+  handleChange(nextSubreddit) {
+    this.props.dispatch(selectSubreddit(nextSubreddit));
+    this.props.dispatch(fetchPostsIfNeeded(nextSubreddit));
+  }
+
+  handleRefreshClick(e) {
+    e.preventDefault();
+
+    const { dispatch, selectedSubreddit } = this.props;
+    dispatch(invalidateSubreddit(selectedSubreddit));
+    dispatch(fetchPostsIfNeeded(selectedSubreddit));
+  }
+
+  render() {
+    const { selectedSubreddit, posts, isFetching, lastUpdated } = this.props;
+    return (
+      <div>
+        <Picker
+          value={selectedSubreddit}
+          onChange={this.handleChange}
+          options={["reactjs", "frontend"]}
+        />
+        <p>
+          {lastUpdated && (
+            <span>
+              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{" "}
+            </span>
+          )}
+          {!isFetching && (
+            <button onClick={this.handleRefreshClick}>Refresh</button>
+          )}
+        </p>
+        {isFetching && posts.length === 0 && <h2>Loading...</h2>}
+        {!isFetching && posts.length === 0 && <h2>Empty.</h2>}
+        {posts.length > 0 && (
+          <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+            <Posts posts={posts} />
+          </div>
+        )}
+      </div>
+    );
+  }
+}
+
+AsyncApp.propTypes = {
+  selectedSubreddit: PropTypes.string.isRequired,
+  posts: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  lastUpdated: PropTypes.number,
+  dispatch: PropTypes.func.isRequired
+};
+
+function mapStateToProps(state) {
+  const { selectedSubreddit, postsBySubreddit } = state;
+  const { isFetching, lastUpdated, items: posts } = postsBySubreddit[
+    selectedSubreddit
+  ] || {
+    isFetching: true,
+    items: []
+  };
+
+  return {
+    selectedSubreddit,
+    posts,
+    isFetching,
+    lastUpdated
+  };
+}
+
+export default connect(mapStateToProps)(AsyncApp);
+```
+
+Presentational Components
+components/Picker.js
+
+```js
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+export default class Picker extends Component {
+  render() {
+    const { value, onChange, options } = this.props;
+
+    return (
+      <span>
+        <h1>{value}</h1>
+        <select onChange={e => onChange(e.target.value)} value={value}>
+          {options.map(option => (
+            <option value={option} key={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </span>
+    );
+  }
+}
+
+Picker.propTypes = {
+  options: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  value: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired
+};
+```
+
+components/Posts.js
+
+```js
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+
+export default class Posts extends Component {
+  render() {
+    return (
+      <ul>
+        {this.props.posts.map((post, i) => (
+          <li key={i}>{post.title}</li>
+        ))}
+      </ul>
+    );
+  }
+}
+
+Posts.propTypes = {
+  posts: PropTypes.array.isRequired
+};
+```
+
+### Next Steps
+
+#### Perform Asynchronous dispatch
+
+redux-thunk
+Redux Thunk middleware allows you to write action creators that return a function instead of an action. The thunk can be used to delay the dispatch of an action, or to dispatch only if a certain condition is met. It incorporates the methods dispatch and getState as parameters.
+
+redux-saga
+redux-saga is a library that aims to make the execution of application side effects (e.g., asynchronous tasks like data fetching and impure procedures such as accessing the browser cache) manageable and efficient. It's simple to test, as it uses the ES6 feature called generators, making the flow as easy to read as synchronous code.
+
+redux-observable
+redux-observable is a middleware for redux that is inspired by redux-thunk. It allows developers to dispatch a function that returns an Observable, Promise or iterable of action(s). When the observable emits an action, or the promise resolves an action, or the iterable gives an action out, that action is then dispatched as usual.
+
+#### Development Purposes / debug
+
+redux-devtools
+Redux DevTools is a set of tools for your Redux development workflow.
+
+redux-logger
+redux-logger logs all actions that are being dispatched to the store.
