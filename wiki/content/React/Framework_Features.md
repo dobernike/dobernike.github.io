@@ -1355,3 +1355,50 @@ Redux DevTools is a set of tools for your Redux development workflow.
 
 redux-logger
 redux-logger logs all actions that are being dispatched to the store.
+
+---
+
+# MobX
+
+## Concepts & Principles
+
+[https://mobx.js.org/intro/concepts.html](https://mobx.js.org/intro/concepts.html)
+
+https://mobx.js.org/assets/action-state-view.png
+
+```js
+import { observable, autorun } from "mobx";
+
+var todoStore = observable({
+  /* some observable state */
+  todos: [],
+
+  /* a derived value */
+  get completedCount() {
+    return this.todos.filter(todo => todo.completed).length;
+  }
+});
+
+/* a function that observes the state */
+autorun(function() {
+  console.log(
+    "Completed %d of %d items",
+    todoStore.completedCount,
+    todoStore.todos.length
+  );
+});
+
+/* ..and some actions that modify the state */
+todoStore.todos[0] = {
+  title: "Take a walk",
+  completed: false
+};
+// -> synchronously prints 'Completed 0 of 1 items'
+
+todoStore.todos[0].completed = true;
+// -> synchronously prints 'Completed 1 of 1 items'
+```
+
+## MobX and the unique symbiosis of predictability and speed
+
+[https://www.youtube.com/watch?v=NBYbBbjZeX4](https://www.youtube.com/watch?v=NBYbBbjZeX4)
