@@ -1402,3 +1402,6 @@ todoStore.todos[0].completed = true;
 ## MobX and the unique symbiosis of predictability and speed
 
 [https://www.youtube.com/watch?v=NBYbBbjZeX4](https://www.youtube.com/watch?v=NBYbBbjZeX4)
+
+can use with functions component like:
+const fn = observer(() => {...})
