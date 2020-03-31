@@ -1360,9 +1360,24 @@ redux-logger logs all actions that are being dispatched to the store.
 
 # MobX
 
+practice -
+[https://github.com/dobernike/learn-web/tree/master/practice/JavaScript/React/mobx-example]
+
 ## Concepts & Principles
 
 [https://mobx.js.org/intro/concepts.html](https://mobx.js.org/intro/concepts.html)
+
+First, let’s define the core concepts of MobX:
+
+- Observable state. Any value that can be mutated and might serve as source for computed values is state. MobX can make most types of values (primitives, arrays, classes, objects, etc.) and even (potentially cyclic) references observable out of the box.
+  Computed values. Any value that can be computed by using a function that purely operates on other observable values.
+
+- Computed values can range from the concatenation of a few strings up to deriving complex object graphs and visualizations. Because computed values are observable themselves, even the rendering of a complete user interface can be derived from the observable state. Computed values might evaluate either lazily or in reaction to state changes.
+  Reactions. A reaction is a bit similar to a computed value, but instead of producing a new value it produces a side effect.
+
+- Reactions bridge reactive and imperative programming for things like printing to the console, making network requests, incrementally updating the React component tree to patch the DOM, etc.
+
+- Actions. Actions are the primary means to modify the state. Actions are not a reaction to state changes but take sources of change, like user events or incoming web-socket connections, to modify the observable state.
 
 https://mobx.js.org/assets/action-state-view.png
 
@@ -1399,9 +1414,290 @@ todoStore.todos[0].completed = true;
 // -> synchronously prints 'Completed 1 of 1 items'
 ```
 
+---
+
 ## MobX and the unique symbiosis of predictability and speed
 
 [https://www.youtube.com/watch?v=NBYbBbjZeX4](https://www.youtube.com/watch?v=NBYbBbjZeX4)
 
 can use with functions component like:
 const fn = observer(() => {...})
+
+---
+
+## Becoming fully reactive: an in-depth explanation of MobX
+
+[https://hackernoon.com/becoming-fully-reactive-an-in-depth-explanation-of-mobservable-55995262a254](https://hackernoon.com/becoming-fully-reactive-an-in-depth-explanation-of-mobservable-55995262a254)
+
+Reacting to state changes is always better then acting on state changes.
+
+when using manual subscriptions, your app will eventually be inconsistent.
+
+A minimal, consistent set of subscriptions can only be achieved if subscriptions are determined at run-time.1
+
+---
+
+## Understanding MobX and when to use it
+
+[https://github.com/mobxjs/mobx/issues/199](https://github.com/mobxjs/mobx/issues/199)
+
+I'm using MobX now because I can write code 3x faster than with Redux, but my codebase still is predictable and testable.
+
+In the end of the day Redux and MobX are just concepts. Choose Redux if you want to have full control over dispatching actions and transforming state. Go with MobX if you prefer to don't manually handle action dispatchments and state transformations.
+
+I think that implemented in the right way, MobX is a natural evolution of Redux, you can trust MobX to manage your state, you just tell what you want, instead teaching MobX how to do it.
+
+I think the main difference between Redux and MobX is that for Redux you need to "teach" how to dispatch actions and transform state, for MobX you just trust that MobX will do a good job, you just tell MobX "do it", and MobX does.
+
+---
+
+## Best Practices for Building JavaScript Applications with React and MobX
+
+[https://www.accelebrate.com/blog/best-practices-for-building-javascript-applications-with-react-and-mobx-part-1-of-3/]
+
+Best Practice #1 – Declaring Variables
+
+```js
+// do not use
+var a = 2;
+
+// variable is immutable
+const b = 2;
+b = 3; // throws an error
+
+// variable is mutable
+let c = 2;
+c = 3; // allowed
+```
+
+Best Practice #2 – Immutable Programming with Objects
+
+```js
+// mutable operations
+const nums = [1, 2, 3, 4];
+
+// array mutated to [ 1, 2, 3, 4, 5 ]
+nums.push(5);
+
+// array mutated to [ 1, 2, 3, 4 ]
+nums.pop();
+
+// array mutated to [ 1, 2, 9, 4 ]
+nums.splice(2, 1, 9);
+// immutable operations
+const oldNums = [1, 2, 3, 4];
+
+// oldNums: [ 1, 2, 3, 4 ]
+// newNums: [ 1, 2, 3, 4, 5 ]
+let newNums = oldNums.concat(5);
+
+// oldNums: [ 1, 2, 3, 4 ]
+// newNums: [ 2, 3 ]
+newNums = oldNums.slice(1, 3);
+
+// immutable operations with spread and rest
+const oldNums = [1, 2, 3, 4];
+
+// oldNums: [ 1, 2, 3, 4 ]
+// removeItem: 1
+// newNums [ 2, 3, 4 ]
+const [removeItem, newNums] = oldNums;
+
+// oldNums: [ 1, 2, 3, 4 ]
+// newNums [ 1, 2, 3, 4, 5 ]
+const newNums = [...oldNums, 5];
+
+// Examples of Object.assign and Object Spreads
+const oldPerson = {
+  firstName: "Bob",
+  lastName: "Smith"
+};
+
+// oldPerson => { firstName: 'Bob', lastName: 'Smith' }
+// newPerson => { firstName: 'Jane', lastName: 'Smith' }
+let newPerson = Object.assign({}, oldPerson, { firstName: "Jane" });
+
+// oldPerson => { firstName: 'Bob', lastName: 'Smith' }
+// newPerson => { firstName: 'Jane', lastName: 'Smith' }
+newPerson = { ...oldPerson, firstName: "Jane" };
+```
+
+Best Practice #3 – Props and State
+
+```js
+const message = "Hello World";
+
+// pass the message into the component
+<ShowMessage message={message} />;
+
+// the ShowMessage component referenced on the previous line
+class ShowMessage extends React.Component {
+  render() {
+    // access the message passed in via props
+    return <span>{this.props.message}</span>;
+  }
+}
+```
+
+```js
+render() {
+
+  // outputs true to the console
+  console.log(Object.isFrozen(this.props);
+
+  // throw an error
+  this.props.message = ‘New Message’;
+
+  return <span>{this.props.message}</span>;
+}
+```
+
+```js
+class SimpleForm extends React.Component {
+  constructor(props) {
+    super(props);
+
+    // initializing the state in the constructor
+    this.state = {
+      message: ""
+    };
+
+    this.onChange.bind = this.onChange.bind(this);
+  }
+
+  // … omitted …
+}
+```
+
+```js
+class SimpleForm extends React.Component {
+  // … omitted …
+
+  onChange(e) {
+    // changing the state with setState
+    this.setState({
+      message: e.target.value
+    });
+  }
+
+  // … omitted …
+}
+```
+
+```js
+class SimpleForm extends React.Component {
+  // … omitted …
+
+  render() {
+    // the state from SimpleForm is passed as props to the input component
+    return <input type="text" value={this.state.message} onChange={this.onChange}>;
+  }
+}
+```
+
+Best Practice #4 – Validating Props
+
+```js
+class ShowMessage extends React.Component {
+  static propTypes = {
+    // message is a string and is required
+    message: PropTypes.string.isRequired
+  };
+
+  render() {
+    return <span>{this.props.message}</span>;
+  }
+}
+```
+
+```js
+static propTypes = {
+  // example of a custom string required
+  message: (props, propName, componentName) => {
+    if (props[propName] == null) {
+      return Error(`${propName} is required`);
+    }
+    if (typeof props[propName] !== 'string') {
+      return Error(`${propName} should be a string`);
+    }
+  }
+}
+```
+
+Best Practice #5 – Structuring a Component Tree
+
+```js
+shouldComponentUpdate(nextProps, nextState) {
+
+  // build a set of all property names on the existing props and next props
+  const propsPropertyNames = new Set(Object.keys(this.props), Object.keys(nextProps))
+
+  // iterate over the whole set of props
+  for (let propName of propsPropertyNames) {
+
+    // if any of them are not the same, then return true and update
+    // observe only object references would be compares for props which
+    // which point to objects
+    if (this.props[propName] !== nextProps[propName]) {
+      return true;
+    }
+
+  }
+
+  // repeat the same process for state
+  const statePropertyNames = new Set(Object.keys(this.state), Object.keys(nextState))
+
+  for (let propName of Object.keys(statePropertyNames)) {
+
+    if (this.state[propName] !== nextState[propName]) {
+      return true;
+    }
+
+  }
+
+  // no changes do not re-render
+  return false;
+
+}
+```
+
+Best Practice #6 – Application State vs. Component State
+
+https://cdn.accelebrate.com/images/blog/best-practices-for-building-javascript-applications-with-react-and-mobx-part-3-of-3/ui-components.png
+
+Best Practice #7 – Computed Properties
+
+```js
+export class CarStore {
+  @observable
+  cars = [];
+
+  @observable
+  sortFieldName = "id";
+
+  @observable filterFieldName = "";
+  @observable filterFieldValue = "";
+
+  // computed properties observe the properties above through
+  // property accessor tracking
+
+  @computed
+  get filteredCars() {
+    if (this.filterFieldName === "") {
+      return this.cars;
+    }
+    return this.cars.filter(car =>
+      String(car[this.filterFieldName]).includes(String(this.filterFieldValue))
+    );
+  }
+
+  @computed
+  get sortedCars() {
+    return this.filteredCars.sort(
+      (a, b) => a[this.sortFieldName] > b[this.sortFieldName]
+    );
+  }
+
+  // … omitted …
+}
+```
