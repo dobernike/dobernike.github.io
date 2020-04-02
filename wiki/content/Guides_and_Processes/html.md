@@ -1180,3 +1180,24 @@ role="tree" нет аналога в html
 - Добавление ARIA-роли переопределяет нативные семантическую роль тега
 - ARIA предоствляет возможности, которых еще нет в родном HTML
 - У элемента может быть только одна роль
+
+---
+
+## a11y casts
+
+[https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc](https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc)
+
+inert polyfill | on github (for a11y side nav show-hide);
+
+chrome://flags -> developer tools experiments Enable
+
+chrome devtools -> more -> settings -> experiments -> check on Accesibility Inspection
+next you need reload devtools -> open Elements page -> in a bottom go to Accessibility page
+
+voiceover for mac or NVDA for windows (nvaccess.org)
+
+webAIM (webaim.org)
+
+chrome extensions -> aXe and/or Accessibility Developer Tools
+
+axe-core for tests (jest or others)
