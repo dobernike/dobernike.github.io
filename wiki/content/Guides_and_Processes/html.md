@@ -1187,6 +1187,8 @@ role="tree" нет аналога в html
 
 [https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc](https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc)
 
+https://www.w3.org/TR/wai-aria-practices-1.1/
+
 inert polyfill | on github (for a11y side nav show-hide);
 
 chrome://flags -> developer tools experiments Enable
@@ -1201,3 +1203,90 @@ webAIM (webaim.org)
 chrome extensions -> aXe and/or Accessibility Developer Tools
 
 axe-core for tests (jest or others)
+
+aria-label for button without text
+
+role="chekbox" and aria-checked="false or true" for custom checkbox on div
+
+### Add semantics
+
+<div class ="checkbox checked">
+  Receive promotional offers
+</div>
+
+to
+
+<div role="checkbox" aria-checked="true">
+  Receive promotional offers
+</div>
+
+### Modify semantics
+
+// aria 1.1
+
+<button class="toggle" checked>
+  Enable
+</button>
+
+to
+
+<button role="switch" aria-checked="true" class="toggle">
+  Enable
+</button>
+
+### Express more UI patterns
+
+<ul role="tree"> 
+  <li role="treeitem" aria-expanded="true">
+    Accessibility course
+  </li>
+  <ul role="group">
+    <li role="treeitem" aria-expanded="false">
+      Introduction
+    </li>
+     <li role="treeitem" aria-expanded="false">
+      Focus
+    </li>
+    ...
+
+### Extra labels and descriptions
+
+<button class="glyph">
+  <div class="filter-glyph">
+  </div>
+</button>
+
+to
+
+<button class="glyph" aria-label="Filter">
+  <div class="menu-glyph">
+  </div>
+</button>
+
+### Relationships
+
+<button aria-expanded="false" aria-controls="advanced-settings">
+  <h2>Andvanced settings</h2>
+</button>
+<div id="advanced-settings">
+  <label><input type="checkbox"> Offer to ...
+  </label>
+  <label><input type="checkbox"> Send usage ...
+  </label>
+</div>
+
+### Live updates
+
+<div role="alert">
+  Could not connect!
+</div>
+
+### aXe library
+
+axe-core (github)
+
+1. extension chrome - aXe
+
+2. for seleniun - axe-webdriverjs (github)
+
+3. axe-cli (github)
