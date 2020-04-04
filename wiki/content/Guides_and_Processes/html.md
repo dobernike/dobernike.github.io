@@ -1187,6 +1187,8 @@ role="tree" нет аналога в html
 
 [https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc](https://www.youtube.com/playlist?list=PL7Bjl0Cb4SboBHNihVBRd-AdctfXcmClc)
 
+[https://www.youtube.com/watch?v=HtTyRajRuyY&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g](https://www.youtube.com/watch?v=HtTyRajRuyY&list=PLNYkxOF6rcICWx0C9LVWWVqvHlYJyqw7g)
+
 https://www.w3.org/TR/wai-aria-practices-1.1/
 
 inert polyfill | on github (for a11y side nav show-hide);
@@ -1290,3 +1292,14 @@ axe-core (github)
 2. for seleniun - axe-webdriverjs (github)
 
 3. axe-cli (github)
+
+---
+
+## Доступность интерфейсов. Лекция Яндекса
+
+[https://habr.com/ru/company/yandex/blog/424879/](https://habr.com/ru/company/yandex/blog/424879/)
+
+Указывайте <title>
+Указывайте яык страницы
+симантика
+валидность
