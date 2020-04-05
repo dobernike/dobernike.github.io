@@ -1513,3 +1513,1047 @@ flex-direction (switch main axis)
 media queries
 
 ⌨️ (04:12:24) Outro
+
+---
+
+## Понимание вьюпорта WebView в iOS 11
+
+[https://css-live.ru/articles/ponimanie-vyuporta-webview-v-ios-11.html](https://css-live.ru/articles/ponimanie-vyuporta-webview-v-ios-11.html)
+
+### Фиксы iOS 11
+
+Свойство мета-тега viewport, которое нам нужно, — это viewport-fit. Оно имеет три возможных значения:
+
+contain: вьюпорт должен полностью вмещать веб-контент. Тогда фиксированные элементы будут содержаться внутри безопасной зоны на iOS 11.
+
+cover: веб-контент должен полностью покрывать вьюпорт. Тогда фиксированные элементы будут зафиксированы во вьюпорте. Даже в тех случаях, когда это означает, что они будут перекрыты. Это восстанавливает поведение, которое было при iOS 10.
+
+auto: значение по умолчанию, в этом случае поведение веб-контента такое же, как при contain.
+
+Таким образом, чтобы вернуть панель навигации к самому верху экрана, за статус-бар, как это было на iOS 10, следует добавить в мета-тег viewport свойство viewport-fit=cover.
+
+### iPhone X
+
+На iPhone X уже появляется проблема, даже при том же значении cover у свойства viewport-fit
+
+Они ввели новое понятие, похожее на CSS-переменные, изначально названное CSS-константами.
+
+принято предложение, но с условием: для доступа к этим константам нужно будет использовать функцию с названием env() вместо constant().
+
+Примечание: iOS 11 использует синтаксис с constant(), но последующие версии операционной системы будут поддерживать только env()!
+
+Четыре константы для управления раскладкой безопасных зон — это:
+
+env(safe-area-inset-top): значение отступа безопасной зоны (в CSS-пикселах), считая от верхнего края вьюпорта.
+
+env(safe-area-inset-bottom): значение отступа безопасной зоны (в CSS-пикселах), считая от нижнего края вьюпорта.
+
+env(safe-area-inset-left): значение отступа безопасной зоны (в CSS-пикселах), считая от левого края вьюпорта.
+
+env(safe-area-inset-right): значение отступа безопасной зоны (в CSS-пикселах), считая от правого края вьюпорта.
+
+Пример с CSS-константами
+Скажем, есть фиксированная верхняя панель навигации, и CSS для iOS 10 сейчас выглядит так:
+
+```css
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 44px;
+
+  padding-top: 20px; /* Высота статус-бара */
+}
+```
+
+Чтобы она автоматически подстраивалась под iPhone X и другие устройства на iOS 11, надо добавить свойство viewport-fit=cover в мета-тег viewport и изменить CSS с обращением к константе:
+
+```css
+header {
+  /* ... */
+
+  /* Высота статус-бара в iOS 10 */
+  padding-top: 20px;
+
+  /* Высота статус-бара в iOS 11.0 */
+  padding-top: constant(safe-area-inset-top);
+
+  /* Высота статус-бара в iOS 11+ */
+  padding-top: env(safe-area-inset-top);
+}
+```
+
+Важно, чтобы для старых устройств, не понимающих синтаксис constant() или env(), осталось страховочное значение. Можно также использовать константы в CSS-функции calc().
+
+Также не стоит забывать делать то же самое для нижней панели навигации.
+
+---
+
+## Красивое выравнивание блоков по резиновой сетке. По-новому
+
+[https://css-live.ru/css/responsive-grid-css-grid-layout-auto-fill.html](https://css-live.ru/css/responsive-grid-css-grid-layout-auto-fill.html)
+
+```css
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    100px
+  ); /* или repeat(auto-fit, 100px); */
+  justify-content: center; /* или space-between, или space-evenly, можно и space-around */
+}
+
+/* grid-template-columns: repeat(auto-fit, var(—item-width)); */
+```
+
+Мы нашли стандартное решение старой, но по-прежнему актуальной задачи. На мой взгляд, можно смело улучшать им существующую верстку, обернув в @supports (как советует Эрик Мейер), или внедрять как основное в новые проекты, оставив старый хак в качестве фолбэка.
+
+---
+
+## Руководство по размеру текста для отзывчивого дизайна
+
+[https://css-live.ru/articles/rukovodstvo-po-razmeru-teksta-dlya-otzyvchivogo-dizajna.html](https://css-live.ru/articles/rukovodstvo-po-razmeru-teksta-dlya-otzyvchivogo-dizajna.html)
+
+```
+Градация	Размер шрифта
+ 0	      1.0em
++1	      1.2em
++2	      1.44em
++3	      1.728em
++4	      2.074em
++5	      2.488em
+
+Шкала с малой терцией (1.2) при базовом размере 1em
+```
+
+Пускаем шкалу в дело
+Когда мы выяснили, какая шкала лучше подходит для нашего проекта, пора применить ее на деле. В CSS это можно сделать такими способами:
+
+Скопировать и вручную расставить числа в значения всех нужных свойств.
+
+Задействовать препроцессоры вроде Sass, в которых есть встроенные математические функции.
+
+Воспользоваться стандартной функцией calc() в самом CSS.
+
+Примеры далее используют последний вариант, а за поддержку calc() и var() в браузерах там отвечает PostCSS
+
+Если шкала соотношений будет использоваться для чего-то посложнее, стоит обратить внимание на эти плагины для PostCSS или Sass:
+
+postcss-modular-scale
+
+modularscale-sass
+
+Они позволяют получать значения масштаба в более аккуратном синтаксисе, чем у calc(), а также могут работать с несколькими значениями base и ratio одновременно.
+
+Настройка переменных
+Прежде всего надо определиться со значениями переменных ratio и base, от которых многое зависит в логике шкалы:
+
+```css
+:root {
+  --ratio: 1.2;
+  --base: 1;
+  --base-em: calc(var(--base) * 1em);
+  --base-px: calc(var(--base) * 16px);
+}
+```
+
+Затем нужно задать тот набор градаций, которым вы, скорее всего, будете пользоваться:
+
+```css
+:root {
+  --ms0: 1;
+  --ms1: var(--ratio); /* 1.2   */
+  --ms2: calc(var(--ratio) * var(--ms1)); /* 1.44  */
+  --ms3: calc(var(--ratio) * var(--ms2)); /* 1.728 */
+  --ms4: calc(var(--ratio) * var(--ms3)); /* 2.074 */
+  --ms5: calc(var(--ratio) * var(--ms4)); /* 2.488 */
+  --ms6: calc(var(--ratio) * var(--ms5)); /* 2.986 */
+  --ms7: calc(var(--ratio) * var(--ms6)); /* 3.583 */
+}
+```
+
+Взяв этот ряд коэффициентов, можно умножать их на значение базовой величины, получая фактические значения шкалы:
+
+```css
+font-size: calc(var(--base-em) * var(--ms1)); /* 1.2em  */
+font-size: calc(var(--base-em) * var(--ms2)); /* 1.44em */
+```
+
+Установка размеров по умолчанию
+Браузерный размер по умолчанию для шрифта в сочетании с коэффициентом 1.44 для line-height кажется подходящим вариантом для основного текста:
+
+```css
+body {
+  font-size: calc(var(--base-em) * var(--ms0));
+  line-height: calc(var(--base) * var(--ms2));
+}
+```
+
+Все шесть разных размеров для заголовков вам вряд ли понадобятся (есть же и другие способы визуально разграничить их). Но если вы всё-таки хотите задать каждому из них свой размер, можно взять серию градаций шкалы:
+
+```css
+h6 {
+  font-size: calc(var(--base-em) / var(--ms1));
+}
+h5 {
+  font-size: calc(var(--base-em) * var(--ms0));
+}
+h4 {
+  font-size: calc(var(--base-em) * var(--ms1));
+}
+h3 {
+  font-size: calc(var(--base-em) * var(--ms2));
+}
+h2 {
+  font-size: calc(var(--base-em) * var(--ms3));
+}
+h1 {
+  font-size: calc(var(--base-em) * var(--ms4));
+}
+```
+
+```
+Один из чаще всего упускаемых из виду моментов во фронтенд-разработке — line-height многострочных заголовков. Они часто ну слишком уж огромные.
+```
+
+В случае многострочных заголовков значение на одну ступень шкалы ниже может оказаться более удобным для чтения:
+
+```css
+h3,
+h2 {
+  line-height: calc(var(--base) * var(--ms1));
+}
+h1 {
+  line-height: calc(var(--base) * var(--ms0));
+}
+```
+
+Добавочные возможности шкалы, когда нужно усилить визуальное различие размеров
+
+```css
+@media (min-width: 480px) {
+  html {
+    font-size: calc(var(--base-px) * var(--ms1));
+  }
+}
+```
+
+Вам может понадобиться увеличить не только сам текст, но и разницу в размерах между заголовками разного уровня. Это можно сделать, переопределив размер для крупнейших заголовков на более высокие градации шкалы:
+
+```css
+@media (min-width: 768px) {
+  h3 {
+    font-size: calc(var(--base-em) * var(--ms3));
+  }
+  h2 {
+    font-size: calc(var(--base-em) * var(--ms4));
+  }
+  h1 {
+    font-size: calc(var(--base-em) * var(--ms5));
+  }
+}
+
+@media (min-width: 1024px) {
+  h2 {
+    font-size: calc(var(--base-em) * var(--ms5));
+  }
+  h1 {
+    font-size: calc(var(--base-em) * var(--ms6));
+  }
+}
+
+@media (min-width: 1360px) {
+  h1 {
+    font-size: calc(var(--base-em) * var(--ms7));
+  }
+}
+```
+
+Другие применения шкалы
+
+```css
+.u-textBigger {
+  font-size: calc(var(--base-em) * var(--ms1));
+}
+
+.u-textSmaller {
+  font-size: calc(var(--base-em) / var(--ms1));
+}
+```
+
+```html
+<div class="u-textBigger">
+  <h2>Now I'm as big as an H1</h2>
+  <h3>Now I'm as big as an H2</h3>
+  <p class="u-textSmaller">I haven't changed at all.</p>
+</div>
+
+<div class="u-textSmaller">
+  <div class="u-textSmaller">
+    <div class="u-textBigger">
+      <span class="u-textBigger">Same as it ever was.</span>
+    </div>
+  </div>
+</div>
+```
+
+- Краткая выжимка
+  Определяйте пропорции текстовых элементов по шкале соотношений
+
+  Делайте шкалу универсальной, пригодной для разных размеров экрана
+
+  Если нужно дополнительно подчеркнуть разницу между текстовыми элементами, используйте значения более высоких ступеней шкалы
+
+  Используйте шкалу не только для отдельных элементов
+
+- Дополнительные материалы
+  Более осмысленная типографика Тима Брауна
+
+  Современный подход к пропорциям в веб-типографике Джейсона Пэментала
+
+  Точный контроль над отзывчивой типографикой Майка Ритмюллера
+
+  Отзывчивая типографика со шкалой соотношений Макса Ластера
+
+  Калькулятор шкалы соотношений
+
+  Калькулятор пропорций типографики на базе золотого сечения
+
+  Еще два калькулятора размеров для типографики — Gridlover и Type Scale
+
+- Примечания
+  Использование одной базовой величины и одного соотношения — не единственный способ получить шкалу, подходящую для ограничений маленького экрана. Можно создать составную шкалу, используя несколько базовых значений и соотношений вместо единственного. Вот пример со вторым базовым значением для уменьшения расстояния между градациями. Подробнее см. на modularscale.com.
+
+  Для преобразования вывода calc() и var() можно использовать плагин postcss-cssnext
+
+---
+
+# Selectors, impact on page rendering
+
+## CSS и производительность сети
+
+[https://css-live.ru/articles/css-i-proizvoditelnost-seti.html](https://css-live.ru/articles/css-i-proizvoditelnost-seti.html)
+
+CSS критически важен для отображения страницы — браузер не начнет рендеринг, пока не найдет, загрузит и распарсит весь CSS — поэтому крайне важно как можно скорее получить его на устройстве пользователя. Любая задержка на критическом пути скажется на нашей начальной отрисовке, заставив пользователя видеть пустой экран.
+
+Собственно, вот почему CSS так важен для производительности:
+
+- Браузер не может отобразить страницу до построения дерева отрисовки;
+
+- дерево отрисовки получается из DOM и CSSOM вместе взятых;
+
+- DOM — это HTML плюс любой блокирующий JavaScript, который на него влияет;
+
+- CSSOM — все CSS-правила, применённые к DOM;
+  с помощью атрибутов async и defer можно легко сделать JavaScript неблокирующим;
+
+- сделать CSS асинхронным намного сложнее;
+
+- поэтому важно помнить, что `скорость загрузки страницы определяется самой медленной таблицей стилей.`
+
+Учитывая это, нам нужно максимально быстро построить DOM и CSSOM. DOM по большей части строится относительно быстро: первый же ответ сервера на запрос браузером HTML-страницы – это и есть DOM. Однако, поскольку CSS почти всегда отдельный ресурс от HTML, на построение CSSOM обычно уходит гораздо больше времени.
+
+### Используйте минимально необходимый CSS
+
+Если есть такая возможность, один из эффективнейших способов снизить время до первой отрисовки – воспользоваться паттерном «минимально необходимый CSS»: определить все стили, необходимые для начальной отрисовки (обычно это стили для всего, что попадает на первый экран), вставить их прямо в теги <style> в <head> документа, а остальные стили подгружать асинхронно, отдельно от критического пути.
+
+### Разделяйте свои медиавыражения по типам
+
+Итак, если критический CSS нам не по силам – как скорее всего и окажется – есть вариант попроще, разделить основной CSS-файл на отдельные медиавыражения в нем. Практический результат в том, что браузер будет…
+
+- загружать любой CSS, нужный для текущего контекста (тип устройства, размер экрана, разрешение, ориентация, и т.д) с крайне высоким приоритетом, блокирующим критический путь, и;
+
+- загружать любой CSS, ненужный для текущего контекста с очень низким приоритетом, никак не затрагивая критический путь.
+
+По сути, любой CSS, ненужный для отображения текущего представления, фактически загружается браузером отложенно.
+
+<link rel="stylesheet" href="all.css" />
+
+Если положить весь CSS в один файл, то вот как сеть поступит с ним:
+
+https://css-live.ru/Primer/css-and-network/screenshot-css-media-all.png
+
+Заметьте, что у единственного CSS-файла наивысший приоритет.
+
+Если можно разделить один файл, полностью блокирующий всю отрисовку, на отдельные медиавыражения из него:
+
+<link rel="stylesheet" href="all.css" media="all" />
+<link rel="stylesheet" href="small.css" media="(min-width: 20em)" />
+<link rel="stylesheet" href="medium.css" media="(min-width: 64em)" />
+<link rel="stylesheet" href="large.css" media="(min-width: 90em)" />
+<link rel="stylesheet" href="extra-large.css" media="(min-width: 120em)" />
+<link rel="stylesheet" href="print.css" media="print" />
+
+То мы увидим, что сеть ведет себя с файлами по-разному
+
+https://css-live.ru/Primer/css-and-network/screenshot-css-media-split.png
+
+CSS-файлам, которые не требуются для отображения текущего контекста, назначается наименьший приоритет.
+
+Браузер по-прежнему загрузит все CSS-файлы, но будет блокировать отрисовку только при тех, которые нужны, чтобы полностью отобразить страницу при текущих условиях.
+
+### Избегайте @import в CSS-файлах
+
+Следующее, чем мы можем помочь начальной отрисовке, гораздо, гораздо проще. Не используйте @import в своих CSS-файлах.
+
+@import по своей природе медленный. Это крайне плохо для производительности начальной отрисовки. Это потому, что мы создаем больше запросов к серверу во время критической начальной загрузки.
+
+- Скачиваем HTML;
+
+- HTML запрашивает CSS;
+  (К этому моменту хорошо бы уже начать строить дерево отображения, но;)
+
+- CSS запрашивает ещё CSS;
+
+- строим дерево отображения.
+
+Если взять следующий HTML:
+
+<link rel="stylesheet" href="all.css" media="all" />
+… и содержимое all.css:
+
+@import url(imported.css);
+… каскадная диаграмма в итоге будет такой:
+
+https://css-live.ru/Primer/css-and-network/screenshot-import-before.png
+
+Явное отсутствие распараллеливания во время критической начальной загрузки
+
+Если просто превратить это в плоскую структуру из двух <link rel="stylesheet" /> и нуля директив @import:
+
+<link rel="stylesheet" href="all.css" />
+<link rel="stylesheet" href="imported.css" />
+… то мы получим гораздо разумную каскадную диаграмму:
+
+https://css-live.ru/Primer/css-and-network/screenshot-import-after.png
+Критический CSS начинает загружаться параллельно.
+
+Примечание. Хочу кратко обсудить одно нетипичное исключение. Если вам вдруг выпадет такой случай, что к CSS-файлу с @import нет доступа (то есть удалить его оттуда нельзя), можно без вреда оставить его там же в CSS, но также дополнить разметку соответствующим <link rel="stylesheet" /> в вашем HTML. Это значит, что браузер будет инициировать загрузку импортируемого CSS из HTML, пропустив @import: двойной загрузки не будет.
+
+### Остерегайтесь @import в HTML
+
+Это странный раздел. Очень странный. Я провалился в настолько глубокую кроличью нору, исследуя эту тему… В Blink и WebKit всё поломано, потому что в них баг; в Firefox и IE/Edge только кажется, что поломано. Я завел баги про это в их багтрекерах.
+
+во всех основных браузерах реализован вспомогательный, облегченный парсер, называемый обычно «Сканер предварительной загрузки» (Preload Scanner). Основной парсер в браузере отвечает за создание DOM, CSSOM, запуск JavaScript и так далее, и он постоянно приостанавливается по мере того, как он блокируется разными частями документа. Сканер предварительной загрузки может спокойно забегать вперед основного, сканируя остальной HTML в поисках ссылок на другие подресурсы (такие как CSS-файлы, JS и изображения). После их обнаружения сканер предварительной загрузки начинает загружать их, готовый к тому, чтобы основной парсер потом мог подхватить их уже готовыми для использования. Внедрение сканера предварительной загрузки улучшило производительность веб-страниц примерно на 19%, причём разработчикам даже не пришлось и пальцем пошевелить. Это отличная новость для пользователей!
+
+Единственное, за чем нам, разработчикам, нужно следить — чтобы нечаянно не скрыть чего-нибудь от сканера предварительной загрузки, как иногда бывает.
+
+В данном разделе рассматриваются баги в сканере предварительной загрузки в WebKit и Blink, а также его неэффективность в Firefox’s и IE/Edge.
+
+#### Firefox и IE/Edge: поместите @import перед JS и CSS в HTML
+
+В Firefox и IE/Edge сканер предварительной загрузки, похоже, не подхватывает какие-либо директивы @import, определённые после <script src=""> или <link rel="stylesheet" />
+
+Поэтому этот HTML:
+
+<script src="app.js"></script>
+
+<style>
+  @import url(app.css);
+</style>
+
+… даст вот такую каскадную диаграмму:
+
+https://css-live.ru/Primer/css-and-network/screenshot-ff-import-blocked-by-js.png
+
+Потеря распараллеливания в Firefox из-за неработающего сканера предварительной загрузки (примечание: точно такая же каскадная диаграмма получается в IE/Edge).
+
+Здесь хорошо видно, что таблица стилей из @import не начинает загружаться до завершения JavaScript-файла.
+
+Эта проблема – не что-то уникальное для JavaScript. С таким HTML всё так же:
+
+<link rel="stylesheet" href="style.css" />
+
+<style>
+  @import url(app.css);
+</style>
+
+Быстрое решение этой проблемы — поменять местами блоки <script> или <link rel="stylesheet" /> и <style>. Однако, из-за этого, что-то наверняка может сломаться, поскольку мы меняем порядок зависимостей (читай, каскад).
+
+Правильное решение этой проблемы — вообще обходиться без @import и использовать второй link rel="stylesheet"
+
+<link rel="stylesheet" href="style.css" />
+<link rel="stylesheet" href="app.css" />
+
+Гораздо лучше:
+
+https://css-live.ru/Primer/css-and-network/screenshot-ff-import-unblocked-by-css.png
+Два <link rel="stylesheet" /> восстанавливают параллельность. (примечание: точно такая же каскадная диаграмма получается в IE/Edge).
+
+#### Blink и WebKit: оборачивайте адреса ссылок в @import внутри HTML в кавычки
+
+В WebKit и Blink та же картина, что в Firefox и IE/Edge, получается только если у ссылок в @import нет кавычек. Это значит, что в сканере предварительной загрузки в WebKit и Blink есть баг.
+
+Если просто добавить кавычки, проблема решится, и не нужно будет ничего переупорядочивать. И всё же, как и ранее, мой совет здесь — вообще обойтись без @import, а вместо него поставить второй <link rel="stylesheet" />.
+
+До:
+
+<link rel="stylesheet" href="style.css" />
+
+<style>
+  @import url(app.css);
+</style>
+
+… даёт:
+https://css-live.ru/Primer/css-and-network/screenshot-chrome-import-blocked-by-css.png
+Без кавычек в ссылках в @import сканер предварительной загрузки в Chrome у нас поломается (примечание: точно такая же каскадная диаграмма получается в Opera и Safari.)
+
+После:
+
+<link rel="stylesheet" href="style.css" />
+
+<style>
+  @import url("app.css");
+</style>
+
+https://css-live.ru/Primer/css-and-network/screenshot-chrome-import-unblocked-by-css.png
+Если добавить кавычки в ссылки в @import, то это починит сканер предварительной загрузки в Chrome (примечание: точно такая же каскадная диаграмма получается в Opera и Safari.)
+
+### Не размещайте <link rel="stylesheet" /> перед асинхронными сниппетами
+
+речь пойдет о том, как CSS может нечаянно задержать загрузку последующих ресурсов, прежде всего JavaScript, асинхронно подгружаемого кодом наподобие такого:
+
+<script>
+  var script = document.createElement('script');
+  script.src = "analytics.js";
+  document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+Во всех браузерах есть замечательное поведение, преднамеренное и ожидаемое, но я не припомню ни одного разработчика, который с ним знаком. Это вдвойне удивительно, учитывая, как сильно оно может влиять на производительность.
+
+```
+Браузер не выполнит <script>, если он в это время еще работает с каким-то CSS-кодом
+```
+
+<link rel="stylesheet" href="slow-loading-stylesheet.css" />
+<script>
+console.log("пока грузится оочеень-мееедлееенный-файл.css");
+</script>
+
+Это специально. Так задумано. Ни один синхронный элемент <script> в вашем HTML не выполнится, пока грузится какой-либо CSS. Это простая защитная стратегия для особого случая, когда <script> может запросить что-то о стилях страницы: если скрипт запрашивает цвет страницы до того, как загружен и разобран CSS, то ответ JavaScript может оказаться неверным и неактуальным. Чтобы избежать этого, браузер не выполняет <script>, пока CSSOM не будет готова.
+
+Как результат — любые задержки во время загрузки CSS косвенно скажутся на вещах вроде асинхронных сниппетов. Лучше всего это видно на примере.
+
+Если поместить <link rel="stylesheet" /> перед нашим асинхронным сниппетом, тот не сработает, пока CSS-файл не загрузится и не распарсится. Следовательно, ваш CSS всё тормозит.
+
+<link rel="stylesheet" href="app.css" />
+
+<script>
+  var script = document.createElement('script');
+  script.src = "analytics.js";
+  document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+При таком порядке очевидно, что JavaScript-файл не начинает грузиться, пока создаётся CSSOM. Любое распараллеливание полностью потеряно.
+
+https://css-live.ru/Primer/css-and-network/screenshot-async-js-blocked-by-css.png
+Из-за таблицы стилей перед асинхронным сниппетом теряется возможность распараллеливания.
+
+Интересно, что сканер предварительной загрузки хотел бы уже подхватить ссылку на analytics.js заранее, но мы непроизвольно скрыли её: "analytics.js" — строка, и не становится атрибутом src, который можно разобрать на токены, пока элемент не появится в DOM
+
+Сторонние сервисы довольно часто предоставляют такие асинхронные сниппеты для более безопасной загрузки своих скриптов. Также разработчики часто с подозрением относятся к таким сторонним ресурсам, размещая свои асинхронные сниппеты позже на странице. Пусть намерения здесь и благие — «Я не хочу размещать сторонние теги <script> раньше моих собственных ресурсов!» — от этого часто бывает лишь вред. На самом деле, Google Analytics даже говорит нам, что делать, и они правы:
+
+```
+Скопируйте и вставьте этот код первым элементом в <HEAD> на каждой странице, которую нужно отслеживать.
+```
+
+```
+Если блоки <script>…</script> не зависят от CSS, размещайте их выше ваших таблиц стилей.
+```
+
+Вот что получается, если следовать этому паттерну:
+
+<script>
+  var script = document.createElement('script');
+  script.src = "analytics.js";
+  document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+
+<link rel="stylesheet" href="app.css" />
+
+https://css-live.ru/Primer/css-and-network/screenshot-async-js-blocked-by-css-fixed.png
+Если поменять местами таблицу стилей и асинхронный сниппет, то распараллеливание восстановится.
+
+Теперь можно видеть, что мы полностью восстановили распараллеливание и страница загружается почти вдвое быстрее.
+
+### Размещайте любой JavaScript без обращения к CSSOM перед CSS; размещайте любой JavaScript с обращением к CSSOM после CSS
+
+как лучше загружать CSS и JavaScript в целом?
+
+Если
+
+- синхронный JS, определённый после CSS, блокируется, пока строится CSSOM;
+
+- синхронный JS блокирует построение DOM…
+
+то при условии, что они не зависят друг от друга — что быстрее/предпочтительнее?
+
+- Cкрипт после стилей;
+
+- стили после скрипта?
+
+И вот ответ:
+
+```
+Если между файлами нет зависимости, то вам лучше размещать свои блокирующие скрипты выше блокирующих стилей
+```
+
+нет смысла откладывать выполнение JavaScript ради CSS, от которого этот JavaScript не зависит.
+
+(Сканер предварительной загрузки гарантирует, что, хотя построение DOM блокируется скриптами, CSS по-прежнему загружается в параллельном потоке.)
+
+Если какой-то ваш JavaScript зависит от CSS, а какой-то нет, тогда самый оптимальный порядок для загрузки синхронных JavaScript и CSS — разделить этот JavaScript на две части и загружать их по разные стороны вашего CSS:
+
+<!-- Этот JavaScript выполнится сразу же после загрузки. -->
+<script src="Мне-надо-блокировать-dom-но-НЕ-НАДО-обращаться-к-cssom.js"></script>
+
+<link rel="stylesheet" href="app.css" />
+
+<!-- Этот JavaScript выполнится сразу же после построения CSSOM. -->
+<script src="Мне-надо-блокировать-dom-но-НАДО-обращаться-к-cssom.js"></script>
+
+С таким паттерном загрузки у нас и загрузка, и выполнение происходят в самом оптимальном порядке. Можно заметить маленькие розовые метки, представляющие выполнение JavaScript. Запись (1) — HTML, в котором запланировано выполнение какого-то JavaScript при загрузке и/или выполнении других файлов; запись (2) выполняется в момент загрузки; запись (3) — CSS, поэтому он вообще не выполняет JavaScript; запись (4) не выполняется, пока CSS не будет завершён.
+https://css-live.ru/Primer/css-and-network/waterfall-js-execution.png
+Как CSS может повлиять на то, в какой момент выполнится JavaScript.
+
+крайне важно протестировать этот паттерн в вашем конкретном случае: результаты могут отличаться в зависимости от того, сильно ли различаются по весу и ресурсоёмкости тот JavaScript, что грузится до CSS, и сам CSS. Тестируйте, тестируйте и еще раз тестируйте.
+
+### Размещайте <link rel="stylesheet" /> в <body>
+
+Эта последняя стратегия довольно нова, дает огромный плюс для прогрессивного рендеринга и ощущение быстроты для пользователя. И она также весьма удобна для компонентов.
+
+В HTTP/1.1 все наши стили обычно собраны в один большой главный файл. Назовём его app.css:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="app.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav">...</nav>
+    </header>
+
+    <main class="content">
+      <section class="content-primary">
+        <h1>...</h1>
+
+        <div class="date-picker">...</div>
+      </section>
+
+      <aside class="content-secondary">
+        <div class="ads">...</div>
+      </aside>
+    </main>
+
+    <footer class="site-footer"></footer>
+  </body>
+</html>
+```
+
+Здесь есть три основных недостатка:
+
+- `Любая отдельно взятая страница применяет лишь небольшую часть стилей из app.css`: мы почти наверняка загружаем больше CSS, чем надо.
+
+- `Нам навязана неэффективная стратегия кеширования`: при изменении, допустим, цвета фона выбранного текущего дня в выпадающем календарике, который есть только на одной странице, потребовалось бы обновить кеш для всего app.css.
+
+- `Весь app.css блокирует отображение`: даже, если текущей странице требуется только 17% app.css, нам по-прежнему нужно ждать загрузки остальных 83%, прежде чем мы начнем что-либо рендерить.
+
+С HTTP/2 можно начать решать пункты 1 и 2
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="core.css" />
+    <link rel="stylesheet" href="site-header.css" />
+    <link rel="stylesheet" href="site-nav.css" />
+    <link rel="stylesheet" href="content.css" />
+    <link rel="stylesheet" href="content-primary.css" />
+    <link rel="stylesheet" href="date-picker.css" />
+    <link rel="stylesheet" href="content-secondary.css" />
+    <link rel="stylesheet" href="ads.css" />
+    <link rel="stylesheet" href="site-footer.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="site-nav">...</nav>
+    </header>
+
+    <main class="content">
+      <section class="content-primary">
+        <h1>...</h1>
+
+        <div class="date-picker">...</div>
+      </section>
+
+      <aside class="content-secondary">
+        <div class="ads">...</div>
+      </aside>
+    </main>
+
+    <footer class="site-footer"></footer>
+  </body>
+</html>
+```
+
+Теперь избыточность можно побороть, поскольку для страницы можно загружать только нужный CSS, а не всё подряд. Это уменьшает размер файла, блокирующего CSS-код при начальной загрузке.
+
+Мы также можем принять более продуманную стратегию кеширования, обновляя кеш только для нужных файлов, и не трогать остальные.
+
+Что мы не решили, так это то, что всё это по-прежнему блокирует отображение — скорость загрузки у нас по-прежнему ограничивается самой медленной таблицей стилей. Это значит, что, если по какой-либо причине загрузка файла page-footer.css будет долгой, браузер не сможет даже начать отрисовку .page-header.
+
+Однако, из-за недавних изменений в Chrome (версия 69, кажется) и поведения, которое уже есть в Firefox и IE/Edge, <link rel="stylesheet" /> будут блокировать отображение только последующего контента, а не всей страницы. Это значит, что теперь можно выстраивать наши страницы так:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="core.css" />
+  </head>
+  <body>
+    <link rel="stylesheet" href="site-header.css" />
+    <header class="site-header">
+      <link rel="stylesheet" href="site-nav.css" />
+      <nav class="site-nav">...</nav>
+    </header>
+
+    <link rel="stylesheet" href="content.css" />
+    <main class="content">
+      <link rel="stylesheet" href="content-primary.css" />
+      <section class="content-primary">
+        <h1>...</h1>
+
+        <link rel="stylesheet" href="date-picker.css" />
+        <div class="date-picker">...</div>
+      </section>
+
+      <link rel="stylesheet" href="content-secondary.css" />
+      <aside class="content-secondary">
+        <link rel="stylesheet" href="ads.css" />
+        <div class="ads">...</div>
+      </aside>
+    </main>
+
+    <link rel="stylesheet" href="site-footer.css" />
+    <footer class="site-footer"></footer>
+  </body>
+</html>
+```
+
+Практический результат таков, что теперь можно добавлять стили на страницу по капле, как только они становятся доступны.
+
+В браузерах, в которых это не поддерживается, мы ничего не теряем в производительности: мы возвращаемся к старому поведению, когда у нас всё грузится со скоростью самого медленного CSS-файла.
+
+Чтобы подробнее узнать об этом методе подключения CSS, рекомендую прочитать статью Джейка на эту тему.
+[https://css-live.ru/articles/budushhee-zagruzki-css.html]
+
+### Заключение
+
+- Загружайте любой CSS «лениво» (отложенно):
+
+  - Это может быть минимально необходимый CSS;
+  - или разделяйте ваш CSS на медиавыражения.
+
+- Избегайте @import:
+
+  - В HTML;
+  - но особенно в CSS;
+  - и не забывайте о странностях со сканером предварительной загрузки.
+
+- Будьте внимательны с синхронным порядком CSS и JavaScript:
+
+  - JavaScript, определённый после CSS, не сработает до завершения загрузки CSSOM;
+  - поэтому, если ваш JavaScript не зависит от вашего CSS:
+    - загрузите его перед вашим CSS;
+  - но если он зависит от вашего CSS:
+    - загрузите его после CSS.
+
+- Загружайте CSS, как только он нужен DOM:
+  - Это разблокирует начальный рендер и позволит рендерить страницу прогрессивно.
+
+---
+
+## CSS selector performance
+
+[https://ecss.io/appendix1.html](https://ecss.io/appendix1.html)
+
+Some takeaways from these tests:
+
+sweating over the selectors used in modern browsers is futile; most selection methods are now so fast it's really not worth spending much time over. Furthermore, there is disparity across browsers of what the slowest selectors are anyway. Look here last to speed up your CSS.
+
+excessive unused styles are likely to cost more, performance wise, than any selectors you chose so look to tidy up there second. 3000 lines that are unused or surplus on a page are not even that uncommon. While it's common to bunch all the styles up into a great big single styles.css, if different areas of your site/web application can have different (additional) style sheets added (dependency graph style), that may be the better option.
+
+if your CSS has been added to by a number of different authors over time, look to tools like UnCSS to automate the removal of styles; doing that process by hand is no fun!
+
+the battle for high performing CSS will not be won in the selectors used, it will be won with the judicious use of property and values.
+
+getting something painted to screen fast is obviously important but so is how a page feels when the user interacts with it. Look for expensive property and value pairs first (Chrome continuous repaint mode is your friend here), they are likely to provide the biggest gains.
+
+---
+
+## Optimizing CSS: ID Selectors and Other Myths
+
+[https://www.sitepoint.com/optimizing-css-id-selectors-and-other-myths/](https://www.sitepoint.com/optimizing-css-id-selectors-and-other-myths/)
+
+### The Basics of CSS Parsing
+
+```
+rank	type	                        example
+1.	  ID	                          #classID
+2.	  Class	                        .class
+3.	  Tag	                          div
+4.	  General and adjacent sibling	div ~ a, div + a
+5.	  Child and descendant	        div > a, div a
+6.	  Universal	                    *
+7.	  Attribute	                    [type="text"]
+8.	  Pseudo-classes and elements   a:first-of-type, a:hover
+```
+
+Therefore, the shorter the selector, the better. If possible, make sure that the key selector is a class or an ID to keep it fast and specific.
+
+### Measuring the Performance
+
+```
+Selector	                            Query Time (ms)
+div	                                  4.8740
+.box	                                3.625
+.box > .title	                        4.4587
+.box .title	                          4.5161
+.box ~ .box	                          4.7082
+.box + .box	                          4.6611
+.box:last-of-type	                    3.944
+.box:nth-of-type(2n - 1)	            16.8491
+.box:not(:last-of-type)	              5.8947
+.box:not(:empty):last-of-type .title	8.0202
+.box:nth-last-child(n+6) ~ div	      20.8710
+```
+
+https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/11/1510297945frame-full-1024x156.jpg
+
+---
+
+## Performance Impact of CSS Selectors (ознакомиться для исторического контекста)
+
+[https://www.stevesouders.com/blog/2009/03/10/performance-impact-of-css-selectors/](https://www.stevesouders.com/blog/2009/03/10/performance-impact-of-css-selectors/)
+
+`The sad truth about CSS3 selectors is that they really shouldn’t be used at all if you care about page performance. Decorating your markup with classes and ids and matching purely on those while avoiding all uses of sibling, descendant and child selectors will actually make a page perform significantly better in all browsers.`
+
+```
+Web Site	  # CSS Rules #DOM Elements
+AOL	        2289	      1628
+eBay	      305	        588
+Facebook  	2882	      1966
+Google	    92	        552
+Live Search	376	        449
+MSN	        1038	      886
+MySpace	    932	        444
+Wikipedia	  795	        1333
+Yahoo!	    800	        564
+YouTube	    821	        817
+average	    1033	      923
+```
+
+---
+
+# CSS 3 (Custom fonts, animations, box-shadow, etc)
+
+## Неизведанные глубины CSS: метрики шрифта, line-height и vertical-align
+
+[https://css-live.ru/css/metriki-shrifta-line-height-vertical-align.html](https://css-live.ru/css/metriki-shrifta-line-height-vertical-align.html)
+
+Line-height и vertical-align — простые CSS-свойства. Настолько простые, что большинство из нас уверены, что понимают, как они работают и как ими пользоваться. Но это не так. На деле они сложны, может быть, сложнее всех, потому что `у них ведущая роль в создании одной из самых малоизвестных особенностей CSS: строчного (инлайнового) контекста форматирования`.
+
+Например, line-height можно задать в виде длины или безразмерного значения ​1, но по умолчанию у него значение normal — «нормально». Прекрасно, но что значит «нормально»? Часто пишут, что это (по крайней мере, должно быть) 1, или где-то 1.2, даже CSS-спецификация не дает точного ответа. Мы знаем, что безразмерное line-height считается относительно font-size, но загвоздка в том, что font-size: 100px ведет себя по-разному для разных гарнитур, так будет ли line-height всегда одинаковым или разным? Действительно ли оно от 1 до 1.2? А vertical-align, как line-height влияет на него?
+
+### Поговорим сначала о font-size
+
+```html
+<p>
+  <span class="a">Ba</span>
+  <span class="b">Ba</span>
+  <span class="c">Ba</span>
+</p>
+```
+
+```css
+p {
+  font-size: 100px;
+}
+.a {
+  font-family: Helvetica;
+}
+.b {
+  font-family: Gruppo;
+}
+.c {
+  font-family: Catamaran;
+}
+```
+
+`Одинаковый font-size с разными гарнитурами дает элементы разной высоты:`
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/font-size.png
+
+Даже если мы в курсе этой особенности, почему font-size: 100px не делает элементы высотой 100px? Я измерил эти значения: Helvetica — 115px, Gruppo — 97px и Catamaran — 164px.
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/font-size-line-height.png
+
+Хотя на первый взгляд это странно, это вполне ожидаемо. `Причина в самом шрифте`. Вот как это работает:
+
+- шрифт задает свои единицы измерения em-квадрата (или UPM, units per em — единиц на кегль), некий контейнер, в котором будут рисоваться все символы. В этом контейнере всё измеряется в относительных единицах и обычно он принимается за 1000 единиц. Но бывает и 1024, и 2048, и сколько угодно.
+
+- на базе этих относительных единиц задаются метрики шрифта: высота верхних выносных элементов (ascender), нижних выносных (descender), заглавных букв (capital height), строчных букв (x-height) и т.п. Заметьте, что некоторые значения могут выступать за рамки em-квадрата.
+
+- в браузере эти относительные единицы масштабируются до заданного font-size.
+
+Возьмем шрифт Catamaran и откроем его в FontForge, чтобы увидеть метрики:
+
+- em-квадрат принят за 1000 единиц
+
+- высота верхних выносных — 1100, а нижних — 540. Судя по нескольким тестам, браузеры используют значения HHead Ascent/Descent на Mac OS и Win Ascent/Descent на Windows (и эти значения могут различаться!). Также видно, что высота заглавных букв (Capital Height) равна 680, а высота строчных (X height) — 485.
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/font-forge-metrics.png
+
+Это значит, что шрифт Catamaran использует 1100 + 540 единиц из em-квадрата в 1000 единиц, что при font-size: 100px дает высоту 164px. `Эта вычисленная высота определяет область содержимого элемента`, так я и буду называть ее всю статью. Можете представлять область содержимого как ту область, к которой применяется свойство background ​2.
+
+Также легко предсказать, что высота заглавных букв будет 68px (680 единиц), а строчных (x-высота) — 49px (485 единиц). Как результат, 1ex = 49px, а 1em = 100px, а не 164px (к счастью, em отсчитывается от font-size, а не от вычисленной высоты)
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/upm-px-equivalent.png
+
+`Высота контейнера строки определяется высотами его потомков`
+
+Каждый HTML-элемент на самом деле представляет собой «стопку» контейнеров строки. Если вы знаете высоту каждого контейнера строки, вы знаете и высоту элемента.
+
+<p>
+    Good design will be better.
+    <span class="a">Ba</span>
+    <span class="b">Ba</span>
+    <span class="c">Ba</span>
+    We get to make a consequence.
+</p>
+
+html сгенерирует 3 контейнера строки:
+
+- в первом и последнем — только по одному анонимному элементу строки (текст)
+
+- во втором — два анонимных элемента строки и 3 <span>-а
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/line-boxes.png
+Элемент <p> (черная рамка) состоит из контейнеров строк (белые рамки), состоящих из строчных элементов (сплошные рамки) и анонимных элементов строки (пунктирные рамки)
+
+Хорошо видно, что второй контейнер строки выше остальных, из-за вычисленной области содержимого его потомков, а точнее — того, что со шрифтом Catamaran.
+
+`Самое сложное в создании контейнера строки то, что мы не можем ни толком это увидеть, ни управлять этим из CSS.`
+
+### line-height: до подводных камней и дальше
+
+Область содержимого и контейнер строки. Высота контейнера строки рассчитывается по высоте его потомков, но это не «высота области содержимого потомков». И в этом большая разница.
+
+`у элемента строки есть две разных высоты: высота области содержимого и высота виртуальной области`
+
+- высота области содержимого определяется метриками шрифта
+
+- `высота виртуальной области — это line-height`, и именно эта высота `используется при расчете высоты контейнера строки`
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/line-height.png
+У элементов строки есть две разные высоты
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/line-height-yes-no.png
+В CSS line-height — не расстояние между базовыми линиями
+
+Вычисленная разность высот между виртуальной областью и областью содержимого называется «leading», или интерлиньяж.
+Половина интерлиньяжа добавляется сверху от области содержимого, вторая половина снизу от нее. `Таким образом, область содержимого всегда будет посередине виртуальной области.`
+
+В зависимости от вычисленного значения, line-height (виртуальная область) может быть равна, выше или ниже области содержимого. Если виртуальная область ниже, то интерлиньяж отрицательный и контейнер строки визуально оказывается ниже собственных потомков.
+
+Есть и другие виды элементов строки:
+
+- замещаемые элементы строки (<img>, <input>, <svg> и т.п.)
+
+- элементы типа inline-block и прочих inline-\*
+
+- строчные элементы, участвующие в особых контекстах форматирования (например, во флекс-контейнере все флекс-элементы «блокифицируются»)
+
+Для этих особых строчных элементов высота рассчитывается по их свойствам height, margin and border. Если у height значение auto, то используется line-height, и высота области содержимого строго равна line-height.
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/line-height-inline-block.png
+У замещаемых строчных элементов, элементов типа inline-block/inline-\* и «блокифицированных» строчных элементов высота области содержимого равна их высоте, или line-height.
+
+`line-height: normal будет равна высоте области содержимого, т.е. 1640 единиц или 1.64.`
+
+`Становится очевидно, что указывать line-height: 1 — плохой подход.`
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/line-height-1.png
+Из-за line-height: 1 контейнер строки может стать ниже, чем область содержимого
+
+Вообще вычисленная line-height у 1117 шрифтов (Google Web Fonts) колеблется от 0.618 до 3.378.
+
+Немного подробностей о расчете контейнера строки:
+
+- для строчных элементов padding и border увеличивают область фона, но не область содержимого (и не высоту контейнера строки). Так что не всегда область содержимого — то, что видно на экране. А margin-top и margin-bottom ни на что не влияют.
+
+- для замещаемых строчных элементов, элементов типа inline-block и «блокифицированных» строчных элементов: padding, margin и border увеличивают height, а значит, и высоту области содержимого и контейнера строки.
+
+### vertical-align: одно свойство, чтоб править всеми
+
+`vertical-align может играть ведущую роль в строчном контексте форматирования.`
+
+По умолчанию у него значение baseline. Поскольку пропорция между верхней и нижней часть редко бывает 50/50, это иногда приводит к неожиданным результатам, например, с соседними элементами.
+
+Начнем с такого кода:
+
+<p>
+    <span>Ba</span>
+    <span>Ba</span>
+</p>
+
+```css
+p {
+  font-family: Catamaran;
+  font-size: 100px;
+  line-height: 200px;
+}
+```
+
+Тег <p> с двумя соседними <span>-ами, наследующими font-family, font-size и фиксированный line-height. Базовые линии совпадают и высота контейнера строки равна их line-height.
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/vertical-align-baseline.png
+Тот же шрифт, та же базовая линия, на вид всё в порядке
+
+Что, если у второго элемента будет меньший font-size?
+
+```css
+span:last-child {
+  font-size: 50px;
+}
+```
+
+`из-за выравнивания по базовой линии (по умолчанию) контейнер строки может стать выше (!)`
+
+http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-et-vertical-align/vertical-align-baseline-nok.png
+Меньший дочерний элемент может привести к большей высоте контейнера строки
+
+...
+
+Выводы
+
+- понять строчный (инлайновый) контекст форматирования нелегко
+
+- у всех строчных элементов 2 высоты
+  - область содержимого (основанная на метриках шрифта)
+  - виртуальная область (line-height)
+  - ни ту, ни другую высоту нельзя однозначно визуализировать (если вы разрабатываете браузерный отладчик и готовы взяться за это — было бы великолепно!)
+- line-height: normal основывается на метриках шрифта
+- при line-height: n виртуальная область может стать меньше, чем область содержимого
+- на vertical-align нельзя особо полагаться
+- высота контейнера строки рассчитывается на основе свойств line-height и vertical-align его потомков
+- нельзя просто взять и получить/установить метрики шрифта из CSS
+- есть в планах спецификация на эту тему, чтобы помочь с вертикальным выравниванием: модуль строчной сетки (Line Grid)
+
+---
+
+## Большая статья про гриды (CSS Grid Layout)
+[https://css-live.ru/css/bolshaya-statya-pro-gridy-css-grid-layout.html](https://css-live.ru/css/bolshaya-statya-pro-gridy-css-grid-layout.html)
