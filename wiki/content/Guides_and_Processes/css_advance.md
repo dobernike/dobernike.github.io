@@ -2555,5 +2555,144 @@ http://iamvdo.me/content/01-blog/30-css-avance-metriques-des-fontes-line-height-
 
 ---
 
+## визуал по работе с flexbox
+
+[https://css-live.ru/articles/vizualnoe-rukovodstvo-po-svojstvam-flexbox-iz-css3.html](https://css-live.ru/articles/vizualnoe-rukovodstvo-po-svojstvam-flexbox-iz-css3.html)
+
+---
+
 ## Большая статья про гриды (CSS Grid Layout)
+
 [https://css-live.ru/css/bolshaya-statya-pro-gridy-css-grid-layout.html](https://css-live.ru/css/bolshaya-statya-pro-gridy-css-grid-layout.html)
+
+---
+
+## Руководство по Web Animations API — часть 1: создание базовой анимации
+
+[https://css-live.ru/articles/rukovodstvo-po-web-animations-api-chast-1-sozdanie-bazovoj-animacii.html](https://css-live.ru/articles/rukovodstvo-po-web-animations-api-chast-1-sozdanie-bazovoj-animacii.html)
+
+### Создание ключевых кадров анимации
+
+Если вы работали с CSS-переходами и/или анимациями, то это будет вам знакомо.
+
+```js
+var player = document.getElementById("toAnimate").animate(
+  [
+    { transform: "scale(1)", opacity: 1, offset: 0 },
+    { transform: "scale(.5)", opacity: 0.5, offset: 0.3 },
+    { transform: "scale(.667)", opacity: 0.667, offset: 0.7875 },
+    { transform: "scale(.6)", opacity: 0.6, offset: 1 },
+  ],
+  {
+    duration: 700, //миллисекунды
+    easing: "ease-in-out", //'linear', кривая Безье, и т.д.
+    delay: 10, //миллисекунды
+    iterations: Infinity, //или число
+    direction: "alternate", //'normal', 'reverse', и т.д.
+    fill: "forwards", //'backwards', 'both', 'none', 'auto'
+  }
+);
+```
+
+Сравните с такой же анимацией на CSS:
+
+```css
+@keyframes emphasis {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+  78.75% {
+    transform: scale(0.667);
+    opacity: 0.667;
+  }
+  100% {
+    transform: scale(0.6);
+    opacity: 0.6;
+  }
+}
+#toAnimate {
+  animation: emphasis 700ms ease-in-out 10ms infinite alternate forwards;
+}
+```
+
+---
+
+## Руководство по Web Animations API — Часть 2: Объект AnimationPlayer и управление временной шкалой
+
+[https://css-live.ru/articles/rukovodstvo-po-web-animations-api-chast-2-animationplayer-i-upravlenie-vremennoj-shkaloj.html](https://css-live.ru/articles/rukovodstvo-po-web-animations-api-chast-2-animationplayer-i-upravlenie-vremennoj-shkaloj.html)
+
+### Состояния проигрывания AnimationPlayer и управление им
+
+```js
+var player = element.animate(/* ... */);
+console.log(player.playState); //"running"
+
+player.pause(); //"paused"
+player.play(); //"running"
+player.cancel(); //"idle"... перейти к исходному состоянию
+player.finish(); //"finished"... перейти к конечному состоянию
+```
+
+### Скорость воспроизведения
+
+```js
+var player = element.animate(/* ... */);
+console.log(player.playbackRate); //1
+
+player.playbackRate = 2; ////двойная скорость. Для замедления скорости можно также применять десятичные дроби.
+```
+
+### Шкала времени
+
+currentTime возвращает текущее положение анимации в миллисекундах. Максимальное значение вычисляется по формуле «задержка + (продолжительность \* число итераций)», поэтому при бесконечных итерациях не бывает максимального значения.
+
+```js
+var player = element.animate([{ opacity: 1 }, { opacity: 0 }], {
+  duration: 1000,
+  delay: 500,
+  iterations: 3,
+});
+
+player.onfinish = function () {
+  console.log(player.currentTime); // 3500
+};
+```
+
+### Ещё одна опция: reverse()
+
+Можно также обратить анимацию с помощью reverse(), который будет очень похож на play() (в частности, у него будет тот же самый playState), за исключением того, что с ним анимация проходит шкалу времени в обратном направлении. После завершения анимации currentTime будет равен 0.
+
+---
+
+# Optimization
+
+## CSSO
+
+[https://2016.holyjs-piter.ru//talks/dvornov.html](https://2016.holyjs-piter.ru//talks/dvornov.html)
+
+ccso самый быстрый на момент 2016 года
+(сравнение с clean-css и css-nano)
+
+### Минификатор (работа)
+
+css -> минификатор -> сжатый css
+
+минификатор = парсер -> AST -> Компрессор -> AST -> Транслятор
+
+Основные шаги
+Токенизация
+Построение дерева (лексер)
+
+Делаем код быстрее
+
+- charAt() -> charCodeAt()
+- Избегайте лишних операций со строками
+- Контролируйте выход за пределы
+- Уменьшайте количесвто сравнений
+
+call быстрее чем apply ? (скорее всего из-за оптимизации);
