@@ -2897,3 +2897,61 @@ caniuse
 mdn
 
 use postcss-preset-env to use next css now
+
+---
+
+## autoprefixer
+
+[https://github.com/postcss/autoprefixer](https://github.com/postcss/autoprefixer)
+
+PostCSS plugin to parse CSS and add vendor prefixes to CSS rules using values from Can I Use. It is recommended by Google and used in Twitter and Alibaba.
+
+Write your CSS rules without vendor prefixes (in fact, forget about them entirely):
+
+```css
+::placeholder {
+  color: gray;
+}
+
+.image {
+  background-image: url(image@1x.png);
+}
+@media (min-resolution: 2dppx) {
+  .image {
+    background-image: url(image@2x.png);
+  }
+}
+```
+
+Autoprefixer will use the data based on current browser popularity and property support to apply prefixes for you. You can try the interactive demo of Autoprefixer.
+
+```css
+::-webkit-input-placeholder {
+  color: gray;
+}
+::-moz-placeholder {
+  color: gray;
+}
+:-ms-input-placeholder {
+  color: gray;
+}
+::-ms-input-placeholder {
+  color: gray;
+}
+::placeholder {
+  color: gray;
+}
+
+.image {
+  background-image: url(image@1x.png);
+}
+@media (-webkit-min-device-pixel-ratio: 2),
+  (-o-min-device-pixel-ratio: 2/1),
+  (min-resolution: 2dppx) {
+  .image {
+    background-image: url(image@2x.png);
+  }
+}
+```
+
+---
