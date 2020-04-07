@@ -2955,3 +2955,14 @@ Autoprefixer will use the data based on current browser popularity and property 
 ```
 
 ---
+
+## CSS Remedy
+
+[https://css-tricks.com/css-remedy/](https://css-tricks.com/css-remedy/)
+
+reset -> normalize -> css-remedy
+[https://github.com/jensimmons/cssremedy]
+
+Sets CSS properties or values to what they would be if the CSSWG were creating the CSS today, from scratch, and didn’t have to worry about backwards compatibility.
+
+---
