@@ -2885,3 +2885,15 @@ Testing For Selector Support
 ```
 
 ---
+
+## Dealing with Cross Browser Compatibility
+
+[https://www.youtube.com/watch?v=9tEixRJ3GeI](https://www.youtube.com/watch?v=9tEixRJ3GeI)
+
+use normalize for fix - browsers render same different
+
+check:
+caniuse
+mdn
+
+use postcss-preset-env to use next css now
