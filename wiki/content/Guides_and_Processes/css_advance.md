@@ -2757,3 +2757,49 @@ contain: none | strict | content | [ size || layout || style || paint ];
 ```
 
 ---
+
+## Optimizing HTML/CSS performance and cleaner code
+
+[https://medium.com/@divyanshu013/optimizing-html-css-performance-and-cleaner-code-606a403d0c14](https://medium.com/@divyanshu013/optimizing-html-css-performance-and-cleaner-code-606a403d0c14)
+
+### HTML
+
+- Keep styles separate from HTML, better to use CSS for styling instead of increasing the complexity of HTML
+
+- Also keep the CSS and JS files separate from HTML instead of embedding within the HTML. It’s better to minify and add them during the build process (think Webpack)
+
+- Put JS <script></script> at the end of the page to increase page load speed. This allows the browser to render the page before executing the JS
+
+- There is really no need to add type="text/javascript" or charset="UTF-8" attributes to your <script></script>
+
+- It might be a good idea to use some validation tool to run your HTML through such as some good HTML linter
+
+- HTML comments <!-- --> is not really necessary. A markup language such as HTML should itself clearly define the markup of the page. Adding comments will just increase page size. Comments in your CSS and JS are helpful because they can explain the logic or the intent in one line for reference
+
+- Use gzip for compressing your HTML code. This means that the browser has to uncompress it before rendering however, this is insignificant when compared to downloading a larger sized file. Using gzip on a node server is pretty simple by using a specific module such as compression [https://github.com/expressjs/compression]
+
+- It might look like doing away with <!doctype html> can save a line of code. However, removing the doctype will trigger quirks mode and cause the browser to render in backward compatibility mode instead. Some features might not work as expected
+
+- Images may comprise a majority of page size if used and it’s very essential to use them in optimal quality. Alternatively if high quality images are required then lazy loading with your JS is a good idea
+
+### CSS
+
+- Minifying CSS would help a lot in decreasing the size of your stylesheet and generally your build tool should be doing this for production builds
+
+- Put your CSS at the top of your HTML page, such as the <head></head> so that your webpage gets loaded better
+
+- Use a tool such as autoprefixer to generate vendor specific CSS. Instead of running this tool everytime you make a change to your CSS, it’s a better idea to include autoprefixer in your build process to generate a production ready stylesheet
+
+- Bundling your stylesheets instead of having many stylesheets can be better for performance especially for single page apps (SPAs)
+
+- Use a content delivery network (CDN) for caching and faster loading
+
+- This [https://css-tricks.com/efficiently-rendering-css/] article on CSS-Tricks is great for checking which selectors are more expensive for the browsers. Some key take-aways are:
+
+### P.S.
+
+- Browsers read CSS selectors from right to left
+
+- IDs (#something) are the most efficient and universal is the least (\*)
+
+- Descendant selectors are very expensive for performance. Use classes or IDs instead
