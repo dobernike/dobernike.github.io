@@ -2803,3 +2803,85 @@ contain: none | strict | content | [ size || layout || style || paint ];
 - IDs (#something) are the most efficient and universal is the least (\*)
 
 - Descendant selectors are very expensive for performance. Use classes or IDs instead
+
+---
+
+# Browsers compabilites
+
+## A Guide To CSS Support In Browsers
+
+[https://www.smashingmagazine.com/2019/02/css-browser-support/](https://www.smashingmagazine.com/2019/02/css-browser-support/)
+
+Test For No Support
+
+```css
+@supports not (display: grid) {
+  .item {
+    /* CSS from browsers which do not support grid layout */
+  }
+}
+```
+
+Test For Multiple Things
+
+```css
+@supports (display: grid) and (shape-outside: circle()) {
+  .item {
+    /* CSS from browsers which support grid and CSS shapes */
+  }
+}
+```
+
+If you need support of one property or another, use or.
+
+```css
+@supports (display: grid) or (display: flex) {
+  .item {
+    /* CSS from browsers which support grid or flexbox */
+  }
+}
+```
+
+Picking A Property And Value To Test For
+
+```css
+.grid > .item {
+  width: 23%;
+  margin: 0 1%;
+}
+
+@supports (display: grid) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    column-gap: 1%;
+  }
+
+  .grid > .item {
+    width: auto;
+    margin: 0;
+  }
+}
+```
+
+Partial Support Of CSS Properties
+
+```css
+@supports (column-gap: 20px) {
+  .flex {
+    margin: 0; /* almost everything supports column-gap so this will always remove the margins, even if we do not have gap support in flexbox. */
+  }
+}
+```
+
+Testing For Selector Support
+
+```css
+@supports selector(: has) {
+  .item {
+    /* CSS for support of :has */
+  }
+}
+```
+
+---
