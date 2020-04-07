@@ -2966,3 +2966,85 @@ reset -> normalize -> css-remedy
 Sets CSS properties or values to what they would be if the CSSWG were creating the CSS today, from scratch, and didn’t have to worry about backwards compatibility.
 
 ---
+
+# Common knowledge
+
+## Модульный CSS
+
+[https://www.youtube.com/watch?v=vYmSYsj-s5w&list=PL8sJahqnzh8IDythQu3ZJPqnvuSXQF8MV&index=13](https://www.youtube.com/watch?v=vYmSYsj-s5w&list=PL8sJahqnzh8IDythQu3ZJPqnvuSXQF8MV&index=13)
+
+Button.js
+
+```js
+const Button = ({ children, disabled, primary }) => {
+  let classNames = "btn";
+  if (disabled) classNames += " btn--disabled";
+  if (primary) classNames += ' btn--primary";
+
+  return (
+    <button type="button" disabled={disabled} className={classNames}>
+      <span className="label">
+        {children}
+      </span>
+    </button>
+  )
+};
+```
+
+<Button>Default</Button>
+<Button disabled>Disabled</Button>
+<Button primary>Primary</Button>
+
+Split code & co-locate
+Button.js + Button.css
+
+BEM
+
+```js
+import './Button.css'
+const Button = ({ children, disabled, primary }) => {
+  let classNames = "Button";
+  if (disabled) classNames += " Button--disabled";
+  if (primary) classNames += ' Button--primary";
+
+  return (
+    <button type="button" disabled={disabled} className={classNames}>
+      <span className='Button__label'>
+        {children}
+      </span>
+    </button>
+  )
+};
+```
+
+CSS-MODULES
+
+```js
+import styles from './Button.css'
+
+const Button = ({ children, disabled, primary }) => {
+  let classNames = {styles.root};
+  if (disabled) classNames = {styles.disabled};
+  if (primary) classNames = {styles.primary};
+
+  return (
+    <button type="button" disabled={disabled} className={classNames}>
+      <span className={styles.label}>
+        {children}
+      </span>
+    </button>
+  )
+};
+```
+
+BEM for free
+@value
+composes
+:global
+
+work on server too
+
+postcss like babel for css
+autoprefixer
+
+---
