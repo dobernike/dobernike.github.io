@@ -2696,3 +2696,64 @@ css -> минификатор -> сжатый css
 - Уменьшайте количесвто сравнений
 
 call быстрее чем apply ? (скорее всего из-за оптимизации);
+
+---
+
+## CSS performance optimization
+
+[https://developer.mozilla.org/en-US/docs/Learn/Performance/CSS_performance](https://developer.mozilla.org/en-US/docs/Learn/Performance/CSS_performance)
+
+CSS is render blocking
+
+### Optimizing for render blocking
+
+```html
+<link rel="stylesheet" href="styles.css" />
+<!-- blocking -->
+<link rel="stylesheet" href="print.css" media="print" />
+<!-- not blocking -->
+<link
+  rel="stylesheet"
+  href="mobile.css"
+  media="screen and (max-width: 480px)"
+/>
+<!-- not blocking on large screens -->
+```
+
+### Animating on the GPU
+
+To improve performance, the node being animated can be moved off the main thread and onto the GPU
+
+Properties that will lead to compositing include 3D transforms (`transform:` `translateZ()`, `rotate3d()`, etc.), animating transform and `opacity`, `position: fixed`, `will-change`, and `filter`. Some elements, including <video>, <canvas> and <iframe>, are also on their own layer.
+
+### will-change property
+
+The CSS will-change property tells browsers which properties of an element are expected to change enabling browsers to set up optimizations before the element is actually changed, improving performance by doing potentially expensive work before it is required.
+
+```css
+will-change: opacity, transform;
+```
+
+### The font-display property
+
+his improves performance by making the text visible instead of having a blank screen, with a trade-off being a flash of unstyled text.
+
+```css
+@font-face {
+  font-family: someFont;
+  src: url(/path/to/fonts/someFont.woff) format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: fallback;
+}
+```
+
+### The contain property
+
+The contain CSS property allows an author to indicate that an element and its contents are, as much as possible, independent of the rest of the document tree. This allows the browser to recalculate layout, style, paint, size, or any combination of them for a limited area of the DOM and not the entire page.
+
+```css
+contain: none | strict | content | [ size || layout || style || paint ];
+```
+
+---
