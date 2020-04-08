@@ -156,3 +156,23 @@ https://khalilstemmler.com/img/blog/ddd-intro/events.svg
 [https://habr.com/ru/post/335834/](https://habr.com/ru/post/335834/)
 
 ---
+
+# Event Sourcing
+
+...
+
+---
+
+# Microservices architechure
+
+...
+
+---
+
+# Architecture of highloaded applications
+
+## Архитектура высоконагруженных приложений. Масштабирование распределенных систем.
+
+[https://habr.com/ru/company/badoo/blog/185220/](https://habr.com/ru/company/badoo/blog/185220/)
+
+---
