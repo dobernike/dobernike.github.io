@@ -3048,3 +3048,538 @@ postcss like babel for css
 autoprefixer
 
 ---
+
+## Common CSS Flexbox Layout Patterns with Example Code
+
+[https://tobiasahlin.com/blog/common-flexbox-patterns/](https://tobiasahlin.com/blog/common-flexbox-patterns/)
+
+Every example assumes that your HTML contains an element with a class of container which then contains several children that all have a class of item (the number of children varies per example):
+
+```html
+<div class="container">
+  <div class="item"></div>
+  <div class="item"></div>
+  <div class="item"></div>
+  ...
+</div>
+```
+
+### Stretch all, fixed spacing
+
+```css
+.container {
+  display: flex;
+}
+
+.item {
+  flex-grow: 1;
+  height: 100px;
+}
+
+.item + .item {
+  margin-left: 2%;
+}
+```
+
+We use a + selector to only add gaps between pairs of items (essentially just skipping the left margin for the first item in the list).
+
+### Stretch middle, fixed spacing
+
+```css
+.container {
+  display: flex;
+}
+
+.item {
+  height: 100px;
+  width: 100px; /* A fixed width as the default */
+}
+
+.item-center {
+  flex-grow: 1; /* Set the middle element to grow and stretch */
+}
+
+.item + .item {
+  margin-left: 2%;
+}
+```
+
+### Alternating grid
+
+- Set flex-wrap: wrap on the container (or all items would be rendered on a single row)
+
+- Set justify-content: space-between on the container, to only create space between the elements (and not between the edge of the parent element and items)
+
+- Set every item’s width to 49% (or something similar that is equal to or less than 50%)
+
+- Set every third item’s width to 100% so that it fills that entire row. We can target every third item in the list with the nth-child() selector.
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  width: 48%;
+  height: 100px;
+  margin-bottom: 2%;
+}
+
+.item:nth-child(3n) {
+  width: 100%;
+}
+```
+
+### 3x3 grid
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  flex: 0 32%;
+  height: 100px;
+  margin-bottom: 2%; /* (100-32*3)/2 */
+}
+```
+
+### 3x3 grid, constrained proportions (1:1)
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  width: 32%;
+  padding-bottom: 32%; /* Same as width, sets height */
+  margin-bottom: 2%; /* (100-32*3)/2 */
+  position: relative;
+}
+```
+
+### 3x3 grid, constrained proportions (16:9)
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.item {
+  width: 32%;
+  padding-bottom: 18%; /* 32:18, i.e. 16:9 */
+  margin-bottom: 2%; /* (100-32*3)/2 */
+}
+```
+
+### Graph: vertical bars
+
+```css
+.container {
+  display: flex;
+  height: 300px;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.item {
+  width: 14%;
+}
+.item-1 {
+  height: 40%;
+}
+.item-2 {
+  height: 50%;
+}
+.item-3 {
+  height: 60%;
+}
+.item-4 {
+  height: 20%;
+}
+.item-5 {
+  height: 30%;
+}
+```
+
+### Graph: horizontal bars
+
+```css
+.container {
+  display: flex;
+  height: 300px;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.item {
+  height: 14%;
+}
+.item-1 {
+  width: 40%;
+}
+.item-2 {
+  width: 50%;
+}
+.item-3 {
+  width: 60%;
+}
+.item-4 {
+  width: 20%;
+}
+.item-5 {
+  width: 30%;
+}
+```
+
+### Vertical stack (centered)
+
+```css
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item {
+  height: 40px;
+  margin-bottom: 10px;
+}
+```
+
+### Masonry (or mosaic)
+
+```css
+/* Re-order items into rows */
+.item:nth-child(3n + 1) {
+  order: 1;
+}
+.item:nth-child(3n + 2) {
+  order: 2;
+}
+.item:nth-child(3n) {
+  order: 3;
+}
+
+/* Force new columns */
+.container::before,
+.container::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}
+```
+
+```css
+.container {
+  display: flex;
+  flex-flow: column wrap;
+  align-content: space-between;
+  height: 580px;
+}
+
+.item {
+  width: 32%;
+  margin-bottom: 2%; /* (100-32*3)/2 */
+}
+
+/* Re-order items into rows */
+.item:nth-child(3n + 1) {
+  order: 1;
+}
+.item:nth-child(3n + 2) {
+  order: 2;
+}
+.item:nth-child(3n) {
+  order: 3;
+}
+
+/* Force new columns */
+.container::before,
+.container::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0;
+  order: 2;
+}
+```
+
+---
+
+## Patterns for Practical CSS Custom Properties Use
+
+[https://css-tricks.com/patterns-for-practical-css-custom-properties-use/](https://css-tricks.com/patterns-for-practical-css-custom-properties-use/)
+
+- Variables. The basics, such as setting, a brand color to use wherever needed.
+
+- Default Values. For example, a default border-radius that can be overridden later.
+
+- Cascading Values. Using clues based on specificity, such as user preferences.
+
+- Scoped Rulesets. Intentional variations on individual elements, like links and buttons.
+
+- Mixins. Rulesets intended to bring their values to a new context.
+
+- Inline Properties. Values passed in from inline styles in our HTML.
+
+### Pattern 1: Variables
+
+```css
+html {
+  --brand-color: hsl(230, 80%, 60%);
+}
+
+.logo {
+  fill: pink; /* fallback */
+  fill: var(--brand-color);
+}
+```
+
+### Pattern 2: Default values
+
+```css
+.button {
+  /* --roundness: 2px; */
+  border-radius: var(--roundness, 10px);
+}
+```
+
+### Pattern 3: Cascading values
+
+User-based themes
+
+```css
+.message {
+  background-color: var(--student-background, #fff);
+  color: var(--student-color, #000);
+  font-family: var(--student-font, "Times New Roman", serif);
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+[data-student-theme="rachel"] {
+  --student-background: rgb(43, 25, 61);
+  --student-color: rgb(252, 249, 249);
+  --student-font: Arial, sans-serif;
+}
+
+[data-student-theme="jen"] {
+  --student-background: #d55349;
+  --student-color: #000;
+  --student-font: Avenir, Helvetica, sans-serif;
+}
+
+[data-student-theme="tyler"] {
+  --student-background: blue;
+  --student-color: yellow;
+  --student-font: "Comic Sans MS", "Comic Sans", cursive;
+}
+```
+
+```html
+<section>
+  <div data-student-theme="chris">
+    <p class="message">
+      Chris: I've spoken at events and given workshops all over the world at
+      conferences.
+    </p>
+  </div>
+  <div data-student-theme="rachel">
+    <p class="message">
+      Rachel: I prefer email over other forms of communication.
+    </p>
+  </div>
+  <div data-student-theme="jen">
+    <p class="message">
+      Jen: This is why I immediately set up my new team with Slack for real-time
+      chat.
+    </p>
+  </div>
+  <div data-student-theme="tyler">
+    <p class="message">
+      Tyler: I miss AIM and MySpace, but this message board is okay.
+    </p>
+  </div>
+</section>
+```
+
+```css
+.readable-theme [data-student-theme] {
+  --student-background: hsl(50, 50%, 90%);
+  --student-color: hsl(200, 50%, 10%);
+  --student-font: Verdana, Geneva, sans-serif;
+}
+```
+
+```html
+<section class="readable-theme">
+  ...
+</section>
+```
+
+### Pattern 4: Scoped rulesets
+
+```css
+a {
+  --link: hsl(230, 60%, 50%);
+  --link-visited: hsl(290, 60%, 50%);
+  --link-hover: hsl(230, 80%, 60%);
+  --link-active: hsl(350, 60%, 50%);
+}
+
+a:link {
+  color: var(--link);
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  color: var(--link-hover);
+}
+
+a:active {
+  color: var(--link-active);
+}
+```
+
+```html
+<a href="#">Link Example</a>
+```
+
+Example: Grayscale link
+
+```css
+.grayscale {
+  --link: LightSlateGrey;
+  --link-visited: Silver;
+  --link-hover: DimGray;
+  --link-active: LightSteelBlue;
+}
+```
+
+```html
+<a href="#" class="grayscale">Link Example</a>
+```
+
+Example: Custom links
+
+```css
+.custom-link {
+  --hue: 30;
+  --link: hsl(var(--hue), 60%, 50%);
+  --link-visited: hsl(calc(var(--hue) + 60), 60%, 50%);
+  --link-hover: hsl(var(--hue), 80%, 60%);
+  --link-active: hsl(calc(var(--hue) + 120), 60%, 50%);
+}
+
+.danger {
+  --hue: 350;
+}
+```
+
+```html
+<a href="#" class="custom-link">Link Example</a>
+<a href="#" class="custom-link danger">Link Example</a>
+```
+
+### Pattern 5: Mixins
+
+Example: Baseline grid foundation
+
+```css
+.baseline,
+.baseline * {
+  --rhythm: 2rem;
+  --line-height: var(--sub-rhythm, var(--rhythm));
+  --line-height-ratio: 1.4;
+  --font-size: calc(var(--line-height) / var(--line-height-ratio));
+}
+
+.baseline {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+```
+
+```css
+.baseline h2,
+.baseline p,
+.baseline ul {
+  padding: 0 var(--rhythm);
+  margin: 0 0 var(--rhythm);
+}
+
+.baseline p {
+  --line-height-ratio: 1.2;
+}
+
+.baseline h2 {
+  --sub-rhythm: calc(3 * var(--rhythm));
+  --line-height-ratio: 1;
+}
+
+.baseline p,
+.baseline h2 {
+  font-size: var(--font-size);
+  line-height: var(--line-height);
+}
+
+.baseline ul {
+  margin-left: var(--rhythm);
+}
+```
+
+```html
+<section class="baseline">
+  <h2>A Tiny Webpage</h2>
+  <p>This is the tiniest webpage. It has three noteworthy features:</p>
+  <ul>
+    <li>Tiny</li>
+    <li>Exemplary</li>
+    <li>Identifies as Hufflepuff</li>
+  </ul>
+</section>
+```
+
+### Pattern 6: Inline properties
+
+```css
+.grid {
+  --columns: auto-fit;
+
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+}
+```
+
+```html
+<div class="grid">
+  <img src="https://www.fillmurray.com/900/600" alt="Bill Murray" />
+  <img src="https://www.placecage.com/900/600" alt="Nic Cage" />
+  <img src="https://www.placecage.com/g/900/600" alt="Nic Cage gray" />
+  <img src="https://www.fillmurray.com/g/900/600" alt="Bill Murray gray" />
+  <img src="https://www.placecage.com/c/900/600" alt="Nic Cage crazy" />
+  <img src="https://www.placecage.com/gif/900/600" alt="Nic Cage gif" />
+</div>
+```
+
+```html
+<div class="grid" style="--columns: 3;">
+  ...
+</div>
+```
+
+---
