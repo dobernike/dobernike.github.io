@@ -150,3 +150,9 @@ https://khalilstemmler.com/img/blog/ddd-intro/events.svg
 - create long-lasting software implementations of complex domains
 
 ---
+
+## DDD на практике. Проектирование списка желаний (на php)
+
+[https://habr.com/ru/post/335834/](https://habr.com/ru/post/335834/)
+
+---
